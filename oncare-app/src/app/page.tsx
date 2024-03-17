@@ -1,6 +1,6 @@
 "use client"
 
-import { useMutation, useQuery } from "convex/react";
+import { useMutation, useQuery } from 'convex/react';
 import Image from "next/image";
 import { useState } from "react";
 import styles from "./page.module.css";
@@ -34,7 +34,7 @@ export default function Home() {
             onChange={e => setText(e.target.value)} 
             className="text-black"
           />
-          <button>Create</button>00
+          <button>Create</button>
         </form>
       </div>
     </main>
