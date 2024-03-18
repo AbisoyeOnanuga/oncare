@@ -59,8 +59,8 @@ type();
 // Array of image sources
 const images = [
     'assets/images/Oncare-background.png',
-    'assets/images/Oncare-background.png',
-    'assets/images/Oncare-background.png',
+    'assets/images/Oncare-mission.png',
+    'assets/images/Oncare-vision.png',
     // Add more image paths as needed
   ];
   
