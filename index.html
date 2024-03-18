@@ -46,8 +46,8 @@
                         <h1 class="home__title"><span class="home__title-color">Chemo Tracker</span><br>
                         side-effects tracking with<span class="typing-container"> </span></h1>
     
-                        <a href="" class="button">Login</a><br>
-                        <a href="" class="button">Sign Up</a>
+                        <button class="button" id="btn-login" disabled="true" onclick="login()">Log in</button><br><br>
+                        <button class="button" id="btn-logout" disabled="true" onclick="logout()">Log out</button>
                     </div>
     
                     <div class="home__social">
@@ -111,6 +111,8 @@
             
             <!--===== AUTH0 CDN =====-->
             <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+            <!--===== AUTH JS =====-->
+            <script type="application/json" id="auth_config" src="auth_config.json"></script>
             <!--===== SCROLL REVEAL =====-->
             <script src="https://unpkg.com/scrollreveal"></script>
     
