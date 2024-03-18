@@ -7,9 +7,9 @@
     /*===== Colours =====*/
     /*Purple 260 - Green 120 - Red 355 - Blue 224 - Pink 340*/
     /* Hue colour mode */
-    --hue-color: 121;
+    --hue-color: 220;
     --first-color: hsl(var(--hue-color), 72%, 52%);
-    --second-color: hsl(var(--hue-color), 50%, 10%);
+    --second-color: hsl(var(--hue-color), 50%, 20%);
     /*===== Fuente y tipografia =====*/
     --body-font: "League Spartan", sans-serif;
     --big-font-size: 2rem;
@@ -32,6 +32,15 @@
         --normal-font-size: 1.1rem;
         --smaller-font-size: 0.9rem;
     }
+}
+
+.hidden {
+    display: none;
+}
+
+label {
+    margin-bottom: 10px;
+    display: block;
 }
 
 /*===== BASE =====*/
@@ -232,6 +241,9 @@ img {
     bottom: 0;
     width: 260px;
 }
+.home__login {
+    width: 135px;
+}
 
 /*BUTTONS*/
 .button {
@@ -242,6 +254,7 @@ img {
     font-weight: var(--font-semi);
     border-radius: 0.5rem;
     transition: 0.3s;
+    width: 100%;
 }
 .button:hover {
     background-color: var(--second-color);
@@ -351,12 +364,17 @@ img {
     }
 }
 @media screen and (min-width: 992px) {
+    .bd-grid {
+        margin-left: auto;
+        margin-right: auto;
+    }
   .home {
         padding: 10rem 0 2rem;
     }
   .home__img {
         width: 450px;
     }
+    
 }
 @media screen and (min-width: 600px) {
     body {
