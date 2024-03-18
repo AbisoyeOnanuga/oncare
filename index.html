@@ -4,7 +4,9 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+        <title>Chemo Tracker: side effects tracking for cancer patients</title>
+        <!-- favicon image -->
+        <link rel="icon" type="image/png" href="assets/images/logo/Oncare-logo_favicon.ico" alt="oncare favicon">        
         <!-- custom css file link -->
         <link rel="stylesheet" href="css/styles.css">
 
@@ -12,7 +14,6 @@
         <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-        <title>Chemo Tracker: side effects tracking for cancer patients</title>
 
     </head>
     <body>
@@ -46,8 +47,8 @@
                         side-effects tracking<br>
                         <span class="typing-container"></span></h1>
                         <div class="home__login">
-                            <button class="button" id="btn-login" disabled="true" onclick="login()">Log in</button><br><br>
-                            <button class="button" id="btn-logout" disabled="true" onclick="logout()">Log out</button>
+                            <button class="button" id="btn-login" onclick="login(login)">Log in</button><br><br>
+                            <button class="button" id="btn-logout" style="display: none;" onclick="logout(logout)">Log out</button>
                         </div>
                     </div>
     
@@ -111,6 +112,7 @@
             <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
             <!--===== AUTH JS =====-->
             <script type="application/json" id="auth_config" src="auth_config.json"></script>
+            <script src="js/auth.js"></script>
             <!--===== SCROLL REVEAL =====-->
             <script src="https://unpkg.com/scrollreveal"></script>
     

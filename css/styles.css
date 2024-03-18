@@ -38,6 +38,17 @@
     display: none;
 }
 
+#btn-logout {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+  
+#btn-logout.show {
+    visibility: visible;
+    opacity: 1;
+}
+
 label {
     margin-bottom: 10px;
     display: block;

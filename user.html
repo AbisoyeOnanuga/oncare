@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Shared styles and scripts -->
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <!-- Navbar content -->
+    </nav>
+
+    <!-- Patient Content -->
+    <div id="patient-content">
+        <!-- Calendar UI -->
+        <div id="calendar">
+            <!-- Calendar dates -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <!-- Footer content -->
+    </footer>
+
+    <!-- Shared scripts -->
+    <script src="auth.js"></script>
+    <script>
+        // Check if the user is authenticated
+        auth0.isAuthenticated().then(isAuthenticated => {
+            if (!isAuthenticated) {
+                // Redirect to login page
+                window.location.href = '/login.html';
+            }
+        });
+    </script>
+</body>
+</html>

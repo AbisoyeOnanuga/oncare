@@ -28,7 +28,7 @@ async function login() {
 }
 
 // Event listener for login
-document.getElementById('login-btn').addEventListener('click', login);
+document.getElementById('btn-login').addEventListener('click', login);
 
 // Handle authentication result
 window.onload = async () => {
@@ -57,6 +57,20 @@ function logout() {
     });
 }
 
+document.getElementById('btn-logout').addEventListener('click', logout);
+
+// UI state
+auth0.isAuthenticated().then(isAuthenticated => {
+    if (isAuthenticated) {
+        document.getElementById('btn-login').style.display = 'none';
+        document.getElementById('btn-logout').style.display = 'block';
+    }
+    else {
+        document.getElementById('btn-login').style.display = 'block';
+        document.getElementById('btn-logout').style.display = 'none';
+    }
+});
+
 // Auth routing
 if (await auth0.isAuthenticated()) {
     // User is authenticated, show the protected content
@@ -64,3 +78,27 @@ if (await auth0.isAuthenticated()) {
     else {
     // User is not authenticated, redirect to login page
     }
+
+// UpdateUI after login, logout, and handling the authentication result
+function updateUI() {
+    auth0.isAuthenticated().then(isAuthenticated => {
+        if (isAuthenticated) {
+            document.getElementById('btn-login').style.display = 'none';
+            document.getElementById('btn-logout').style.display = 'block';
+        }
+        else {
+            document.getElementById('btn-login').style.display = 'block';
+            document.getElementById('btn-logout').style.display = 'none';
+        }
+    });
+}
+
+// Call updateUI on page load to set initial UI state
+updateUI();
+
+if (isAuthenticated) {
+    document.getElementById('logout-btn').classList.add('show');
+  }
+    else {
+        document.getElementById('logout-btn').classList.remove('show');
+}
