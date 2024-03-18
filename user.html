@@ -1,37 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <!-- Shared styles and scripts -->
-</head>
-<body>
-    <!-- Navbar -->
-    <nav>
-        <!-- Navbar content -->
-    </nav>
+    <head>
+        <!-- Shared styles and scripts -->
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Chemo Tracker: side effects tracking for cancer patients</title>
+            <!-- favicon image -->
+            <link rel="icon" type="image/png" href="assets/images/logo/Oncare-logo_favicon.ico" alt="oncare favicon">        
+            <!-- custom css file link -->
+            <link rel="stylesheet" href="css/styles.css">
 
-    <!-- Patient Content -->
-    <div id="patient-content">
-        <!-- Calendar UI -->
-        <div id="calendar">
-            <!-- Calendar dates -->
-        </div>
-    </div>
+            <!-- =====BOX ICONS===== -->
+            <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+            <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    <!-- Footer -->
-    <footer>
-        <!-- Footer content -->
-    </footer>
 
-    <!-- Shared scripts -->
-    <script src="auth.js"></script>
-    <script>
-        // Check if the user is authenticated
-        auth0.isAuthenticated().then(isAuthenticated => {
-            if (!isAuthenticated) {
-                // Redirect to login page
-                window.location.href = '/login.html';
-            }
-        });
-    </script>
-</body>
+        </head>
+    </head>
+
+    <body>
+        <!--===== HEADER =====-->
+        <header class="l-header">
+            <nav class="nav bd-grid">
+                <div>
+                    <a href="#" class="nav__logo">Chemo Tracker</a>
+                </div>
+
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item"><a href="#home" class="nav__link active-link">Home</a></li>
+                        <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+                        <li class="nav__item"><a href="#skills" class="nav__link">How it works</a></li>
+                        <li class="nav__item"><a href="#work" class="nav__link">Why use Chemo Tracker</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-menu'></i>
+                </div>
+            </nav>
+        </header>
+
+        <main class="l-main">
+            <!--===== PATIENT CONTENT =====-->
+            <div id="patient-content">
+                <!--===== CALENDAR UI =====-->
+                <div id="calendar">
+                    <!--===== CALENDAR DATES =====-->
+                    <div class="calendar">
+                        <div class="month">
+                            <ul>
+                                <li class="prev">&#10094;</li>
+                                <li class="next">&#10095;</li>
+                                <li>March<br><span style="font-size:18px">2024</span></li>
+                            </ul>
+                        </div>
+                        <ul class="weekdays">
+                            <li>Mo</li>
+                            <li>Tu</li>
+                            <li>We</li>
+                            <li>Th</li>
+                            <li>Fr</li>
+                            <li>Sa</li>
+                            <li>Su</li>
+                        </ul>
+                        <ul class="days">
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                            <li>8</li>
+                            <li>9</li>
+                            <li>10</li>
+                            <li>11</li>
+                            <li>12</li>
+                            <li>13</li>
+                            <li>14</li>
+                            <li>15</li>
+                            <li>16</li>
+                            <li>17</li>
+                            <li>18</li>
+                            <li>19</li>
+                            <li>20</li>
+                            <li>21</li>
+                            <li>22</li>
+                            <li>23</li>
+                            <li>24</li>
+                            <li>25</li>
+                            <li>26</li>
+                            <li>27</li>
+                            <li>28</li>
+                            <li>29</li>
+                            <li>30</li>
+                            <li>31</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+        <!--===== FOOTER =====-->
+        <footer class="footer">
+            <p class="footer__title">Oncare</p>
+            <div class="footer__social">
+                <a href="#" class="footer__icon"><i class='bx bxl-instagram' ></i></a>
+                <a href="#" class="footer__icon"><i class='bx bxl-github' ></i></a>
+            </div>
+            <p class="footer__copy">&#169; Copyright 2024</p>
+        </footer>
+
+        <!--===== AUTH0 CDN =====-->
+        <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+        <!--===== AUTH JS =====-->
+        <script type="application/json" id="auth_config" src="auth_config.json"></script>
+        <script src="js/auth.js"></script>
+        <!--===== SCROLL REVEAL =====-->
+        <script src="https://unpkg.com/scrollreveal"></script>
+
+        <!--===== MAIN JS =====-->
+        <script src="js/main.js"></script>
+
+        <script>
+            // Check if the user is authenticated
+            auth0.isAuthenticated().then(isAuthenticated => {
+                if (!isAuthenticated) {
+                    // Redirect to login page
+                    window.location.href = '/login.html';
+                }
+            });
+        </script>
+    </body>
 </html>
