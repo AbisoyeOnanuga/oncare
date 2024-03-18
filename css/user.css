@@ -1,0 +1,24 @@
+.calendar {
+    font-family: Arial, sans-serif;
+}
+.month {
+    text-align: center;
+}
+.month ul {
+    list-style-type: none;
+}
+.weekdays {
+    background-color: #ddd;
+    padding: 10px 0;
+    list-style-type: none;
+    text-align: center;
+}
+.days {
+    padding: 10px 0;
+    list-style-type: none;
+    text-align: center;
+}
+.days li {
+    display: inline-block;
+    width: 13.6%;
+}
