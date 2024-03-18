@@ -69,7 +69,7 @@ const images = [
   
   // Function to cycle to the next image
   function nextImage() {
-    const imgElement = document.querySelector('.skills__img');
+    const imgElement = document.querySelector('.features__img');
     
     // Fade out the current image
     imgElement.style.opacity = 0;
