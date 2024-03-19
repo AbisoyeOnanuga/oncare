@@ -26,6 +26,9 @@
     --z-fixed: 100;
 }
 @media screen and (min-width: 1000px) {
+    body {
+        padding: 70px 0px;
+    }
     :root {
         --big-font-size: 3.5rem;
         --h2-font-size: 2rem;
@@ -276,9 +279,14 @@ img {
 
 /* ===== MEDIA QUERIES=====*/
 @media screen and (max-width: 320px) {
-
+    body {
+        padding: 70px 0px;
+    }
 }
-@media screen and (min-width: 576px) {
+@media screen and (max-width: 570px) {
+    body {
+        padding: 50px 0px;
+    }
     .contact__form {
         width: 360px;
         padding-top: 2rem;
@@ -287,15 +295,10 @@ img {
         justify-items: center;
     }
 }
-@media screen and (min-width: 992px) {
-    .bd-grid {
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
-@media screen and (min-width: 600px) {
+
+@media screen and (max-width: 600px) {
     body {
-        margin: 0;
+        padding: 70px 0px;
     }
     .section {
         padding-top: 4rem;
@@ -325,14 +328,17 @@ img {
     .nav__link {
         color: var(--second-color);
     }
-    .features__container {
-        grid-template-columns: repeat(2, 1fr);
-        column-gap: 2rem;
-        align-items: center;
-        text-align: initial;
-    }
 }
 
+@media screen and (max-width: 992px) {
+    body {
+        padding: 70px 0px;
+    }
+    .bd-grid {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
 .calendar {
     background-color: #fff;
     border-radius: 8px;
