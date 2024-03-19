@@ -10,7 +10,6 @@
             <!-- favicon image -->
             <link rel="icon" type="image/png" href="assets/images/logo/Oncare-logo_favicon.ico" alt="oncare favicon">        
             <!-- custom css file link -->
-            <link rel="stylesheet" href="css/styles.css">
             <link rel="stylesheet" href="css/user.css">
 
             <!-- =====BOX ICONS===== -->
@@ -29,10 +28,7 @@
 
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
-                        <li class="nav__item"><a href="#home" class="nav__link active-link">Home</a></li>
-                        <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
-                        <li class="nav__item"><a href="#skills" class="nav__link">How it works</a></li>
-                        <li class="nav__item"><a href="#work" class="nav__link">Why use Chemo Tracker</a></li>
+                        <button class="button" id="btn-logout" style="display: none;" onclick="logout(auth0)">Log out</button>
                     </ul>
                 </div>
 
@@ -103,7 +99,6 @@
             </div>
         </main>
 
-
         <!--===== FOOTER =====-->
         <footer class="footer">
             <p class="footer__title">Oncare</p>
@@ -120,7 +115,6 @@
         <script type="application/json" id="auth_config" src="auth_config.json"></script>
         <script src="js/auth.js"></script>
         <!--===== SCROLL REVEAL =====-->
-        <script src="https://unpkg.com/scrollreveal"></script>
 
         <!--===== MAIN JS =====-->
         <script src="js/main.js"></script>
