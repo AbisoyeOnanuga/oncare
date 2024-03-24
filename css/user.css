@@ -12,7 +12,7 @@
     --second-color: hsl(var(--hue-color), 50%, 20%);
     /*===== Fuente y tipografia =====*/
     --body-font: "League Spartan", sans-serif;
-    --big-font-size: 2rem;
+    --big-font-size: 3rem;
     --h2-font-size: 1.25rem;
     --normal-font-size: .938rem;
     --smaller-font-size: .75rem;
@@ -84,6 +84,7 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex: 1;
 }
 .nav__list {
     display: flex;
@@ -95,9 +96,12 @@ a {
     color: #fff;
     padding: 0.75rem 2.5rem;
     font-weight: var(--font-semi);
-    border-radius: 0.5rem;
+    font-size: var(--h2-font-size);
+    border-radius: 25rem;
     transition: 0.3s;
-    border: none;
+    border:rgb(0, 0, 0);
+    border-style: solid;
+    border-width: 0.1rem;
 }
 .button:hover {
     background-color: var(--second-color);
@@ -121,26 +125,44 @@ a {
 .patient-content {
 gap: 1rem;
 }
-.notes-dates {
-    width: 30%;
-    float: left;
-    margin-bottom: var(--mb-4);
-    padding: var(--mb-2);
-    background-color: #fff;
-    border-radius: 0.5rem;
-}
-.notes-content {
-    width: 70%;
-    float: right;
-}
 .doctor-note,
 .patient-note {
     margin-bottom: var(--mb-4);
     padding: var(--mb-2);
     background-color: #fff;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
 }
-
+.doctor-note {
+    background-color: rgba(0, 123, 255, 0.12); /* Transparent blue */
+}
+.patient-note {
+    background-color: rgba(255, 166, 0, 0.12); /* Transparent orange */
+}
+.notes-dates,
+.notes-content {
+    margin-right: var(--mb-2); /* Adds a gap to the right */
+    height: 75vh; /* Full view height */
+    overflow-y: auto; /* Enables vertical scrolling */
+}
+.doctor-note,
+.patient-note {
+    border: 0.1rem solid rgba(0, 0, 0); /* Transparent border */
+    height: 35vh; /* Half view height */
+    margin-bottom: var(--mb-2); /* Adds a gap between the notes */
+}
+.notes-dates {
+    width: 30%;
+    float: left;
+    margin-bottom: var(--mb-4);
+    padding: var(--mb-2);
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
+    border-radius: 1rem;
+    border: 0.1rem solid rgba(0, 0, 0); /* Transparent border */
+}
+.notes-content {
+    width: 65%;
+    float: right;
+}
 
 /* ===== FOOTER =====*/
 .footer {
@@ -213,5 +235,6 @@ gap: 1rem;
     .notes-content {
         width: 100%;
         float: none;
+        margin-right: 0; /* Removes the gap for smaller screens */
     }
 }
