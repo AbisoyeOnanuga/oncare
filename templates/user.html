@@ -6,7 +6,7 @@
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Oncare: side-effects tracking for cancer patients</title>
+            <title>Chemo-Tracker: side-effects tracking for cancer patients</title>
             <!-- favicon image -->
             <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/images/logo/Oncare-logo_favicon.ico') }}" alt="oncare favicon">        
             <!-- custom css file link -->
@@ -23,7 +23,7 @@
         <header class="l-header">
             <nav class="nav bd-grid">
                 <div>
-                    <a href="#" class="nav__logo">ONCARE</a>
+                    <a href="#" class="nav__logo">Chemo-Tracker</a>
                 </div>
 
                 <div class="nav__menu" id="nav-menu">
@@ -54,12 +54,12 @@
                 </div>
                 <!--===== NOTES UI =====-->
                 <div class="notes-content">
-                    <div class="doctor-note">
+                    <div class="doctor-note hidden">
                         <div class="doctor-note-label">Doctor's Note</div>
                         <form id="doctor-note-form">
                             <!-- Doctor's input fields -->
                             <textarea class="note-input" name="doctor-note-input"></textarea>
-                            <button class="button" type="submit">Submit</button>
+                            <button class="note-button" type="submit" disabled="true">Submit</button>
                         </form>
                     </div>
                     <div class="patient-note">
@@ -67,7 +67,7 @@
                         <form id="patient-note-form">
                             <!-- Patient's input fields -->
                             <textarea class="note-input" name="patient-note-input"></textarea>
-                            <button class="button" type="submit">Submit</button>
+                            <button class="note-button" type="submit">Submit</button>
                         </form>
                     </div>
                 </div>

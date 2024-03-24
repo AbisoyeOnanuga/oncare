@@ -90,7 +90,7 @@ a {
     display: flex;
     gap: var(--mb-2);
 }
-.button {
+button {
     display: inline-block;
     background-color: var(--first-color);
     color: #fff;
@@ -103,7 +103,10 @@ a {
     border-style: solid;
     border-width: 0.1rem;
 }
-.button:hover {
+.note-button {
+    width: fit-content;
+}
+button:hover {
     background-color: var(--second-color);
     box-shadow: 0px 10px 36px rgba(0, 0, 0, 0.15);
 }
@@ -122,6 +125,9 @@ a {
     padding: var(--mb-4);
     height: 100%
 }
+.hidden {
+    display: none;
+}
 .patient-content {
 gap: 1rem;
 }
@@ -135,17 +141,28 @@ gap: 1rem;
 .doctor-note {
     background-color: rgba(0, 123, 255, 0.12); /* Transparent blue */
 }
+.doctor-note-label {
+    position: relative;
+    top: -17px;
+    left: -17px;
+    padding: 0.5rem;
+    background-color: rgba(0, 123, 255, 0.3);
+    border-bottom-right-radius: 0.5rem;
+    border-top-left-radius: 1rem;
+    max-width: fit-content;
+}
 .patient-note {
     background-color: rgba(255, 166, 0, 0.12); /* Transparent orange */
     position: relative;
 }
 .patient-note-label {
-    position: absolute; /* Position the label absolutely within the .patient-note container */
+    position: absolute;
     top: 0;
     left: 0;
-    padding: 0.5rem; /* Add some padding around the text */
-    background-color: rgba(255, 165, 0, 0.3); /* Optional: style the label with a semi-transparent background */
-    border-bottom-right-radius: 0.5rem; /* Optional: round the bottom-right corner of the label */
+    padding: 0.5rem;
+    background-color: rgba(255, 165, 0, 0.3);
+    border-bottom-right-radius: 0.5rem;
+    border-top-left-radius: 1rem;
 }
 .notes-dates,
 .notes-content {
@@ -155,15 +172,16 @@ gap: 1rem;
 }
 .doctor-note,
 .patient-note {
+    flex-grow: 1; /* Grow to fill the space */
     border: 0.1rem solid rgba(0, 0, 0); /* Transparent border */
     height: 35vh; /* Half view height */
     margin-bottom: var(--mb-2); /* Adds a gap between the notes */
 }
 .note-input {
     border: 0.1rem solid rgba(0, 0, 0); /* Transparent border */
-    height: 22vh; /* Half view height */
+    height: auto;
     width: 59vw;
-    margin-bottom: var(--mb-2); /* Adds a gap between the notes */
+    margin: var(--mb-2) .1rem; /* Adds a gap between the notes */
     padding: var(--mb-2);
     font-size: var(--h2-font-size);
 }
@@ -179,6 +197,16 @@ gap: 1rem;
 .notes-content {
     width: 65%;
     float: right;
+}
+.notes-content textarea {
+    width: 100%; /* Full width of the container */
+    height: auto; /* Adjust height automatically */
+    min-height: 60%; /* Minimum height */
+}
+.notes-content form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 /* ===== FOOTER =====*/
