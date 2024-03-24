@@ -137,6 +137,15 @@ gap: 1rem;
 }
 .patient-note {
     background-color: rgba(255, 166, 0, 0.12); /* Transparent orange */
+    position: relative;
+}
+.patient-note-label {
+    position: absolute; /* Position the label absolutely within the .patient-note container */
+    top: 0;
+    left: 0;
+    padding: 0.5rem; /* Add some padding around the text */
+    background-color: rgba(255, 165, 0, 0.3); /* Optional: style the label with a semi-transparent background */
+    border-bottom-right-radius: 0.5rem; /* Optional: round the bottom-right corner of the label */
 }
 .notes-dates,
 .notes-content {
