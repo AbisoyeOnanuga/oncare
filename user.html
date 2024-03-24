@@ -46,15 +46,27 @@
                 
                 <!--===== NOTES DATES =====-->
                 <div class="notes-dates">
-                    
+                    <button id="add-note-btn" class="button">+</button>
+                    <!-- Date filter form -->
+                    <input type="date" id="date-filter" />
+                    <!-- Container for note links -->
+                    <div id="notes-links-container"></div>
                 </div>
                 <!--===== NOTES UI =====-->
                 <div class="notes-content">
                     <div class="doctor-note">
-
+                        <form id="doctor-note-form">
+                            <!-- Doctor's input fields -->
+                            <textarea class="note-input" name="doctor-note-input"></textarea>
+                            <button class="button" type="submit">Submit</button>
+                        </form>
                     </div>
                     <div class="patient-note">
-
+                        <form id="patient-note-form">
+                            <!-- Patient's input fields -->
+                            <textarea class="note-input" name="patient-note-input"></textarea>
+                            <button class="button" type="submit">Submit</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -78,5 +90,6 @@
 
         <!--===== MAIN JS =====-->
         <script src="js/main.js"></script>
+        <script src="js/notes.js"></script>
     </body>
 </html>

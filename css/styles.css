@@ -1,0 +1,240 @@
+/*===== GOOGLE FONTS =====*/
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap');
+/*===== VARIABLES CSS =====*/
+:root {
+    --header-height: 3rem;
+    --font-semi: 600;
+    /*===== Colours =====*/
+    /*Purple 260 - Green 120 - Red 355 - Blue 224 - Pink 340*/
+    /* Hue colour mode */
+    --hue-color: 220;
+    --first-color: hsl(var(--hue-color), 72%, 52%);
+    --second-color: hsl(var(--hue-color), 50%, 20%);
+    /*===== Fuente y tipografia =====*/
+    --body-font: "League Spartan", sans-serif;
+    --big-font-size: 3rem;
+    --h2-font-size: 1.25rem;
+    --normal-font-size: .938rem;
+    --smaller-font-size: .75rem;
+    /*===== Margins =====*/
+    --mb-2: 1rem;
+    --mb-4: 2rem;
+    --mb-5: 2.5rem;
+    --mb-6: 3rem;
+    /*===== z index =====*/
+    --z-back: -10;
+    --z-fixed: 100;
+}
+
+/*===== BASE STYLES =====*/
+html, body {
+    height: 100%;
+    margin: 0;
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+    background-color: #f7f7f7;
+}
+ul {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+}
+
+/*===== LAYOUT =====*/
+.l-header,
+.footer {
+    width: 100%;
+    text-align: center;
+}
+.l-main {
+    min-height: calc(100% - var(--header-height) - var(--footer-height));
+    padding: var(--mb-2);
+}
+
+/*===== HEADER =====*/
+.l-header {
+    width: 100%;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3em 0;
+}
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--mb-2);
+    width: 100%;
+}
+.nav__logo {
+    font-size: var(--big-font-size);
+    color: rgb(0, 0, 0);
+    margin-left: var(--mb-4);
+}
+.nav__menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+.nav__list {
+    display: flex;
+    gap: var(--mb-2);
+}
+.button {
+    display: inline-block;
+    background-color: var(--first-color);
+    color: #fff;
+    padding: 0.75rem 2.5rem;
+    font-weight: var(--font-semi);
+    font-size: var(--h2-font-size);
+    border-radius: 25rem;
+    transition: 0.3s;
+    border:rgb(0, 0, 0);
+    border-style: solid;
+    border-width: 0.1rem;
+}
+.button:hover {
+    background-color: var(--second-color);
+    box-shadow: 0px 10px 36px rgba(0, 0, 0, 0.15);
+}
+
+/*===== HOME =====*/
+@keyframes blink {
+    0%, 100% { border-color: transparent; }
+    50% { border-color: black; }
+}
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/*===== MAIN CONTENT =====*/
+.l-main {
+    padding: var(--mb-4);
+    height: 100%
+}
+.patient-content {
+gap: 1rem;
+}
+.doctor-note,
+.patient-note {
+    margin-bottom: var(--mb-4);
+    padding: var(--mb-2);
+    background-color: #fff;
+    border-radius: 1rem;
+}
+.doctor-note {
+    background-color: rgba(0, 123, 255, 0.12); /* Transparent blue */
+}
+.patient-note {
+    background-color: rgba(255, 166, 0, 0.12); /* Transparent orange */
+}
+.notes-dates,
+.notes-content {
+    margin-right: var(--mb-2); /* Adds a gap to the right */
+    height: 75vh; /* Full view height */
+    overflow-y: auto; /* Enables vertical scrolling */
+}
+.doctor-note,
+.patient-note {
+    border: 0.1rem solid rgba(0, 0, 0); /* Transparent border */
+    height: 35vh; /* Half view height */
+    margin-bottom: var(--mb-2); /* Adds a gap between the notes */
+}
+.notes-dates {
+    width: 30%;
+    float: left;
+    margin-bottom: var(--mb-4);
+    padding: var(--mb-2);
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
+    border-radius: 1rem;
+    border: 0.1rem solid rgba(0, 0, 0); /* Transparent border */
+}
+.notes-content {
+    width: 65%;
+    float: right;
+}
+
+/* ===== FOOTER =====*/
+.footer {
+    width: 100%;
+    background-color: var(--second-color);
+    padding: var(--mb-2) 0;
+    text-align: center;
+    color: #fff;
+}
+.footer__title {
+    font-size: var(--h2-font-size);
+}
+.footer__social {
+    margin: var(--mb-2) 0;
+}
+.footer__icon {
+    font-size: 1.5rem;
+    color: #fff;
+    margin: 0 var(--mb-2);
+}
+.footer__copy {
+    font-size: var(--smaller-font-size);
+}
+
+/*===== RESPONSIVE NAV BUTTON =====*/
+.nav__toggle {
+    display: none; /* Hide by default */
+}
+
+@media screen and (max-width: 768px) {
+    .nav__toggle {
+        display: block; /* Show only on small screens */
+    }
+    .nav__menu {
+        position: absolute;
+        top: var(--header-height);
+        left: 0;
+        width: 100%;
+        background-color: var(--first-color);
+        padding: var(--mb-2) 0;
+        flex-direction: column;
+        align-items: center;
+        display: none; /* Hide by default, shown by JS */
+    }
+    .nav__list {
+        flex-direction: column;
+    }
+    .button {
+        width: auto; /* Adjust button width on small screens */
+    }
+    .footer {
+        position: relative; /* Adjust footer position on small screens */
+    }
+}
+/*===== MEDIA QUERIES=====*/
+@media screen and (max-width: 768px) {
+    .nav__menu {
+        display: none;
+    }
+    .nav__toggle {
+        display: block;
+        position: absolute;
+        right: var(--mb-2);
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.5rem;
+        color: #fff;
+    }
+    .notes-dates,
+    .notes-content {
+        width: 100%;
+        float: none;
+        margin-right: 0; /* Removes the gap for smaller screens */
+    }
+}
