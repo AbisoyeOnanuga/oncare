@@ -5,6 +5,9 @@ from bson.objectid import ObjectId
 from datetime import datetime
 from pymongo import DESCENDING
 from os import getenv
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 app.config["MONGO_URI"] = getenv('MONGO_URI')
@@ -12,7 +15,13 @@ mongo = PyMongo(app)
 
 @app.route("/")
 def home():
+    return render_template("index.html")
+@app.route("/patient")
+def user():
     return render_template("user.html")
+@app.route("/doctor")
+def doctor():
+    return render_template("doctor.html")
 
 @app.route('/add_note', methods=['POST'])
 def add_note():
@@ -34,7 +43,7 @@ def add_note():
         app.logger.error(f"Error adding note: {e}")
         return jsonify({'error': 'An error occurred while adding the note'}), 500
         
-@app.route('/get_all_notes', methods=['GET'])
+@app.route('/patient/get_all_notes', methods=['GET'])
 def get_all_notes():
     # Fetch all notes from the 'patientnotes' collection
     patient_notes = mongo.db.patientnotes.find({}).sort('date', DESCENDING)
@@ -48,7 +57,7 @@ def get_all_notes():
         })
     return jsonify(notes_list)
 
-@app.route('/get_note_content/<note_id>', methods=['GET'])
+@app.route('/patient/get_note_content/<note_id>', methods=['GET'])
 def get_note_content(note_id):
     try:
         note = mongo.db.patientnotes.find_one({'_id': ObjectId(note_id)})
@@ -59,7 +68,7 @@ def get_note_content(note_id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/update_note/<note_id>', methods=['POST'])
+@app.route('/patient/update_note/<note_id>', methods=['POST'])
 def update_note(note_id):
     try:
         data = request.get_json()
@@ -74,7 +83,7 @@ def update_note(note_id):
     except Exception as e:
         return jsonify({'error': 'An error occurred'}), 500
 
-@app.route('/delete_note/<note_id>', methods=['DELETE'])
+@app.route('/patient/delete_note/<note_id>', methods=['DELETE'])
 def delete_note(note_id):
     try:
         # Convert the string ID to a MongoDB ObjectId
@@ -88,7 +97,7 @@ def delete_note(note_id):
         app.logger.error(f"Error deleting note: {e}")
         return jsonify({'error': 'An error occurred while deleting the note'}), 500
 
-@app.route('/add_doctor_note', methods=['POST'])
+@app.route('/doctor/add_doctor_note', methods=['POST'])
 def add_doctor_note():
     data = request.get_json()
     patient_id = data['patient_id']

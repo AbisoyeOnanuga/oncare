@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         var date = new Date().toISOString();
 
         // Send the note content and date to the Flask app
-        fetch('/add_note', {
+        fetch('/patient/add_note', {
             method: 'POST',
             body: JSON.stringify({ 
                 user_id: 'demo',
@@ -60,7 +60,7 @@ function truncateContent(content, maxLength) {
 
 // Fetch notes for edit, then close notes after edit with close-btn
 function fetchNoteContent(noteId) {
-    fetch('/get_note_content/' + noteId)
+    fetch('/patient/get_note_content/' + noteId)
     .then(response => response.json())
     .then(noteContent => {
         var editForm = document.getElementById('edit-note-form');
@@ -89,7 +89,7 @@ function fetchNoteContent(noteId) {
 
 // Open note fucntion
 function fetchAndDisplayNotes() {
-    fetch('/get_all_notes')
+    fetch('/patient/get_all_notes')
     .then(response => response.json())
     .then(notesList => {
         var notesContainer = document.getElementById('notes-links-container');

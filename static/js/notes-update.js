@@ -1,6 +1,6 @@
 function updateNote(noteId) {
     var content = document.getElementById('edit-note-input').value;
-    fetch('/update_note/' + noteId, {
+    fetch('/patient/update_note/' + noteId, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

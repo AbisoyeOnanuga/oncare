@@ -1,6 +1,6 @@
 function deleteNote(noteId) {
     if (confirm('Are you sure you want to delete this note?')) {
-        fetch('/delete_note/' + noteId, {
+        fetch('/patient/delete_note/' + noteId, {
             method: 'DELETE'
         })
         .then(response => response.json())
