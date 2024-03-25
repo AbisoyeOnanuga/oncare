@@ -7,8 +7,8 @@
     /*===== Colours =====*/
     /*Purple 260 - Green 120 - Red 355 - Blue 224 - Pink 340*/
     /* Hue colour mode */
-    --hue-color: 220;
-    --first-color: hsl(var(--hue-color), 72%, 52%);
+    --hue-color: 27;
+    --first-color: hsl(var(--hue-color), 100%, 60%);
     --second-color: hsl(var(--hue-color), 50%, 20%);
     /*===== Fuente y tipografia =====*/
     --body-font: "League Spartan", sans-serif;
@@ -103,8 +103,15 @@ button {
     border-style: solid;
     border-width: 0.1rem;
 }
-.note-button {
+.note-btn, 
+.edit-note-btn, 
+.delete-note-btn {
     width: fit-content;
+}
+.patient-btn,
+.doctor-btn {
+    display: flex;
+    gap: var(--mb-2)
 }
 button:hover {
     background-color: var(--second-color);
@@ -132,7 +139,8 @@ button:hover {
 gap: 1rem;
 }
 .doctor-note,
-.patient-note {
+.patient-note,
+.edit-note {
     margin-bottom: var(--mb-4);
     padding: var(--mb-2);
     background-color: #fff;
@@ -151,7 +159,8 @@ gap: 1rem;
     border-top-left-radius: 1rem;
     max-width: fit-content;
 }
-.patient-note {
+.patient-note,
+.edit-note {
     background-color: rgba(255, 166, 0, 0.12); /* Transparent orange */
     position: relative;
 }
@@ -171,7 +180,8 @@ gap: 1rem;
     overflow-y: auto; /* Enables vertical scrolling */
 }
 .doctor-note,
-.patient-note {
+.patient-note,
+.edit-note {
     flex-grow: 1; /* Grow to fill the space */
     border: 0.1rem solid rgba(0, 0, 0); /* Transparent border */
     height: 35vh; /* Half view height */
@@ -207,6 +217,24 @@ gap: 1rem;
     display: flex;
     flex-direction: column;
     height: 100%;
+}
+.note-summary {
+    display: inline-block;
+    background-color: var(--first-color);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    font-weight: var(--font-semi);
+    font-size: var(--body-font);
+    border-radius: 25rem;
+    transition: 0.3s;
+    border:rgb(0, 0, 0);
+    border-style: solid;
+    border-width: 0.1rem;
+    margin: 0.3rem 0;
+}
+.note-summary:hover {
+    background-color: var(--second-color);
+    box-shadow: 0px 10px 36px rgba(0, 0, 0, 0.15);
 }
 
 /* ===== FOOTER =====*/

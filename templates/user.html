@@ -59,7 +59,7 @@
                         <form id="doctor-note-form">
                             <!-- Doctor's input fields -->
                             <textarea class="note-input" name="doctor-note-input"></textarea>
-                            <button class="note-button" type="submit" disabled="true">Submit</button>
+                            <button class="note-button" type="submit" disabled="true">Save</button>
                         </form>
                     </div>
                     <div class="patient-note">
@@ -67,9 +67,27 @@
                         <form id="patient-note-form">
                             <!-- Patient's input fields -->
                             <textarea class="note-input" name="patient-note-input"></textarea>
-                            <button class="note-button" type="submit">Submit</button>
+                            <div class="patient-btn">
+                                <!-- This button is used to create a new note entry in the database -->
+                                <button class="note-btn" type="submit">Save New</button>
+                            </div>
                         </form>
                     </div>
+                    <div class="edit-note">
+                        <div class="patient-note-label">Your Note</div>
+                        <!-- Editable note form, initially hidden -->
+                        <form id="edit-note-form" style="display:none;">
+                            <textarea id="edit-note-input" class="note-input"></textarea>
+                            <div class="edit-btn-group">
+                                <!-- This button is used to save updates to an existing note -->
+                                <button id="update-note-btn" type="button">Update</button>
+                                <!-- This button is used to delete an existing note -->
+                                <button id="delete-note-btn" type="button">Delete</button>
+                                <button class="close-btn">X</button>
+                            </div>
+                        </form>
+                    </div>                      
+
                 </div>
             </div>
         </main>
