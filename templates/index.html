@@ -21,15 +21,17 @@
         <header class="l-header">
             <nav class="nav bd-grid">
                 <div>
-                    <a href="#" class="nav__logo">Chemo Tracker</a>
+                    <a href="/" class="nav__logo">Chemo-Tracker</a>
+                </div>
+                <div>
+                    <a href="/" class="nav__logo"><img src="{{ url_for('static', filename='assets/images/logo/Oncare-logo_transparent.png') }}" alt="Oncare logo"></a>
                 </div>
 
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
-                        <li class="nav__item"><a href="#home" class="nav__link active-link">Home</a></li>
-                        <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
-                        <li class="nav__item"><a href="#skills" class="nav__link">How it works</a></li>
-                        <li class="nav__item"><a href="#work" class="nav__link">Why use Chemo Tracker</a></li>
+                        <a href="#about" class="nav__link"><button class="button" id="about">About</button></a>
+                        <a href="#features" class="nav__link"><button class="button" id="how">How it works</button></a>
+                        <a href="#mission" class="nav__link"><button class="button" id="why">Why use Chemo Tracker</button></a>
                     </ul>
                 </div>
 
@@ -47,8 +49,8 @@
                     side-effects tracking<br>
                     <span class="typing-container"></span></h1>
                     <div class="home__login">
-                        <a href="/patient"><button class="button" id="btn-login" onclick="login(auth0)">Log in</button></a><br><br>
-                        <a href="/doctor"><button class="button" id="btn-login" onclick="login(auth0)">Doctor Log in</button></a>
+                        <a href="/patient"><button class="button" id="btn-login">Log in</button></a><br><br>
+                        <a href="/doctor"><button class="button" id="btn-login">Doctor Log in</button></a>
                     </div>
                 </div>
 
@@ -59,7 +61,7 @@
                 </div>
 
                 <div class="home__img">
-                    <img src="assets/images/logo/Oncare-logo_transparent.png" alt="">
+                    <img src="{{ url_for('static', filename='assets/images/logo/Oncare-logo_transparent.png') }}" alt="">
                 </div>
             </section>
 
@@ -69,7 +71,7 @@
 
                 <div class="about__container bd-grid">
                     <div class="about__img">
-                        <img src="assets/images/logo/Oncare-logo.png" alt="">
+                        <img src="{{ url_for('static', filename='assets/images/logo/Oncare-logo.png') }}" alt="">
                     </div>
                     
                     <div>
@@ -82,40 +84,40 @@
                 </div>
             </section>
 
-                <!--===== FEATURES =====-->
-                <section class="features section" id="skills">
-                    <h2 class="section-title">Features</h2>
-    
-                    <div class="features__container bd-grid">          
-                        <div>
-                            <h2 class="features__subtitle">Features</h2>
-                            <p class="features__text">These are Chemo Tracker's most valuable features, 
-                                as reviewed by our users: <b>Voice notes</b>, <b>Doctor chat</b>, and <b>Voice enabled reminders</b> 
-                                There are also the <b>Calender Log</b> <b>Prescription Tracker</b>.
-                            </p>
-                        </div>
-                        <div>              
-                            <img src="assets/images/Oncare-background.png" alt="" class="features__img">
-                        </div>
+            <!--===== FEATURES =====-->
+            <section class="features section" id="features">
+                <h2 class="section-title">Features</h2>
 
+                <div class="features__container bd-grid">          
+                    <div>
+                        <h2 class="features__subtitle">Features</h2>
+                        <p class="features__text">These are Chemo Tracker's most valuable features, 
+                            as reviewed by our users: <b>Voice notes</b>, <b>Doctor chat</b>, and <b>Voice enabled reminders</b> 
+                            There are also the <b>Calender Log</b> <b>Prescription Tracker</b>.
+                        </p>
                     </div>
-                    <div class="features__table bd-grid">
-                        <div class="features__row">
-                            <div class="features__data">
-                                <i class='bx bxs-alarm features__icon'></i>
-                                <span class="features__name">Voice enabled reminders</span>
-                            </div>
-                            <div class="features__data">
-                                <i class='bx bxs-user-voice features__icon'></i>
-                                <span class="features__name">Voice notes</span>
-                            </div>
-                            <div class="features__data">
-                                <i class='bx bx-chat features__icon'></i>
-                                <span class="features__name">Doctor chat</span>
-                            </div>
+                    <div>              
+                        <img src="{{ url_for('static', filename='assets/images/Oncare-background.png') }}" alt="" class="features__img">
+                    </div>
+
+                </div>
+                <div class="features__table bd-grid">
+                    <div class="features__row">
+                        <div class="features__data">
+                            <i class='bx bxs-alarm features__icon'></i>
+                            <span class="features__name">Voice enabled reminders</span>
+                        </div>
+                        <div class="features__data">
+                            <i class='bx bxs-user-voice features__icon'></i>
+                            <span class="features__name">Voice notes</span>
+                        </div>
+                        <div class="features__data">
+                            <i class='bx bx-chat features__icon'></i>
+                            <span class="features__name">Doctor chat</span>
                         </div>
                     </div>
-                </section>
+                </div>
+            </section>
 
             <!--===== CONTACT =====-->
             <!--<section class="contact section" id="contact">
@@ -145,12 +147,11 @@
         <!--===== AUTH0 CDN =====-->
         <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
         <!--===== AUTH JS =====-->
-        <script type="application/json" id="auth_config" src="auth_config.json"></script>
-        <script src="js/auth.js"></script>
+
         <!--===== SCROLL REVEAL =====-->
         <script src="https://unpkg.com/scrollreveal"></script>
 
         <!--===== MAIN JS =====-->
-        <script src="js/main.js"></script>
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     </body>
 </html>

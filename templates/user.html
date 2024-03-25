@@ -25,10 +25,14 @@
                 <div>
                     <a href="/patient" class="nav__logo">Chemo-Tracker</a>
                 </div>
+                <div>
+                    <a href="/patient" class="nav__logo"><img src="{{ url_for('static', filename='assets/images/logo/Oncare-logo_transparent.png') }}" alt="Oncare logo"></a>
+                </div>
+
 
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
-                        <a href="/"><button class="button" id="btn-login" onclick="login(auth0)">Logout</button></a>
+                        <a href="/"><button class="button" id="btn-login">Logout</button></a>
                         <button class="button" id="btn-tracker">Chemo-Tracker</button>
                         <button class="button" id="btn-meds">Meds</button>
                     </ul>

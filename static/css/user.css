@@ -76,6 +76,13 @@ a {
     color: rgb(0, 0, 0);
     margin-left: var(--mb-4);
 }
+.nav__logo img{
+    font-size: var(--big-font-size);
+    color: rgb(0, 0, 0);
+    margin-left: var(--mb-4);
+    width: 100px;
+    margin: var(--mb-2);
+}
 .nav__menu {
     display: flex;
     justify-content: center;
