@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     // Initially hide the patient note form container
     document.querySelector('.patient-note').style.display = 'none';
+    document.querySelector('.edit-note').style.display = 'none';
 
     document.getElementById('add-note-btn').addEventListener('click', function() {
         // Display the patient note form container
@@ -8,7 +9,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         noteContainer.style.display = noteContainer.style.display === 'none' ? 'block' : 'none';
     });
 
-    // Submit Button Functionality
+    // Submit button functionality
     document.getElementById('patient-note-form').addEventListener('submit', function(event) {
         event.preventDefault();
         var noteContent = document.querySelector('.patient-note .note-input').value;
@@ -49,11 +50,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 
-document.addEventListener('DOMContentLoaded', fetchAndDisplayNotes);
-document.getElementById('date-filter').addEventListener('change', fetchAndDisplayNotes);
-
-document.addEventListener('DOMContentLoaded', fetchAndDisplayNotes);
-
+// Notes Summary for list view
 function truncateContent(content, maxLength) {
     if (content.length > maxLength) {
         return content.substring(0, maxLength) + '...';
@@ -61,24 +58,15 @@ function truncateContent(content, maxLength) {
     return content;
 }
 
-document.getElementsByClassName('.note-summary').addEventListener('click', function() {
-    // Display the patient note form container
-    var noteContainer = document.querySelector('.edit-note');
-    noteContainer.style.display = noteContainer.style.display === 'none' ? 'block' : 'none';
-});
-
-// Close Note Functionality
-document.querySelector('.close-btn').addEventListener('click', function() {
-    document.querySelector('.edit-note').style.display = 'none';
-});
-
+// Fetch notes for edit, then close notes after edit with close-btn
 function fetchNoteContent(noteId) {
     fetch('/get_note_content/' + noteId)
     .then(response => response.json())
     .then(noteContent => {
-        // Assuming 'noteContent' is the actual content of the note
         var editForm = document.getElementById('edit-note-form');
+        var editContainer = document.querySelector('.edit-note');
         var editInput = document.getElementById('edit-note-input');
+        var closeButton = document.querySelector('.close-btn');
 
         // Populate the form with the fetched content
         editInput.value = noteContent;
@@ -88,10 +76,18 @@ function fetchNoteContent(noteId) {
 
         // Display the form for editing
         editForm.style.display = 'block';
+        editContainer.style.display = 'block'; // container is also displayed
+
+        // Add event listener to the close button to hide the form and the container
+        closeButton.addEventListener('click', function() {
+            editForm.style.display = 'none';
+            editContainer.style.display = 'none'; // Hide the container as well
+        });
     })
     .catch(error => console.error('Error:', error));
 }
 
+// Open note fucntion
 function fetchAndDisplayNotes() {
     fetch('/get_all_notes')
     .then(response => response.json())
@@ -118,56 +114,4 @@ function fetchAndDisplayNotes() {
     })
     .catch(error => console.error('Error:', error));
 }
-
-
-document.getElementById('update-note-btn').addEventListener('click', function() {
-    var noteId = this.dataset.noteId;
-    var updatedContent = document.getElementById('edit-note-input').value;
-
-    fetch('/update_note/' + noteId, {
-        method: 'POST',
-        body: JSON.stringify({ content: updatedContent }),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.result === 'Note updated') {
-            // Handle successful update
-            // Update the note summary in the list and hide the edit form
-            var noteSummary = document.querySelector(`[data-note-id="${noteId}"]`);
-            if (noteSummary) {
-                noteSummary.textContent = truncateContent(updatedContent, 50);
-            }
-            document.getElementById('edit-note-form').style.display = 'none';
-        }
-    })
-    .catch(error => console.error('Error:', error));
-});
-
-// Delete Note Functionality
-Array.from(document.getElementsByClassName('delete-note-btn')).forEach(button => {
-    button.addEventListener('click', function() {
-        var noteId = this.closest('.edit-note').querySelector('a').dataset.noteId;
-        fetch('/delete_note/' + noteId, {
-            method: 'DELETE', // Using DELETE method for deletion
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data.result === 'Note deleted') {
-                // Remove the note element from the DOM
-                this.closest('.notes-content').remove();
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    });
-});
-
-function filterNotesByDate(date) {
-    // Logic to filter notes by date
-}
-document.getElementById('date-filter').addEventListener('change', filterNotesByDate);
+document.addEventListener('DOMContentLoaded', fetchAndDisplayNotes);
