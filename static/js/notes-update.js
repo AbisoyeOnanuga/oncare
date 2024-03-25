@@ -11,7 +11,7 @@ function updateNote(noteId) {
     .then(data => {
         if (data.result) {
             alert('Note updated successfully!');
-            closeNote(); // Assuming you have a closeNote function to hide the form
+            window.location.reload();
         } else {
             alert('Error: ' + data.error);
         }

@@ -7,7 +7,6 @@ function deleteNote(noteId) {
         .then(data => {
             if (data.result) {
                 alert('Note deleted successfully!');
-                closeNote(); // Assuming you have a closeNote function to hide the form
                 // Optionally, remove the note from the DOM or refresh the notes list
             } else {
                 alert('Error: ' + data.error);
