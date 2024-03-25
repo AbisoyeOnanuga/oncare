@@ -8,9 +8,9 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Chemo-Tracker: side-effects tracking for cancer patients</title>
             <!-- favicon image -->
-            <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/images/logo/Oncare-logo_favicon.ico') }}" alt="oncare favicon">        
+            <link rel="icon" type="image/png" href="assets/images/logo/Oncare-logo_favicon.ico" alt="oncare favicon">        
             <!-- custom css file link -->
-            <link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}">
+            <link rel="stylesheet" href="css/user.css">
 
             <!-- =====BOX ICONS===== -->
             <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
@@ -54,8 +54,12 @@
                 </div>
                 <!--===== NOTES UI =====-->
                 <div class="notes-content">
+<<<<<<< HEAD:templates/user.html
                     <div class="doctor-note hidden">
                         <div class="doctor-note-label">Doctor's Note</div>
+=======
+                    <div class="doctor-note">
+>>>>>>> parent of a9554e0 (configure flask app):user.html
                         <form id="doctor-note-form">
                             <!-- Doctor's input fields -->
                             <textarea class="note-input" name="doctor-note-input"></textarea>
@@ -63,7 +67,6 @@
                         </form>
                     </div>
                     <div class="patient-note">
-                        <div class="patient-note-label">Your Note</div>
                         <form id="patient-note-form">
                             <!-- Patient's input fields -->
                             <textarea class="note-input" name="patient-note-input"></textarea>
@@ -109,7 +112,7 @@
         <!--===== SCROLL REVEAL =====-->
 
         <!--===== MAIN JS =====-->
-        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/notes.js') }}"></script>
+        <script src="js/main.js"></script>
+        <script src="js/notes.js"></script>
     </body>
 </html>
