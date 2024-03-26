@@ -9,6 +9,7 @@
         <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/images/logo/favicon.ico') }}" alt="oncare favicon">        
         <!-- custom css file link -->
         <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/background.css') }}">
 
         <!-- =====BOX ICONS===== -->
         <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
@@ -17,6 +18,14 @@
 
     </head>
     <body>
+        <div class="background-shapes">
+            <div class="frosted-glass">
+                <img src="{{ url_for('static', filename='assets/images/shape3.png') }}" class="shape top-right">
+                <img src="{{ url_for('static', filename='assets/images/shape4.png') }}" class="shape bottom-left">
+                <img src="{{ url_for('static', filename='assets/images/shape.png') }}" class="shape center-1">
+                <img src="{{ url_for('static', filename='assets/images/shape2.png') }}" class="shape center-2"> 
+            </div>
+        </div>
         <!--===== HEADER =====-->
         <header class="l-header">
             <nav class="nav bd-grid">
@@ -31,7 +40,7 @@
                     <ul class="nav__list">
                         <a href="#about" class="nav__link"><button class="button" id="about">About</button></a>
                         <a href="#features" class="nav__link"><button class="button" id="how">How it works</button></a>
-                        <a href="#mission" class="nav__link"><button class="button" id="why">Why use Chemo Tracker</button></a>
+                        <a href="#features" class="nav__link"><button class="button" id="why">Why use Chemo Tracker</button></a>
                     </ul>
                 </div>
 
@@ -60,13 +69,10 @@
                     <a href="https://github.com/AbisoyeOnanuga/oncare" class="home__social-icon"><i class='bx bxl-github' ></i></a>
                 </div>
 
-                <div class="home__img">
-                    <img src="{{ url_for('static', filename='assets/images/logo/Oncare-logo_transparent.png') }}" alt="">
-                </div>
             </section>
 
             <!--===== ABOUT =====-->
-            <section class="about section " id="about">
+            <section class="about section" id="about">
                 <h2 class="section-title">About</h2>
 
                 <div class="about__container bd-grid">
@@ -75,9 +81,9 @@
                     </div>
                     
                     <div>
-                        <h2 class="about__subtitle">Chemo Tracker
+                        <h2 class="about__subtitle">Chemo-Tracker</h2>
                         <p class="about__text">
-                            Chemo Tracker is a product of Oncare, 
+                            Chemo-Tracker is a product of Oncare, 
                             an easy-to-use solution for primary care.
                         </p>           
                     </div>                                   
@@ -105,15 +111,15 @@
                     <div class="features__row">
                         <div class="features__data">
                             <i class='bx bxs-alarm features__icon'></i>
-                            <span class="features__name">Voice enabled reminders</span>
+                            <span class="features__name">Voice-enabled reminders</span>
                         </div>
                         <div class="features__data">
                             <i class='bx bxs-user-voice features__icon'></i>
-                            <span class="features__name">Voice notes</span>
+                            <span class="features__name">Voice-notes</span>
                         </div>
                         <div class="features__data">
                             <i class='bx bx-chat features__icon'></i>
-                            <span class="features__name">Doctor chat</span>
+                            <span class="features__name">Doctor's notes</span>
                         </div>
                     </div>
                 </div>

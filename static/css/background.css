@@ -1,0 +1,102 @@
+.background-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Ensures the shapes stay in the background */
+    pointer-events: none; /* Allows clicks to pass through to content below */
+    display: flex;
+}
+.frosted-glass {
+    position: absolute;
+    background: inherit;
+    overflow: hidden;
+    filter: blur(45px);
+    height: calc(100% + 40px);
+    width: calc(100% + 40px);
+}
+.shape {
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+  
+/* Positioning the shapes */
+.top-right {
+    top: 20%;
+    right: 10%;
+    animation: rotate-and-move 20s infinite linear;
+}
+  
+.bottom-left {
+    bottom: 10%;
+    left: 10%;
+    animation: rotate-and-move 20s infinite linear;
+}
+  
+.center-1 {
+    top: 50%;
+    left: 45%;
+    animation: form-heart 10s infinite linear;
+}
+  
+.center-2 {
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%) rotate(180deg);
+    animation: form-heart 10s infinite linear;
+    animation-delay: -5s; /* To sync with the first center shape */
+}
+  
+/* Keyframe animations */
+@keyframes rotate-top-right {
+    0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+    50% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+  
+@keyframes rotate-bottom-left {
+    0%, 100% { transform: translate(50%, 50%) rotate(0deg); }
+    50% { transform: translate(50%, 50%) rotate(-360deg); }
+}
+  
+/* Center shapes forming a heart */
+@keyframes form-heart {
+    0%, 100% {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    25% {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+    50% {
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+    75% {
+      transform: translate(-50%, -50%) rotate(135deg);
+    }
+  }
+  
+/* Top right and bottom left shapes rotating and moving in a path */
+@keyframes rotate-and-move {
+    0%, 100% {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    50% {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+.top-right, .bottom-left {
+    animation-name: rotate-and-move;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+  
+  .center-1, .center-2 {
+    animation-name: form-heart;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }

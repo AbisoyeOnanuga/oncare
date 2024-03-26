@@ -64,6 +64,8 @@ a {
     justify-content: center;
     margin: 3em 0;
 }
+
+/*===== NAV =====*/
 .nav {
     display: flex;
     justify-content: space-between;
@@ -93,6 +95,7 @@ a {
     display: flex;
     gap: var(--mb-2);
 }
+
 button {
     display: inline-block;
     background-color: var(--first-color);

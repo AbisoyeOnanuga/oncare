@@ -11,6 +11,7 @@
             <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/images/logo/favicon.ico') }}" alt="oncare favicon">        
             <!-- custom css file link -->
             <link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}">
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/background.css') }}">
 
             <!-- =====BOX ICONS===== -->
             <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
@@ -19,6 +20,14 @@
     </head>
 
     <body>
+        <div class="background-shapes">
+            <div class="frosted-glass">
+                <img src="{{ url_for('static', filename='assets/images/shape3.png') }}" class="shape top-right">
+                <img src="{{ url_for('static', filename='assets/images/shape4.png') }}" class="shape bottom-left">
+                <img src="{{ url_for('static', filename='assets/images/shape.png') }}" class="shape center-1">
+                <img src="{{ url_for('static', filename='assets/images/shape2.png') }}" class="shape center-2"> 
+            </div>
+        </div>
         <!--===== HEADER =====-->
         <header class="l-header">
             <nav class="nav bd-grid">
