@@ -144,11 +144,20 @@ button:hover {
 .doctor-content {
 gap: 1rem;
 }
+.patient-link {
+    background: var(--first-color);
+    width: auto;
+    height: auto;
+    padding: 0.5rem;
+    display: block;
+    color: white;
+    font-size: var(--h2-font-size);
+    border-radius: 0.5rem;
+}
 .doctor-note,
 .patient-note {
     margin-bottom: var(--mb-4);
     padding: var(--mb-2);
-    background-color: #fff;
     border-radius: 1rem;
     background-color: rgba(255, 166, 0, 0.12); /* Transparent orange */
     position: relative;
@@ -226,7 +235,7 @@ gap: 1rem;
 .note-summary {
     display: inline-block;
     background-color: var(--first-color);
-    color: #fff;
+    color: white;
     padding: 0.5rem 1rem;
     font-weight: var(--font-semi);
     font-size: var(--body-font);
@@ -251,7 +260,7 @@ gap: 1rem;
     background-color: var(--second-color);
     padding: var(--mb-2) 0;
     text-align: center;
-    color: #fff;
+    color: white;
 }
 .footer__title {
     font-size: var(--h2-font-size);
@@ -261,7 +270,7 @@ gap: 1rem;
 }
 .footer__icon {
     font-size: 1.5rem;
-    color: #fff;
+    color: white;
     margin: 0 var(--mb-2);
 }
 .footer__copy {
@@ -319,7 +328,6 @@ gap: 1rem;
     .patient-note {
         margin-bottom: var(--mb-4);
         padding: var(--mb-2);
-        background-color: #fff;
         border-radius: 1rem;
         background-color: rgba(255, 166, 0, 0.12); /* Transparent orange */
         position: relative;

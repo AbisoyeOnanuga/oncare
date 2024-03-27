@@ -304,4 +304,8 @@ gap: 1rem;
         float: none;
         margin-right: 0; /* Removes the gap for smaller screens */
     }
+    .footer {
+        position: relative; /* Adjust footer position on small screens */
+        top: 550px;
+    }
 }
