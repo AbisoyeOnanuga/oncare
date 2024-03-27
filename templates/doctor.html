@@ -10,7 +10,7 @@
             <!-- favicon image -->
             <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/images/logo/Oncare-logo_favicon.ico') }}" alt="oncare favicon">        
             <!-- custom css file link -->
-            <link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}">
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/doctor.css') }}">
             <link rel="stylesheet" href="{{ url_for('static', filename='css/background.css') }}">
 
             <!-- =====BOX ICONS===== -->
@@ -41,8 +41,8 @@
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
                         <a href="/"><button class="button" id="btn-login">Logout</button></a>
-                        <button class="button" id="btn-tracker">Chemo-Tracker</button>
-                        <button class="button" id="btn-meds">Meds</button>
+                        <button class="button" id="btn-tracker">Patient</button>
+                        <button class="button" id="btn-meds">Clinic</button>
                     </ul>
                 </div>
 
@@ -54,39 +54,50 @@
 
         <main class="l-main">
             <!--===== PATIENT CONTENT =====-->
-            <div id="patient-content">
+            <div id="doctor-content">
                 
                 <!--===== NOTES DATES =====-->
                 <div class="notes-dates">
-                    <button id="add-note-btn" class="button">+</button>
-                    <!-- Date filter form -->
-                    <input type="date" id="date-filter" />
+                    <div class="patient-note-label">Patient's List</div><br>
+                    <!-- Name filter form -->
                     <!-- Container for note links -->
-                    <div id="notes-links-container"></div>
+                    <div id="patients-links-container"></div>
                 </div>
                 <!--===== NOTES UI =====-->
                 <div class="notes-content">
+                    <div class="patient-note">
+                        <div class="patient-note-label">Patient's Logs</div>
+                        <form id="patient-note-form">
+                            <!-- Patient's input fields -->
+                            <div id="notes-links-container"></div>
+                            <div class="patient-btn">
+                                <button class="close-btn">X</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="patient-note">
+                        <div class="patient-note-label">Patient's Logs</div>
+                        <form id="patient-note-form">
+                            <!-- Patient's input fields -->
+                            <textarea class="note-input" name="patient-note-input" disabled="true"></textarea>
+                            <div class="doctor-btn">
+                                <button class="back-btn">back</button>
+                                <button class="close-btn">X</button>
+                            </div>
+                        </form>
+                    </div>
                     <div class="doctor-note">
                         <div class="doctor-note-label">Your Note</div>
                         <form id="doctor-note-form">
                             <!-- Doctor's input fields -->
                             <textarea class="note-input" name="doctor-note-input"></textarea>
                             <div class="doctor-btn">
-                                <button class="note-btn" type="submit">Save</button>
-                                <button class="edit-note-btn">Edit</button>
-                                <button class="delete-note-btn">Delete</button>
+                                <button class="update-note-btn" type="submit">Update</button>
+                                <button class="close-btn">X</button>
                             </div>
                         </form>
+                    </div>
 
-                    </div>
-                    <div class="patient-note">
-                        <div class="patient-note-label">Patient's Note</div>
-                        <form id="patient-note-form">
-                            <!-- Patient's input fields -->
-                            <textarea class="note-input" name="patient-note-input"></textarea>
-                            <button class="note-button" type="submit" disabled="true">Submit</button>
-                        </form>
-                    </div>
                 </div>
             </div>
         </main>
@@ -110,5 +121,7 @@
         <!--===== MAIN JS =====-->
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
         <script src="{{ url_for('static', filename='js/notes-doctor.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/notes-update.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/notes-delete.js') }}"></script>
     </body>
 </html>

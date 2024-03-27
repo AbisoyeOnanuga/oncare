@@ -109,19 +109,17 @@ button {
     border-style: solid;
     border-width: 0.1rem;
 }
-.note-btn, 
-.edit-note-btn, 
-.delete-note-btn {
-    width: fit-content;
+button:hover {
+    background-color: var(--second-color);
+    box-shadow: 0px 10px 36px rgba(0, 0, 0, 0.15);
 }
-.patient-btn,
 .doctor-btn {
     display: flex;
     gap: var(--mb-2)
 }
-button:hover {
-    background-color: var(--second-color);
-    box-shadow: 0px 10px 36px rgba(0, 0, 0, 0.15);
+.patient-btn {
+    position: relative;
+    bottom: 0;
 }
 
 /*===== HOME =====*/
@@ -143,12 +141,11 @@ button:hover {
 .hidden {
     display: none;
 }
-.patient-content {
+.doctor-content {
 gap: 1rem;
 }
 .doctor-note,
-.patient-note,
-.edit-note {
+.patient-note {
     margin-bottom: var(--mb-4);
     padding: var(--mb-2);
     background-color: #fff;
@@ -163,6 +160,9 @@ gap: 1rem;
 .doctor-note {
     background-color: rgba(0, 123, 255, 0.12); /* Transparent blue */
 }
+#doctor-note-form {
+    margin-top: -35px;
+}
 .doctor-note-label {
     position: relative;
     top: -17px;
@@ -175,8 +175,8 @@ gap: 1rem;
 }
 .patient-note-label {
     position: absolute;
-    top: 0;
-    left: 0;
+    margin-top: -17px;
+    margin-left: -17px;
     padding: 0.5rem;
     background-color: rgba(255, 165, 0, 0.3);
     border-bottom-right-radius: 0.5rem;
@@ -206,15 +206,17 @@ gap: 1rem;
     border: 0.1rem solid rgba(0, 0, 0); /* Transparent border */
 }
 .notes-content {
-    width: 65%;
+    width: 67%;
     float: right;
     overflow: visible;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
 }
 .notes-content textarea {
     width: 100%; /* Full width of the container */
     height: auto; /* Adjust height automatically */
-    min-height: 60%;
-    max-width: 100%;
+    min-height: 80%;
 }
 .notes-content form {
     display: flex;
@@ -238,6 +240,9 @@ gap: 1rem;
 .note-summary:hover {
     background-color: var(--second-color);
     box-shadow: 0px 10px 36px rgba(0, 0, 0, 0.15);
+}
+#notes-links-container {
+    min-height: 85%
 }
 
 /* ===== FOOTER =====*/
@@ -303,5 +308,38 @@ gap: 1rem;
         width: 100%;
         float: none;
         margin-right: 0; /* Removes the gap for smaller screens */
+    }
+    .notes-content {
+        display: grid;
+    }
+    .notes-content textarea{
+        min-height: 70%;
+    }
+    .doctor-note,
+    .patient-note {
+        margin-bottom: var(--mb-4);
+        padding: var(--mb-2);
+        background-color: #fff;
+        border-radius: 1rem;
+        background-color: rgba(255, 166, 0, 0.12); /* Transparent orange */
+        position: relative;
+        flex-grow: 1; /* Grow to fill the space */
+        border: 0.1rem solid rgba(0, 0, 0); /* Transparent border */
+        min-height: 40vh; /* Half view height */
+        margin-bottom: var(--mb-2); /* Adds a gap between the notes */
+    }
+    .doctor-note {
+        background-color: rgba(0, 123, 255, 0.12); /* Transparent blue */
+    }
+    .doctor-note textarea{
+        flex-grow: 1;
+        max-width: 45vh;
+    }
+    #notes-links-container {
+        min-height: 80%
+    }
+    .footer {
+        position: relative;
+        top: 1300px;
     }
 }
