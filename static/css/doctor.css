@@ -156,7 +156,6 @@ gap: 1rem;
 }
 .doctor-note,
 .patient-note {
-    margin-bottom: var(--mb-4);
     padding: var(--mb-2);
     border-radius: 1rem;
     background-color: rgba(255, 166, 0, 0.12); /* Transparent orange */
@@ -164,7 +163,10 @@ gap: 1rem;
     flex-grow: 1; /* Grow to fill the space */
     border: 0.1rem solid rgba(0, 0, 0); /* Transparent border */
     min-height: 35vh; /* Half view height */
-    margin-bottom: var(--mb-2); /* Adds a gap between the notes */
+}
+.patient-note {
+    max-width: 100%;
+    overflow-y: auto;
 }
 .doctor-note {
     background-color: rgba(0, 123, 255, 0.12); /* Transparent blue */
@@ -251,7 +253,7 @@ gap: 1rem;
     box-shadow: 0px 10px 36px rgba(0, 0, 0, 0.15);
 }
 #notes-links-container {
-    min-height: 85%
+    margin-top: 1rem;
 }
 
 /* ===== FOOTER =====*/
@@ -336,15 +338,16 @@ gap: 1rem;
         min-height: 40vh; /* Half view height */
         margin-bottom: var(--mb-2); /* Adds a gap between the notes */
     }
+    .patient-note {
+        overflow-y: auto;
+    }
+
     .doctor-note {
         background-color: rgba(0, 123, 255, 0.12); /* Transparent blue */
     }
     .doctor-note textarea{
         flex-grow: 1;
         max-width: 45vh;
-    }
-    #notes-links-container {
-        min-height: 80%
     }
     .footer {
         position: relative;

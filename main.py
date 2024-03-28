@@ -23,7 +23,7 @@ def user():
 def doctor():
     return render_template("doctor.html")
 
-@app.route('/add_note', methods=['POST'])
+@app.route('/patient/add_note', methods=['POST'])
 def add_note():
     try:
         data = request.get_json()
@@ -97,19 +97,29 @@ def delete_note(note_id):
         app.logger.error(f"Error deleting note: {e}")
         return jsonify({'error': 'An error occurred while deleting the note'}), 500
 
-@app.route('/doctor/add_doctor_note', methods=['POST'])
-def add_doctor_note():
-    data = request.get_json()
-    patient_id = data['patient_id']
-    date = data['date']
-    # Only add a doctor's note if a patient's note exists for the date
-    patient_note = mongo.db.patientnotes.find_one({'patient_id': patient_id, 'date': date})
-    if patient_note:
-        result = mongo.db.doctornotes.insert_one({'doctor_note': data['note'], 'date': date, 'patient_id': patient_id})
-        return jsonify({'result': 'Doctor note added', 'id': str(result.inserted_id)})
-    else:
-        return jsonify({'error': 'Patient note does not exist for this date'}), 400
-        
+@app.route('/doctor/get_all_patients', methods=['GET'])
+def get_all_patients():
+    # Use aggregation to get a distinct list of user_ids
+    pipeline = [
+        {"$group": {"_id": "$user_id", "count": {"$sum": 1}}}
+    ]
+    patients = mongo.db.patientnotes.aggregate(pipeline)
+    patients_list = [{"id": patient["_id"], "name": "Patient " + patient["_id"]} for patient in patients]
+    return jsonify(patients_list)
+
+@app.route('/doctor/get_patient_notes/<patientId>', methods=['GET'])
+def get_patient_notes(patientId):
+    # Fetch notes for a specific patient from the 'patientnotes' collection
+    patient_notes = mongo.db.patientnotes.find({'user_id': patientId}).sort('date', DESCENDING)
+    notes_list = []
+    for note in patient_notes:
+        notes_list.append({
+            'id': str(note['_id']),
+            'content': note['content'],
+            'date': note['created_at'],
+            'last updated': note['updated_at']
+        })
+    return jsonify(notes_list)
     
 # Run the app
 if __name__ == "__main__":

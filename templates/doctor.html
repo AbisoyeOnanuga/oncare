@@ -67,21 +67,12 @@
                 <div class="notes-content">
                     <div class="patient-note">
                         <div class="patient-note-label">Patient's Logs</div>
+                        <div id="notes-links-container"></div>
                         <form id="patient-note-form">
-                            <!-- Patient's input fields -->
-                            <div id="notes-links-container"></div>
+                            <div class="patient-note-label">Patient's Note</div>
+                            <textarea id="patient-note-textarea" class="note-input" name="patient-note-input" disabled="true" style="display: none;"></textarea>
                             <div class="patient-btn">
-                                <button class="close-btn">X</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="patient-note">
-                        <div class="patient-note-label">Patient's Note</div>
-                        <form id="patient-note-form">
-                            <!-- Patient's input fields -->
-                            <textarea class="note-input" name="patient-note-input" disabled="true"></textarea>
-                            <div class="doctor-btn">
-                                <button class="back-btn">back</button>
+                                <button id="back-btn" class="back-btn" style="display: none;">Back</button>
                                 <button class="close-btn">X</button>
                             </div>
                         </form>
