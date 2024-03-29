@@ -1,3 +1,43 @@
+// Function to toggle visibility of containers
+function toggleContainerVisibility(containerClass, show) {
+    const containers = document.querySelectorAll(`.${containerClass}`);
+    containers.forEach(container => {
+        container.style.display = show ? 'block' : 'none';
+    });
+}
+
+// Function to handle the click event on a patient link
+function handlePatientLinkClick(patientId) {
+    fetchAndDisplayNotes(patientId);
+    // Show the patient-note container and hide the doctor-note container
+    toggleContainerVisibility('patient-note', true);
+    toggleContainerVisibility('doctor-note', false);
+}
+
+
+// Function to handle the click event on a patient link
+function handlePatientLinkClick(patientId) {
+    fetchAndDisplayNotes(patientId);
+}
+
+// Function to close the note and open a new one from the notes-links-container
+function handleBackButtonClick() {
+    var notesContainer = document.getElementById('notes-links-container');
+    var patientNoteTextarea = document.getElementById('patient-note-textarea');
+    var backButton = document.getElementById('back-btn');
+
+    // Hide the textarea and back button, and show the notes container
+    patientNoteTextarea.style.display = 'none';
+    backButton.style.display = 'none';
+    notesContainer.style.display = 'block';
+}
+
+// Function to toggle the patient note container
+function togglePatientNoteContainer(display) {
+    var patientNoteForm = document.getElementById('patient-note-form');
+    patientNoteForm.style.display = display === 'none' ? 'block' : 'none';
+}
+
 // Notes Summary for list view
 function truncateContent(content, maxLength) {
     if (content.length > maxLength) {
@@ -63,11 +103,7 @@ function fetchAndDisplayPatients() {
 
 document.addEventListener('DOMContentLoaded', fetchAndDisplayPatients);
 
-// Function to toggle the patient note container
-function togglePatientNoteContainer(display) {
-    var patientNoteForm = document.getElementById('patient-note-form');
-    patientNoteForm.style.display = display ? 'block' : 'none';
-}
+
 
 // Function to show patient notes
 function showPatientNotes(notes) {
@@ -95,23 +131,6 @@ function showPatientNotes(notes) {
     });
 
     // Show the notes container
-    notesContainer.style.display = 'block';
-}
-
-// Function to handle the click event on a patient link
-function handlePatientLinkClick(patientId) {
-    fetchAndDisplayNotes(patientId);
-}
-
-// Function to close the note and open a new one from the notes-links-container
-function handleBackButtonClick() {
-    var notesContainer = document.getElementById('notes-links-container');
-    var patientNoteTextarea = document.getElementById('patient-note-textarea');
-    var backButton = document.getElementById('back-btn');
-
-    // Hide the textarea and back button, and show the notes container
-    patientNoteTextarea.style.display = 'none';
-    backButton.style.display = 'none';
     notesContainer.style.display = 'block';
 }
 

@@ -165,9 +165,10 @@ gap: 1rem;
     min-height: 35vh; /* Half view height */
 }
 .patient-note {
-    max-width: 100%;
-    overflow-y: auto;
+    max-width: fit-content;
+    min-width: fit-content;
 }
+
 .doctor-note {
     background-color: rgba(0, 123, 255, 0.12); /* Transparent blue */
 }
@@ -247,6 +248,7 @@ gap: 1rem;
     border-style: solid;
     border-width: 0.1rem;
     margin: 0.3rem 0;
+    max-width: 20rem;
 }
 .note-summary:hover {
     background-color: var(--second-color);
@@ -254,6 +256,7 @@ gap: 1rem;
 }
 #notes-links-container {
     margin-top: 1rem;
+    height: 85%;
 }
 
 /* ===== FOOTER =====*/
@@ -284,6 +287,17 @@ gap: 1rem;
     display: none; /* Hide by default */
 }
 /*===== MEDIA QUERIES=====*/
+@media screen and (max-width: 1130px) {
+    .notes-content {
+        width: 64%
+    }
+    .patient-note  {
+        min-width: 62%;
+    }
+    #notes-links-container {
+        height: 80%;
+    }
+}
 @media screen and (max-width: 768px) {
     .nav__toggle {
         display: block; /* Show only on small screens */
@@ -328,29 +342,29 @@ gap: 1rem;
     }
     .doctor-note,
     .patient-note {
-        margin-bottom: var(--mb-4);
         padding: var(--mb-2);
         border-radius: 1rem;
         background-color: rgba(255, 166, 0, 0.12); /* Transparent orange */
         position: relative;
         flex-grow: 1; /* Grow to fill the space */
         border: 0.1rem solid rgba(0, 0, 0); /* Transparent border */
-        min-height: 40vh; /* Half view height */
+        min-height: 50vh; /* Half view height */
         margin-bottom: var(--mb-2); /* Adds a gap between the notes */
+        max-width: 100%;
     }
-    .patient-note {
-        overflow-y: auto;
-    }
-
     .doctor-note {
         background-color: rgba(0, 123, 255, 0.12); /* Transparent blue */
     }
     .doctor-note textarea{
         flex-grow: 1;
-        max-width: 45vh;
+        width: auto;
     }
     .footer {
         position: relative;
         top: 1300px;
+    }
+    .note-summary {
+        max-width: none;
+        width: 100%;
     }
 }
