@@ -1,4 +1,5 @@
 # Env
 config.js
 auth_config.json
-*.env
+
+.env
