@@ -81,7 +81,7 @@
                         <div class="doctor-note-label">Your Note</div>
                         <form id="doctor-note-form">
                             <!-- Doctor's input fields -->
-                            <textarea class="note-input" name="doctor-note-input"></textarea>
+                            <textarea id="doctor-note-input" class="note-input"></textarea>
                             <div class="doctor-btn">
                                 <button class="update-note-btn" type="submit">Update</button>
                                 <button class="close-btn">X</button>
@@ -111,5 +111,6 @@
         <!--===== MAIN JS =====-->
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
         <script src="{{ url_for('static', filename='js/patients.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/patients-update.js') }}"></script>
     </body>
 </html>

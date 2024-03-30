@@ -66,12 +66,18 @@ function fetchNoteContent(noteId) {
     .then(noteContent => {
         // Assuming 'patient-note-text' is the correct ID for the textarea
         var patientNoteTextarea = document.getElementById('patient-note-text');
-
+        var doctorNoteTextarea = document.getElementById('doctor-note-input');
         // Populate the textarea with the fetched content
-        patientNoteTextarea.value = noteContent // Ensure you're accessing the note content correctly
-
+        patientNoteTextarea.value = noteContent // Ensure you're accessing the patient note content correctly
+        // Check if there is a doctor's response and populate it
+        if (noteContent.doctor_responses && noteContent.doctor_responses.length > 0) {
+            // Access the latest doctor's response content correctly
+            doctorNoteTextarea.value = noteContent.doctor_responses[noteContent.doctor_responses.length - 1].response_content;
+        } else {
+            // If there is no doctor's response, clear the textarea
+            doctorNoteTextarea.value = '';
+        }
         // Show the patient-note-form, back-btn, and doctor-note
-    
         toggleDisplay('patient-note-form', true);
         toggleDisplay('patient-note-text', true);
         toggleDisplay('back-btn', true);
@@ -80,6 +86,9 @@ function fetchNoteContent(noteId) {
         // Hide the notes-links-container
         toggleDisplay('notes-links-container', false);
         toggleDisplay('note-label', false);
+
+        // Set the noteId on the update button
+        document.querySelector('.update-note-btn').dataset.noteId = noteId;
     })
     .catch(error => console.error('Error:', error));
 }
@@ -123,27 +132,18 @@ function fetchAndDisplayNotes(patientId) {
 
 // Event listener for the back button
 document.getElementById('back-btn').addEventListener('click', function() {
-    // Hide the patient-note-form, back-btn, and doctor-note
+    // Hide the patient-note-form and doctor-note container
     toggleDisplay('patient-note-form', false);
-    toggleDisplay('back-btn', false);
     toggleDisplay('doctor-note', false);
-
     // Show the notes-links-container
     toggleDisplay('notes-links-container', true);
-});
-
-// Event listener for the close button in the patient-note container
-document.querySelector('.patient-note .close-btn').addEventListener('click', function() {
-    // Hide the patient-note container and all its children
-    toggleDisplay('patient-note', false);
-    toggleDisplay('patient-note-form', false);
+    // Hide the back button itself
     toggleDisplay('back-btn', false);
-    toggleDisplay('doctor-note', false);
 });
 
 // Event listener for the close button in the doctor-note container
 document.querySelector('.doctor-note .close-btn').addEventListener('click', function() {
-    toggleDoctorNoteVisibility(false); // Hide the doctor-note container
+    toggleDisplay('doctor-note', false); // Hide the doctor-note container
 });
 
 // Attach event listeners after the DOM content has loaded
@@ -169,7 +169,11 @@ document.querySelector('.close-btn').addEventListener('click', function() {
     toggleNotesContentVisibility(false); // Hide the notes-content container
 });
 
-document.getElementById('back-btn').addEventListener('click', function() {
-    toggleNotesContentVisibility(false); // Hide the notes-content container
-    this.style.display = 'none'; // Hide the back button
+// Event listener for the close button in the patient-note container
+document.querySelector('.patient-note .close-btn').addEventListener('click', function() {
+    // Hide the patient-note container and all its children
+    toggleDisplay('patient-note', false);
+    toggleDisplay('patient-note-form', false);
+    toggleDisplay('back-btn', false);
+    toggleDisplay('doctor-note', false);
 });
