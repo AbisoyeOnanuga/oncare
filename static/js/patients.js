@@ -79,6 +79,7 @@ function fetchNoteContent(noteId) {
 
         // Hide the notes-links-container
         toggleDisplay('notes-links-container', false);
+        toggleDisplay('note-label', false);
     })
     .catch(error => console.error('Error:', error));
 }
@@ -114,6 +115,7 @@ function fetchAndDisplayNotes(patientId) {
         document.getElementById('back-btn').style.display = 'none';
         // Hide the doctor-note by default
         document.querySelector('.doctor-note').style.display = 'none';
+        toggleDisplay('note-label', true);
         togglePatientNoteContainer();
     })
     .catch(error => console.error('Error:', error));
