@@ -70,7 +70,7 @@
                         <div id="notes-links-container"></div>
                         <form id="patient-note-form">
                             <div class="patient-note-label">Patient's Note</div>
-                            <textarea id="patient-note-textarea" class="note-input" name="patient-note-input" disabled="true" style="display: none;"></textarea>
+                            <textarea id="patient-note-text" class="note-input" name="patient-note-input" disabled="true" style="display: none;"></textarea>
                         </form>
                         <div class="patient-btn">
                             <button id="back-btn" class="back-btn">Back</button>
@@ -88,7 +88,6 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </main>
@@ -112,6 +111,5 @@
         <!--===== MAIN JS =====-->
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
         <script src="{{ url_for('static', filename='js/patients.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/notes-update.js') }}"></script>
     </body>
 </html>

@@ -1,42 +1,48 @@
-// Function to toggle visibility of containers
-function toggleContainerVisibility(containerClass, show) {
-    const containers = document.querySelectorAll(`.${containerClass}`);
-    containers.forEach(container => {
-        container.style.display = show ? 'block' : 'none';
-    });
+// Function to show or hide elements by ID
+function toggleDisplay(elementId, show) {
+    const element = document.getElementById(elementId);
+    element.style.display = show ? 'block' : 'none';
 }
 
-// Function to handle the click event on a patient link
-function handlePatientLinkClick(patientId) {
-    fetchAndDisplayNotes(patientId);
-    // Show the patient-note container and hide the doctor-note container
-    toggleContainerVisibility('patient-note', true);
-    toggleContainerVisibility('doctor-note', false);
+document.querySelector('.notes-content').style.display = 'none';
+// Function to toggle visibility of the notes-content container
+function toggleNotesContentVisibility(show) {
+    const notesContent = document.querySelector('.notes-content');
+    const doctorContent = document.querySelector('.doctor-note');
+    const patientContent = document.getElementById('patient-note-form');
+    var backBtn = document.getElementById('back-btn')
+    notesContent.style.display = show ? 'flex' : 'none';
+    patientContent.style.display = 'none';
+    backBtn.style.display = 'none';
+    doctorContent.style.display = 'none';
 }
 
-
-// Function to handle the click event on a patient link
-function handlePatientLinkClick(patientId) {
-    fetchAndDisplayNotes(patientId);
+// Function to fetch and display patients
+function fetchAndDisplayPatients() {
+    fetch('/doctor/get_all_patients')
+    .then(response => response.json())
+    .then(patientsList => {
+        var patientsContainer = document.getElementById('patients-links-container');
+        patientsContainer.innerHTML = '';  // Clear existing patients
+        patientsList.forEach(patient => {
+            var patientElement = document.createElement('div');
+            var patientLink = document.createElement('a');
+            patientLink.href = '#';
+            patientLink.className = 'patient-link';
+            patientLink.dataset.patientId = patient.id;
+            patientLink.textContent = patient.name;
+            patientElement.appendChild(patientLink);
+            // Attach an event to fetch and display this patient's notes when clicked
+            patientLink.addEventListener('click', function() {
+                fetchAndDisplayNotes(patient.id);
+                toggleNotesContentVisibility(true); // Show the notes-content container
+            });
+            patientsContainer.appendChild(patientElement);
+        });
+    })
+    .catch(error => console.error('Error:', error));
 }
 
-// Function to close the note and open a new one from the notes-links-container
-function handleBackButtonClick() {
-    var notesContainer = document.getElementById('notes-links-container');
-    var patientNoteTextarea = document.getElementById('patient-note-textarea');
-    var backButton = document.getElementById('back-btn');
-
-    // Hide the textarea and back button, and show the notes container
-    patientNoteTextarea.style.display = 'none';
-    backButton.style.display = 'none';
-    notesContainer.style.display = 'block';
-}
-
-// Function to toggle the patient note container
-function togglePatientNoteContainer(display) {
-    var patientNoteForm = document.getElementById('patient-note-form');
-    patientNoteForm.style.display = display === 'none' ? 'block' : 'none';
-}
 
 // Notes Summary for list view
 function truncateContent(content, maxLength) {
@@ -46,6 +52,29 @@ function truncateContent(content, maxLength) {
     return content;
 }
 
+// Function to fetch and display the content of a specific note
+function fetchNoteContent(noteId) {
+    fetch('/doctor/get_patient_notes/' + noteId)
+    .then(response => response.json())
+    .then(noteContent => {
+        // Assuming 'patient-note-text' is the correct ID for the textarea
+        var patientNoteTextarea = document.getElementById('patient-note-text');
+
+        // Populate the textarea with the fetched content
+        patientNoteTextarea.value = noteContent.note; // Ensure you're accessing the note content correctly
+
+        // Show the patient-note-form, back-btn, and doctor-note
+        toggleDisplay('patient-note-form', true);
+        toggleDisplay('back-btn', true);
+        toggleDisplay('doctor-note', true);
+
+        // Hide the notes-links-container
+        toggleDisplay('notes-links-container', false);
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+// Function to fetch and display notes for a patient
 function fetchAndDisplayNotes(patientId) {
     fetch(`/doctor/get_patient_notes/${patientId}`)
     .then(response => response.json())
@@ -70,69 +99,50 @@ function fetchAndDisplayNotes(patientId) {
             notesContainer.appendChild(noteElement);
         });
         // After fetching, call togglePatientNoteContainer to show the notes
+        document.getElementById('notes-links-container').style.display = 'block';
+        // Hide the patient-note-form and back-btn by default
+        document.getElementById('patient-note-form').style.display = 'none';
+        document.getElementById('back-btn').style.display = 'none';
+        // Hide the doctor-note by default
+        document.querySelector('.doctor-note').style.display = 'none';
         togglePatientNoteContainer();
     })
     .catch(error => console.error('Error:', error));
 }
 
-// Function to fetch and display patients
-function fetchAndDisplayPatients() {
-    fetch('/doctor/get_all_patients')
-    .then(response => response.json())
-    .then(patientsList => {
-        var patientsContainer = document.getElementById('patients-links-container');
-        patientsContainer.innerHTML = '';  // Clear existing patients
-        patientsList.forEach(patient => {
-            var patientElement = document.createElement('div');
-            var patientLink = document.createElement('a');
-            patientLink.href = '#';
-            patientLink.className = 'patient-link';
-            patientLink.dataset.patientId = patient.id;
-            patientLink.textContent = patient.name;
-            patientElement.appendChild(patientLink);
-            // Attach an event to fetch and display this patient's notes when clicked
-            patientLink.addEventListener('click', function() {
-                fetchAndDisplayNotes(patient.id);
-            });
-            patientsContainer.appendChild(patientElement);
-        });
-    })
-    .catch(error => console.error('Error:', error));
-    togglePatientNoteContainer();
-}
+// Event listener for the back button
+document.getElementById('back-btn').addEventListener('click', function() {
+    // Hide the patient-note-form, back-btn, and doctor-note
+    toggleDisplay('patient-note-form', false);
+    toggleDisplay('back-btn', false);
+    toggleDisplay('doctor-note', false);
 
-document.addEventListener('DOMContentLoaded', fetchAndDisplayPatients);
+    // Show the notes-links-container
+    toggleDisplay('notes-links-container', true);
+});
 
+// Event listener for the close button in the patient-note container
+document.querySelector('.patient-note .close-btn').addEventListener('click', function() {
+    // Hide the patient-note container and all its children
+    toggleDisplay('patient-note', false);
+    toggleDisplay('patient-note-form', false);
+    toggleDisplay('back-btn', false);
+    toggleDisplay('doctor-note', false);
+});
 
+// Event listener for the close button in the doctor-note container
+document.querySelector('.doctor-note .close-btn').addEventListener('click', function() {
+    toggleDoctorNoteVisibility(false); // Hide the doctor-note container
+});
 
-// Function to show patient notes
-function showPatientNotes(notes) {
-    var notesContainer = document.getElementById('notes-links-container');
-    var patientNoteTextarea = document.getElementById('patient-note-textarea');
-    var backButton = document.getElementById('back-btn');
-
-    // Clear the notes container and hide the textarea and back button
-    notesContainer.innerHTML = '';
-    patientNoteTextarea.style.display = 'none';
-    backButton.style.display = 'none';
-
-    // Populate the notes container with clickable links
-    notes.forEach(note => {
-        var noteElement = document.createElement('div');
-        noteElement.textContent = `Note - ${new Date(note.date).toLocaleString()}: ${note.content}`;
-        noteElement.onclick = function() {
-            // When a note is clicked, show the textarea and back button, and populate the textarea
-            notesContainer.style.display = 'none';
-            patientNoteTextarea.style.display = 'block';
-            patientNoteTextarea.value = note.content;
-            backButton.style.display = 'block';
-        };
-        notesContainer.appendChild(noteElement);
-    });
-
-    // Show the notes container
-    notesContainer.style.display = 'block';
-}
+// Attach event listeners after the DOM content has loaded
+document.addEventListener('DOMContentLoaded', function() {
+    fetchAndDisplayPatients();
+    // Other initialization code...
+    toggleDisplay('patient-note-form', false);
+    toggleDisplay('back-btn', false);
+    toggleDisplay('doctor-note', false);
+});
 
 // Attach event listeners after the DOM content has loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -142,12 +152,13 @@ document.addEventListener('DOMContentLoaded', function() {
             handlePatientLinkClick(this.dataset.patientId);
         });
     });
+});
 
-    // Attach event listener to the back button
-    document.getElementById('back-btn').addEventListener('click', handleBackButtonClick);
+document.querySelector('.close-btn').addEventListener('click', function() {
+    toggleNotesContentVisibility(false); // Hide the notes-content container
+});
 
-    // Attach event listener to the close button
-    document.querySelector('.close-btn').addEventListener('click', function() {
-        togglePatientNoteContainer(false);
-    });
+document.getElementById('back-btn').addEventListener('click', function() {
+    toggleNotesContentVisibility(false); // Hide the notes-content container
+    this.style.display = 'none'; // Hide the back button
 });
