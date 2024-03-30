@@ -131,7 +131,27 @@ def get_patient_content(note_id):
             return jsonify({'error': 'Note not found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-    
+
+@app.route('/doctor/add_response_to_note/<note_id>', methods=['POST'])
+def add_response_to_note(note_id):
+    try:
+        data = request.get_json()
+        # Add the doctor's response to the patient's note
+        result = mongo.db.patientnotes.update_one(
+            {'_id': ObjectId(note_id)},
+            {'$push': {'doctor_responses': {
+                'doctor_id': data['doctor_id'],  # Replace with actual doctor ID
+                'response_content': data['response_content'],
+                'timestamp': datetime.now()
+            }}}
+        )
+        if result.modified_count:
+            return jsonify({'result': 'Response added'}), 200
+        else:
+            return jsonify({'error': 'Note not found or response not added'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 # Run the app
 if __name__ == "__main__":
     app.run(debug=True)
