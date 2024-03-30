@@ -1,9 +1,16 @@
 // Function to show or hide elements by ID
 function toggleDisplay(elementId, show) {
     const element = document.getElementById(elementId);
-    element.style.display = show ? 'block' : 'none';
+    element.style.display = show ? 'unset' : 'none';
 }
-
+// Attach event listener to the parent container
+document.getElementById('notes-links-container').addEventListener('click', function(event) {
+    // Check if the clicked element is a note-summary link
+    if (event.target && event.target.classList.contains('note-summary')) {
+        const noteId = event.target.dataset.noteId;
+        fetchNoteContent(noteId);
+    }
+});
 document.querySelector('.notes-content').style.display = 'none';
 // Function to toggle visibility of the notes-content container
 function toggleNotesContentVisibility(show) {
@@ -54,17 +61,19 @@ function truncateContent(content, maxLength) {
 
 // Function to fetch and display the content of a specific note
 function fetchNoteContent(noteId) {
-    fetch('/doctor/get_patient_notes/' + noteId)
+    fetch('/doctor/get_patient_content/' + noteId)
     .then(response => response.json())
     .then(noteContent => {
         // Assuming 'patient-note-text' is the correct ID for the textarea
         var patientNoteTextarea = document.getElementById('patient-note-text');
 
         // Populate the textarea with the fetched content
-        patientNoteTextarea.value = noteContent.note; // Ensure you're accessing the note content correctly
+        patientNoteTextarea.value = noteContent // Ensure you're accessing the note content correctly
 
         // Show the patient-note-form, back-btn, and doctor-note
+    
         toggleDisplay('patient-note-form', true);
+        toggleDisplay('patient-note-text', true);
         toggleDisplay('back-btn', true);
         toggleDisplay('doctor-note', true);
 

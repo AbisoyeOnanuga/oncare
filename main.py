@@ -120,6 +120,17 @@ def get_patient_notes(patientId):
             'last updated': note['updated_at']
         })
     return jsonify(notes_list)
+
+@app.route('/doctor/get_patient_content/<note_id>', methods=['GET'])
+def get_patient_content(note_id):
+    try:
+        note = mongo.db.patientnotes.find_one({'_id': ObjectId(note_id)})
+        if note:
+            return jsonify(note['content'])
+        else:
+            return jsonify({'error': 'Note not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
     
 # Run the app
 if __name__ == "__main__":
