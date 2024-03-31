@@ -9,7 +9,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = getenv('MONGO_URI')
+username = getenv('MONGO_USERNAME')
+password = getenv('MONGO_PASSWORD')
+app.config["MONGO_URI"] = f"mongodb+srv://{username}:{password}@cluster0.yrqjzc6.mongodb.net/chemo-tracker?retryWrites=true&w=majority&appName=Cluster0&tls=true"
 mongo = PyMongo(app)
 
 @app.route("/")
