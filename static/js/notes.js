@@ -66,6 +66,7 @@ function fetchNoteContent(noteId) {
         var editForm = document.getElementById('edit-note-form');
         var editContainer = document.querySelector('.edit-note');
         var editInput = document.getElementById('edit-note-input');
+        var doctorNote = document.querySelector('.doctor-note');
         var closeButton = document.querySelector('.close-btn');
 
         // Populate the form with the fetched content
@@ -77,14 +78,37 @@ function fetchNoteContent(noteId) {
         // Display the form for editing
         editForm.style.display = 'block';
         editContainer.style.display = 'block'; // container is also displayed
+        doctorNote.style.display = 'block';
 
         // Add event listener to the close button to hide the form and the container
         closeButton.addEventListener('click', function() {
+            doctorNote.style.display = 'none';
             editForm.style.display = 'none';
             editContainer.style.display = 'none'; // Hide the container as well
         });
     })
     .catch(error => console.error('Error:', error));
+}
+
+// Function to fetch the doctor's note based on the noteId for the patient account
+function fetchDoctorNoteForPatient(noteId) {
+    fetch(`/doctor/get_doctor_note/${noteId}`)
+    .then(response => response.json())
+    .then(doctorNote => {
+        var doctorNoteContainer = document.querySelector('.doctor-note');
+        var doctorNoteTextarea = document.querySelector('[name="doctor-note-input"]');
+        // Unhide the doctor-note container
+        doctorNoteContainer.classList.remove('hidden');
+        // Check if there is a doctor's response and populate it
+        if (doctorNote && doctorNote.response_content) {
+            // Access the doctor's response content correctly
+            doctorNoteTextarea.value = doctorNote.response_content;
+        } else {
+            // If there is no doctor's response, display a placeholder message
+            doctorNoteTextarea.value = 'No doctor response yet.';
+        }
+    })
+    .catch(error => console.error('Error fetching doctor note:', error));
 }
 
 // Open note fucntion
@@ -107,6 +131,7 @@ function fetchAndDisplayNotes() {
             // Attach the fetchNoteContent function to the click event of the note summary
             noteSummary.addEventListener('click', function() {
                 fetchNoteContent(note.id);
+                fetchDoctorNoteForPatient(note.id);
             });
 
             notesContainer.appendChild(noteElement);
@@ -115,3 +140,14 @@ function fetchAndDisplayNotes() {
     .catch(error => console.error('Error:', error));
 }
 document.addEventListener('DOMContentLoaded', fetchAndDisplayNotes);
+
+
+
+// Event listener for the note-summary link in the patient account
+document.querySelectorAll('.note-summary').forEach(item => {
+    item.addEventListener('click', function() {
+        var noteId = this.dataset.noteId;
+        fetchDoctorNoteForPatient(noteId);
+        // Additional code to display the patient note content goes here
+    });
+});
