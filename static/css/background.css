@@ -12,7 +12,7 @@
     position: absolute;
     background: inherit;
     overflow: hidden;
-    filter: blur(45px);
+    filter: blur(40px);
     height: calc(100% + 40px);
     width: calc(100% + 40px);
 }
