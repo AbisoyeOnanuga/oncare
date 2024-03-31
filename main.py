@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify, render_template
 from flask_pymongo import PyMongo
-from bson.json_util import dumps
 from bson.objectid import ObjectId
 from datetime import datetime
 from pymongo import DESCENDING
@@ -139,7 +138,7 @@ def add_response_to_note(note_id):
         # Add the doctor's response to the patient's note
         result = mongo.db.patientnotes.update_one(
             {'_id': ObjectId(note_id)},
-            {'$push': {'doctor_responses': {
+            {'$set': {'doctor_responses': {
                 'doctor_id': data['doctor_id'],  # Replace with actual doctor ID
                 'response_content': data['response_content'],
                 'timestamp': datetime.now()
@@ -149,6 +148,17 @@ def add_response_to_note(note_id):
             return jsonify({'result': 'Response added'}), 200
         else:
             return jsonify({'error': 'Note not found or response not added'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/doctor/get_doctor_note/<note_id>', methods=['GET'])
+def get_doctor_note(note_id):
+    try:
+        note_document = mongo.db.patientnotes.find_one({'_id': ObjectId(note_id)})
+        if note_document:
+            return jsonify(note_document['doctor_responses'])
+        else:
+            return jsonify({'error': 'Note not found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
