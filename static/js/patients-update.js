@@ -48,3 +48,12 @@ document.getElementById('doctor-note-form').addEventListener('submit', function(
     var noteId = this.querySelector('.update-note-btn').dataset.noteId; // The note ID should be stored in the button's data attribute
     updateDoctorResponse(noteId);
 });
+
+// Event delegation for dynamically added content
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('update-note-btn')) {
+        var noteId = event.target.dataset.noteId;
+        updateDoctorResponse(noteId);
+        event.preventDefault(); // Prevent the default form submission
+    }
+});
