@@ -28,20 +28,23 @@ function updateDoctorResponse(noteId) {
     });
 }
 
+// Event listener for the close button in the doctor-note container
+document.querySelector('.doctor-note .close-btn').addEventListener('click', function() {
+    toggleDisplay('doctor-note', false); // Hide the doctor-note container
+});
+
 // Event listener for the note-summary link
 document.querySelectorAll('.note-summary').forEach(item => {
     item.addEventListener('click', function() {
         // Set the noteId on the update button when a note-summary is clicked
         var noteId = this.dataset.noteId;
         document.querySelector('.update-note-btn').dataset.noteId = noteId;
-        
         // Code to display the note content goes here
     });
 });
 
 // Ensure the update button has the correct ID and is within the form
 document.getElementById('doctor-note-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
     var noteId = this.querySelector('.update-note-btn').dataset.noteId; // The note ID should be stored in the button's data attribute
     updateDoctorResponse(noteId);
 });

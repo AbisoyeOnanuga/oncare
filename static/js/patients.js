@@ -66,17 +66,8 @@ function fetchNoteContent(noteId) {
     .then(noteContent => {
         // Assuming 'patient-note-text' is the correct ID for the textarea
         var patientNoteTextarea = document.getElementById('patient-note-text');
-        var doctorNoteTextarea = document.getElementById('doctor-note-input');
         // Populate the textarea with the fetched content
         patientNoteTextarea.value = noteContent // Ensure you're accessing the patient note content correctly
-        // Check if there is a doctor's response and populate it
-        if (noteContent.doctor_responses && noteContent.doctor_responses.length > 0) {
-            // Access the latest doctor's response content correctly
-            doctorNoteTextarea.value = noteContent.doctor_responses[noteContent.doctor_responses.length - 1].response_content;
-        } else {
-            // If there is no doctor's response, clear the textarea
-            doctorNoteTextarea.value = '';
-        }
         // Show the patient-note-form, back-btn, and doctor-note
         toggleDisplay('patient-note-form', true);
         toggleDisplay('patient-note-text', true);
@@ -91,6 +82,24 @@ function fetchNoteContent(noteId) {
         document.querySelector('.update-note-btn').dataset.noteId = noteId;
     })
     .catch(error => console.error('Error:', error));
+}
+
+// Function to fetch the doctor's note based on the noteId
+function fetchDoctorNote(noteId) {
+    fetch(`/doctor/get_doctor_note/${noteId}`)
+    .then(response => response.json())
+    .then(doctorNote => {
+        var doctorNoteTextarea = document.getElementById('doctor-note-input');
+        // Check if there is a doctor's response and populate it
+        if (doctorNote && doctorNote.response_content) {
+            // Access the doctor's response content correctly
+            doctorNoteTextarea.value = doctorNote.response_content;
+        } else {
+            // If there is no doctor's response, clear the textarea
+            doctorNoteTextarea.value = '';
+        }
+    })
+    .catch(error => console.error('Error fetching doctor note:', error));
 }
 
 // Function to fetch and display notes for a patient
@@ -113,6 +122,7 @@ function fetchAndDisplayNotes(patientId) {
             // Attach the fetchNoteContent function to the click event of the note summary
             noteSummary.addEventListener('click', function() {
                 fetchNoteContent(note.id);
+                fetchDoctorNote(note.id);
             });
 
             notesContainer.appendChild(noteElement);
@@ -139,11 +149,6 @@ document.getElementById('back-btn').addEventListener('click', function() {
     toggleDisplay('notes-links-container', true);
     // Hide the back button itself
     toggleDisplay('back-btn', false);
-});
-
-// Event listener for the close button in the doctor-note container
-document.querySelector('.doctor-note .close-btn').addEventListener('click', function() {
-    toggleDisplay('doctor-note', false); // Hide the doctor-note container
 });
 
 // Attach event listeners after the DOM content has loaded
