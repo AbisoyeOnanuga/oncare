@@ -1,10 +1,16 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect, session, url_for
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from datetime import datetime
 from pymongo import DESCENDING
 from os import getenv
 from dotenv import load_dotenv
+
+import json
+#from os import environ as env, use getenv
+from urllib.parse import quote_plus, urlencode
+from authlib.integrations.flask_client import OAuth
+#from dotenv import find_dotenv, load_dotenv, use load_dotenv
 
 load_dotenv()
 
@@ -16,13 +22,16 @@ mongo = PyMongo(app)
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    user_role = session.get("user_role")
+    return render_template("index.html", session=session.get('user'), user_role=user_role, pretty=json.dumps(session.get('user'), indent=4))
 @app.route("/patient")
 def user():
-    return render_template("user.html")
+    user_role = session.get("user_role")
+    return render_template("user.html", session=session.get('user'), user_role=user_role, pretty=json.dumps(session.get('user'), indent=4))
 @app.route("/doctor")
 def doctor():
-    return render_template("doctor.html")
+    user_role = session.get("user_role")
+    return render_template("doctor.html", session=session.get('user'), user_role=user_role, pretty=json.dumps(session.get('user'), indent=4))
 
 @app.route('/patient/add_note', methods=['POST'])
 def add_note():
@@ -163,6 +172,56 @@ def get_doctor_note(note_id):
             return jsonify({'error': 'Note not found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+app.secret_key = getenv("APP_SECRET_KEY")
+
+oauth = OAuth(app)
+
+oauth.register(
+    "auth0",
+    client_id = getenv("AUTH0_CLIENT_ID"),
+    client_secret = getenv("AUTH0_CLIENT_SECRET"),
+    client_kwargs = {
+        "scope": "openid profile email",
+    },
+    server_metadata_url = f'https://{getenv("AUTH0_DOMAIN")}/.well-known/openid-configuration'
+)
+
+@app.route("/login")
+def login():
+    user_role = request.args.get("role")  # Extract role from query parameters
+    return oauth.auth0.authorize_redirect(
+        redirect_uri=url_for("callback", _external=True , role=user_role)
+    )
+
+@app.route("/callback", methods=["GET", "POST"])
+def callback():
+    user_role = request.args.get("role")
+    print(f"User role: {user_role}")  # Add this line for debugging
+    token = oauth.auth0.authorize_access_token()
+    session["user"] = token
+    session["user_role"] = user_role
+    if user_role == "patient":
+        return redirect(url_for("user"))
+    elif user_role == "doctor":
+        return redirect(url_for("doctor"))
+    else:
+        return redirect(url_for("home"))  # Default to home if no role specified
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(
+        "https://" + getenv("AUTH0_DOMAIN")
+        + "/v2/logout?"
+        + urlencode(
+            {
+                "returnTo": url_for("home", _external=True),
+                "client_id": getenv("AUTH0_CLIENT_ID"),
+            },
+            quote_via=quote_plus,
+        )
+    )
 
 # Run the app
 if __name__ == "__main__":

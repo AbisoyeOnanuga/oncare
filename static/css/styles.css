@@ -173,6 +173,26 @@ button:hover {
     font-size: var(--big-font-size);
     margin-bottom: var(--mb-5);
 }
+div pre {
+    font-size: var(--normal-font-size);
+    width: fit-content;
+}
+
+.profile-card {
+    background-color: rgba(255, 255, 255, 0.3); /* Transparent background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Drop shadow effect */
+    text-align: center;
+    padding: 20px;
+    margin: 0 auto; /* Center horizontally */
+    max-width: fit-content; /* Adjust as needed */
+}
+.profile-picture {
+    border-radius: 50%; /* Rounded profile picture */
+    width: 100px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+    margin-bottom: 10px;
+}
 @keyframes blink {
     0%, 100% { border-color: transparent; }
     50% { border-color: black; }
@@ -359,7 +379,7 @@ gap: 1rem;
     text-align: center;
     color: #fff;
     position: relative;
-    top: 1280px;
+    top: 1300px;
 }
 .footer__title {
     font-size: var(--h2-font-size);
@@ -464,8 +484,15 @@ gap: 1rem;
     .button {
         width: auto; /* Adjust button width on small screens */
     }
+    .profile-card .button {
+        width: auto; /* Adjust button width on small screens */
+        width: 20rem;
+        font-size: var(--smaller-font-size);
+        margin: 12px auto;
+        display: grid;
+    }
     .footer {
         position: relative; /* Adjust footer position on small screens */
-        top: 1600px;
+        top: 1800px;
     }
 }

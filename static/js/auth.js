@@ -3,7 +3,7 @@ async function login(auth0) {
     try {
         await auth0.loginWithRedirect({
             // Specify the desired redirect URI
-            redirect_uri: 'http://localhost:3000'
+            redirect_uri: 'http://localhost:5000'
         });
     } catch (err) {
         console.log('Login failed', err);
@@ -76,7 +76,7 @@ fetch('auth_config.json')
             try {
                 await auth0.loginWithRedirect({
                     // Specify the desired redirect URI
-                    redirect_uri: 'http://localhost:3000'
+                    redirect_uri: 'http://localhost:5000'
                 });
             } catch (err) {
                 console.log('Login failed', err);

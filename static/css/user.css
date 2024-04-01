@@ -126,6 +126,26 @@ button:hover {
 }
 
 /*===== HOME =====*/
+/* Profile image styling */
+.profile-picture {
+    border-radius: 50%;
+    width: 40px; /* Adjust as needed */
+    height: 40px; /* Adjust as needed */
+    cursor: pointer;
+}
+
+/* Profile card styling (initially hidden) */
+.profile-card {
+    display: none;
+    position: absolute;
+    top: 60px; /* Adjust to position the card below the image */
+    right: 20px; /* Adjust to position the card next to the image */
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    top: 100px;
+}
 @keyframes blink {
     0%, 100% { border-color: transparent; }
     50% { border-color: black; }

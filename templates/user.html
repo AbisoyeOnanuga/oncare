@@ -41,12 +41,24 @@
 
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
-                        <a href="/"><button class="button" id="btn-login">Logout</button></a>
+                        <a href="/logout"><button class="button" id="btn-login">Logout</button></a>
                         <button class="button" id="btn-tracker">Chemo-Tracker</button>
                         <button class="button" id="btn-meds">Meds</button>
                     </ul>
                 </div>
-
+                {% if session %}
+                    <div class="profile-toggle">
+                        <img src="{{ session.userinfo.picture }}" alt="Profile Picture" class="profile-picture" id="profile-image">
+                        <!-- Profile card content (hidden by default) -->
+                        <div class="profile-card" id="profile-card">
+                            <h1>{{ session.userinfo.name }}</h1>
+                            <p>Email: {{ session.userinfo.email }}</p>
+                            <a href="/logout"><button class="button" id="btn-logout">Logout</button></a>
+                        </div>
+                    </div>
+                {% else %}
+                    <!-- Display login buttons -->
+                {% endif %}
                 <div class="nav__toggle" id="nav-toggle">
                     <i class='bx bx-menu'></i>
                 </div>
