@@ -1,7 +1,6 @@
 # oncare
-This app helps chemotherapy patients log and track treatment side-effects over time.
 
-## Oncare Chemo-Tracker App
+# Oncare Chemo-Tracker App
 
 The Oncare Chemotherapy Side-Effects Tracking App (Chemo-Tracker) is a web-based platform designed to help patients undergoing chemotherapy manage their symptoms effectively. It allows patients to log their experiences, while doctors can review these notes and provide personalized responses. Here’s a comprehensive guide to understanding and navigating this repository.
 
