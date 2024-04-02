@@ -52,7 +52,7 @@
                     <div class="profile-card" id="profile-card">
                         <h1>{{ session.userinfo.name }}</h1>
                         <p>Email: {{ session.userinfo.email }}</p>
-                        <p>User-Id: {{ session.userinfo.sub }}</p>
+                        <p>User-Id: {{ session.userinfo.email }}</p>
                         <a href="/logout"><button class="button" id="btn-logout">Logout</button></a>
                     </div>
                 </div>
@@ -126,7 +126,9 @@
         <script src="{{ url_for('static', filename='js/patients.js') }}"></script>
         <script src="{{ url_for('static', filename='js/patients-update.js') }}"></script>
         <script type="text/javascript">
-            var userId = "{{ session.userinfo.sub }}"; // This will be replaced with the actual value when rendered
+            var userId = "{{ session.userinfo.email }}";
         </script>
+        <input type="hidden" id="userId" value="{{ session.userinfo.email }}" />
+        <input type="hidden" id="userName" value="{{ session.userinfo.name }}" />
     </body>
 </html>

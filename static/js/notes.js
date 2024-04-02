@@ -14,12 +14,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
         event.preventDefault();
         var noteContent = document.querySelector('.patient-note .note-input').value;
         var date = new Date().toISOString();
-
+        var userId = document.getElementById('userId').value;
+        var userName = document.getElementById('userName').value;
         // Send the note content and date to the Flask app
         fetch('/patient/add_note', {
             method: 'POST',
             body: JSON.stringify({ 
                 user_id: userId,
+                name: userName,
                 date: date,
                 type: 'patient',
                 content: noteContent
@@ -45,6 +47,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
             // Clear the input field and hide the note form
             document.querySelector('.patient-note .note-input').value = '';
             document.querySelector('.patient-note').style.display = 'none';
+
+            if (data.result) {
+                alert('Note saved successfully!');
+                window.location.reload();
+            } else {
+                alert('Error: ' + data.error);
+            }
         })
         .catch(error => console.error('Error:', error));
     });

@@ -32,10 +32,10 @@
         <header class="l-header">
             <nav class="nav bd-grid">
                 <div>
-                    <a href="/patient" class="nav__logo">Chemo-Tracker</a>
+                    <a href="/" class="nav__logo">Chemo-Tracker</a>
                 </div>
                 <div>
-                    <a href="/patient" class="nav__logo"><img src="{{ url_for('static', filename='assets/images/logo/Oncare-logo_transparent.png') }}" alt="Oncare logo"></a>
+                    <a href="/" class="nav__logo"><img src="{{ url_for('static', filename='assets/images/logo/Oncare-logo_transparent.png') }}" alt="Oncare logo"></a>
                 </div>
 
 
@@ -53,7 +53,7 @@
                         <div class="profile-card" id="profile-card">
                             <h1>{{ session.userinfo.name }}</h1>
                             <p>Email: {{ session.userinfo.email }}</p>
-                            <p>User-Id: {{ session.userinfo.sub }}</p>
+                            <p>User-Id: {{ session.userinfo.email }}</p>
                             <a href="/logout"><button class="button" id="btn-logout">Logout</button></a>
                         </div>
                     </div>
@@ -138,7 +138,10 @@
         <script src="{{ url_for('static', filename='js/notes.js') }}"></script>
         <script src="{{ url_for('static', filename='js/notes-update.js') }}"></script>
         <script type="text/javascript">
-            var userId = "{{ session.userinfo.email }}"; // This will be replaced with the actual value when rendered
+            var userId = "{{ session.userinfo.email }}";
+            var email = "{{ session['email'] }}";
         </script>
+        <input type="hidden" id="userId" value="{{ session.userinfo.sub }}" />
+        <input type="hidden" id="userName" value="{{ session.userinfo.name }}" />
     </body>
 </html>

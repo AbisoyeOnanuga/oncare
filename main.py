@@ -39,6 +39,7 @@ def add_note():
         data = request.get_json()
         note = {
             "user_id": data.get("user_id"),
+            "name": data.get("name"),
             "type": data.get("type"),
             "content": data.get("content"),
             "created_at": datetime.now(),
@@ -56,9 +57,7 @@ def add_note():
 @app.route('/patient/get_all_notes', methods=['GET'])
 def get_all_notes():
     try:
-        # Retrieve the 'sub' value (user ID) from the session
-        user_id = session.get('sub')  # Replace with the actual session variable name
-
+        user_id = session.get('email')  # Replace with the actual session variable name
         # Fetch notes associated with the user ID
         patient_notes = mongo.db.patientnotes.find({'user_id': user_id}).sort('date', DESCENDING)
         notes_list = []
@@ -71,12 +70,12 @@ def get_all_notes():
             })
         return jsonify(notes_list)
     except Exception as e:
-        return jsonify({'error': str(e)}), 50
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/patient/get_note_content/<note_id>', methods=['GET'])
 def get_note_content(note_id):
     try:
-        user_id = session.get('sub')
+        user_id = session.get('email')
         note = mongo.db.patientnotes.find_one({'_id': ObjectId(note_id), 'user_id': user_id})
         if note:
             return jsonify(note['content'])
@@ -89,7 +88,7 @@ def get_note_content(note_id):
 def update_note(note_id):
     try:
         data = request.get_json()
-        user_id = session.get('sub')
+        user_id = session.get('email')
         result = mongo.db.patientnotes.update_one(
             {'_id': ObjectId(note_id), 'user_id': user_id},
             {'$set': {'content': data['content'], 'updated_at': datetime.now()}}
@@ -105,7 +104,7 @@ def update_note(note_id):
 def delete_note(note_id):
     try:
         # Convert the string ID to a MongoDB ObjectId
-        user_id = session.get('sub')
+        user_id = session.get('email')
         object_id = ObjectId(note_id)
         result = mongo.db.patientnotes.delete_one({'_id': object_id, 'user_id': user_id})
         if result.deleted_count:
@@ -120,10 +119,10 @@ def delete_note(note_id):
 def get_all_patients():
     # Use aggregation to get a distinct list of user_ids
     pipeline = [
-        {"$group": {"_id": "$user_id", "count": {"$sum": 1}}}
+        {"$group": {"_id": "$user_id", "name": {"$first": "$name"}, "count": {"$sum": 1}}}
     ]
     patients = mongo.db.patientnotes.aggregate(pipeline)
-    patients_list = [{"id": patient["_id"], "name": "Patient " + patient["_id"]} for patient in patients]
+    patients_list = [{"id": patient["_id"], "name": patient["name"]} for patient in patients]
     return jsonify(patients_list)
 
 @app.route('/doctor/get_patient_notes/<patientId>', methods=['GET'])
@@ -198,21 +197,31 @@ oauth.register(
 
 @app.route("/login")
 def login():
+    user_id = request.args.get("email", "")
     user_role = request.args.get("role")  # Extract role from query parameters
     return oauth.auth0.authorize_redirect(
-        redirect_uri=url_for("callback", _external=True , role=user_role)
+        redirect_uri=url_for("callback", _external=True , role=user_role, id=user_id)
     )
 
 @app.route("/callback", methods=["GET", "POST"])
 def callback():
     user_role = request.args.get("role")
-    print(f"User role: {user_role}")  # Add this line for debugging
+    #print(f"User role: {user_role}")  # Add this line for debugging
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
     session["user_role"] = user_role
-    # Extract the 'sub' value from the userinfo
-    user_id = request.args.get("sub", "")  # Get the 'sub' value or an empty string
-    session["sub"] = user_id
+
+    # Extract the email from the token
+    userinfo = token.get('userinfo', {})
+    session["email"] = userinfo.get("email")
+
+    # Debugging: Print the email to verify correct retrieval
+    print(f"User id: {session['email']}")
+    # Extract the 'email' and other details from the userinfo
+    #user_id = request.args.get("sub", "") # Get the email or an empty string
+    #session["sub"] = user_id
+    #print(f"user id: {user_id}")
+    # Extract the 'email' from the userinfo
     if user_role == "patient":
         return redirect(url_for("user"))
     elif user_role == "doctor":

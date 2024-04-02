@@ -1,5 +1,6 @@
 function updateDoctorResponse(noteId) {
     var responseContent = document.getElementById('doctor-note-input').value;
+    var userId = document.getElementById('userId').value;
     fetch('/doctor/add_response_to_note/' + noteId, {
         method: 'POST',
         headers: {
