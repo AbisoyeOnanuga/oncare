@@ -138,7 +138,7 @@
         <script src="{{ url_for('static', filename='js/notes.js') }}"></script>
         <script src="{{ url_for('static', filename='js/notes-update.js') }}"></script>
         <script type="text/javascript">
-            var userId = "{{ session.userinfo.sub }}"; // This will be replaced with the actual value when rendered
+            var userId = "{{ session.userinfo.email }}"; // This will be replaced with the actual value when rendered
         </script>
     </body>
 </html>
