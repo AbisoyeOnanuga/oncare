@@ -201,6 +201,10 @@ gap: 1rem;
 #doctor-note-input {
     height: 90%;
 }
+#patients-links-container {
+    display: grid;
+    gap: 12px;
+}
 .doctor-note-label {
     position: relative;
     top: -17px;
