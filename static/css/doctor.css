@@ -108,6 +108,7 @@ button {
     border:rgb(0, 0, 0);
     border-style: solid;
     border-width: 0.1rem;
+    cursor: pointer;
 }
 button:hover {
     background-color: var(--second-color);
