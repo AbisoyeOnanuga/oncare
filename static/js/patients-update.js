@@ -1,6 +1,3 @@
-// Placeholder for user ID obtained from Auth0 after login
-const userId = 'demo'; // Replace with dynamic ID after implementing Auth0
-
 function updateDoctorResponse(noteId) {
     var responseContent = document.getElementById('doctor-note-input').value;
     fetch('/doctor/add_response_to_note/' + noteId, {

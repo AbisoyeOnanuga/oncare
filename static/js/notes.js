@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         fetch('/patient/add_note', {
             method: 'POST',
             body: JSON.stringify({ 
-                user_id: 'demo',
+                user_id: userId,
                 date: date,
                 type: 'patient',
                 content: noteContent

@@ -55,22 +55,29 @@ def add_note():
         
 @app.route('/patient/get_all_notes', methods=['GET'])
 def get_all_notes():
-    # Fetch all notes from the 'patientnotes' collection
-    patient_notes = mongo.db.patientnotes.find({}).sort('date', DESCENDING)
-    notes_list = []
-    for note in patient_notes:
-        notes_list.append({
-            'id': str(note['_id']),
-            'content': note['content'],
-            'date': note['created_at'],
-            'last updated': note['updated_at']
-        })
-    return jsonify(notes_list)
+    try:
+        # Retrieve the 'sub' value (user ID) from the session
+        user_id = session.get('sub')  # Replace with the actual session variable name
+
+        # Fetch notes associated with the user ID
+        patient_notes = mongo.db.patientnotes.find({'user_id': user_id}).sort('date', DESCENDING)
+        notes_list = []
+        for note in patient_notes:
+            notes_list.append({
+                'id': str(note['_id']),
+                'content': note['content'],
+                'date': note['created_at'],
+                'last updated': note['updated_at']
+            })
+        return jsonify(notes_list)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 50
 
 @app.route('/patient/get_note_content/<note_id>', methods=['GET'])
 def get_note_content(note_id):
     try:
-        note = mongo.db.patientnotes.find_one({'_id': ObjectId(note_id)})
+        user_id = session.get('sub')
+        note = mongo.db.patientnotes.find_one({'_id': ObjectId(note_id), 'user_id': user_id})
         if note:
             return jsonify(note['content'])
         else:
@@ -82,8 +89,9 @@ def get_note_content(note_id):
 def update_note(note_id):
     try:
         data = request.get_json()
+        user_id = session.get('sub')
         result = mongo.db.patientnotes.update_one(
-            {'_id': ObjectId(note_id)},
+            {'_id': ObjectId(note_id), 'user_id': user_id},
             {'$set': {'content': data['content'], 'updated_at': datetime.now()}}
         )
         if result.modified_count:
@@ -97,8 +105,9 @@ def update_note(note_id):
 def delete_note(note_id):
     try:
         # Convert the string ID to a MongoDB ObjectId
+        user_id = session.get('sub')
         object_id = ObjectId(note_id)
-        result = mongo.db.patientnotes.delete_one({'_id': object_id})
+        result = mongo.db.patientnotes.delete_one({'_id': object_id, 'user_id': user_id})
         if result.deleted_count:
             return jsonify({'result': 'Note deleted'}), 200
         else:
@@ -201,6 +210,9 @@ def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
     session["user_role"] = user_role
+    # Extract the 'sub' value from the userinfo
+    user_id = request.args.get("sub", "")  # Get the 'sub' value or an empty string
+    session["sub"] = user_id
     if user_role == "patient":
         return redirect(url_for("user"))
     elif user_role == "doctor":
