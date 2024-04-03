@@ -36,6 +36,41 @@ document.addEventListener("click", (event) => {
 
 /*==================== SPEECH RECOGNITION ====================*/ 
 // Function to start speech recognition
+function startSpeechRecognition(inputId, buttonId) {
+    var speechBtn = document.getElementById(buttonId);
+    // Check if the browser supports speech recognition
+    if ('webkitSpeechRecognition' in window) {
+        var recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        // Change the button color to green when active
+        speechBtn.style.backgroundColor = 'rgba(0, 128, 0)'; // Green with transparency
+
+        recognition.start();
+
+        recognition.onresult = function(event) {
+            var speechResult = event.results[0][0].transcript;
+            document.getElementById(inputId).value = speechResult;
+            // Change the button color to grey when inactive
+            speechBtn.style.backgroundColor = 'rgba(128, 128, 128)'; // Grey with transparency
+        };
+
+        recognition.onerror = function(event) {
+            console.error('Speech recognition error', event.error);
+            // Change the button color to red when there is an error
+            speechBtn.style.backgroundColor = 'rgba(255, 0, 0)'; // Red with transparency
+        };
+
+        recognition.onend = function() {
+            // Reset the button color to grey when the microphone stops
+            speechBtn.style.backgroundColor = 'rgba(128, 128, 128)'; // Grey with transparency
+        };
+    } else {
+        alert('Your browser does not support speech recognition.');
+    }
+}
+/*
 function startSpeechRecognition(inputId) {
     // Check if the browser supports speech recognition
     if ('webkitSpeechRecognition' in window) {
@@ -91,7 +126,7 @@ recognition.onend = function() {
     showToast('Microphone has stopped recording');
 };
 
-/*
+
 // Function to start speech recognition
 function startSpeechRecognition(inputId) {
     // Check for SpeechRecognition object in the global scope

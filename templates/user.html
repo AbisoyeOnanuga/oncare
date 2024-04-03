@@ -91,10 +91,10 @@
                         <div class="patient-note-label">Your Note</div>
                         <form id="patient-note-form">
                             <!-- Patient's input fields -->
-                            <textarea class="note-input" name="patient-note-input"></textarea>
+                            <textarea id="patient-note-input" class="note-input" name="patient-note-input"></textarea>
                             <div class="patient-btn">
                                 <!-- Speech recognition button -->
-                                <button type="button" onclick="startSpeechRecognition('patient-note-input')" class="speech-btn">🎤 Speak</button>
+                                <button id="patient-speech-btn" type="button" onclick="startSpeechRecognition('patient-note-input', 'patient-speech-btn')" class="speech-btn">🎤 Speak</button>
                                 <!-- This button is used to create a new note entry in the database -->
                                 <button class="note-btn" type="submit">Save New</button>
                             </div>
@@ -107,7 +107,7 @@
                             <textarea id="edit-note-input" class="note-input"></textarea>
                             <div class="edit-btn-group">
                                 <!-- Speech recognition button -->
-                                <button type="button" onclick="startSpeechRecognition('edit-note-input')" class="speech-btn">🎤 Speak</button>
+                                <button id="edit-speech-btn" type="button" onclick="startSpeechRecognition('edit-note-input', 'edit-speech-btn')" class="speech-btn">🎤 Speak</button>
                                 <!-- This button is used to save updates to an existing note -->
                                 <button id="update-note-btn" type="button">Update</button>
                                 <!-- This button is used to delete an existing note -->
@@ -119,7 +119,6 @@
                 </div>
 
                 <div id="toast" style="display:none;"></div>
-                <div id="mic-status"></div>
             </div>
         </main>
 
