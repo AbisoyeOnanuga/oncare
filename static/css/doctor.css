@@ -320,6 +320,9 @@ gap: 1rem;
 .footer__social {
     margin: var(--mb-2) 0;
 }
+.footer__social a:hover{
+    color: var(--first-color);
+}
 .footer__icon {
     font-size: 1.5rem;
     color: white;
