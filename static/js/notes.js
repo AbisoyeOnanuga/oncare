@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Submit button functionality
     document.getElementById('patient-note-form').addEventListener('submit', function(event) {
         event.preventDefault();
-        var noteContent = document.querySelector('.patient-note .note-input').value;
+        var noteContent = document.getElementById('patient-note-input').value;
         var date = new Date().toISOString();
         var userId = document.getElementById('userId').value;
         var userName = document.getElementById('userName').value;

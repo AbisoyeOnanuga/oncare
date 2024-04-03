@@ -216,11 +216,7 @@ def callback():
     session["email"] = userinfo.get("email")
 
     # Debugging: Print the email to verify correct retrieval
-    print(f"User id: {session['email']}")
-    # Extract the 'email' and other details from the userinfo
-    #user_id = request.args.get("sub", "") # Get the email or an empty string
-    #session["sub"] = user_id
-    #print(f"user id: {user_id}")
+    #print(f"User id: {session['email']}")
     # Extract the 'email' from the userinfo
     if user_role == "patient":
         return redirect(url_for("user"))
