@@ -190,6 +190,20 @@ gap: 1rem;
 .patient-link:hover {
     background: var(--second-color);
 }
+
+#mic-status {
+    display: block;
+    margin-top: 10px;
+    color: #fff;
+    background-color: rgb(85, 85, 85, 0.3);
+    padding: 12px;
+    text-align: center;
+    border-radius: 15px;
+    position: absolute;
+    top: 760px;
+    left: 20%;
+}
+
 .doctor-note,
 .patient-note {
     padding: var(--mb-2);
@@ -436,5 +450,17 @@ gap: 1rem;
     .note-summary {
         max-width: none;
         width: 100%;
+    }
+    #mic-status {
+        display: block;
+        margin-top: 10px;
+        color: #fff;
+        background-color: rgb(85, 85, 85, 0.3);
+        padding: 12px;
+        text-align: center;
+        border-radius: 15px;
+        position: absolute;
+        top: 1725px;
+        left: 55%;
     }
 }

@@ -117,6 +117,20 @@ button {
 .delete-note-btn {
     width: fit-content;
 }
+
+#mic-status {
+    display: block;
+    margin-top: 10px;
+    color: #fff;
+    background-color: rgb(85, 85, 85, 0.3);
+    padding: 12px;
+    text-align: center;
+    border-radius: 15px;
+    position: absolute;
+    top: 760px;
+    left: 20%;
+}
+
 .patient-btn,
 .doctor-btn {
     display: flex;
@@ -337,5 +351,17 @@ gap: 1rem;
         position: relative; /* Adjust footer position on small screens */
         bottom: -1000px;
         z-index: -1;
+    }
+    #mic-status {
+        display: block;
+        margin-top: 10px;
+        color: #fff;
+        background-color: rgb(85, 85, 85, 0.3);
+        padding: 12px;
+        text-align: center;
+        border-radius: 15px;
+        position: absolute;
+        top: 1725px;
+        left: 55%;
     }
 }

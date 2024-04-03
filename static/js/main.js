@@ -46,20 +46,50 @@ function startSpeechRecognition(inputId) {
         // Start the speech recognition
         recognition.start();
 
+        // Visual feedback when the microphone is on
+        document.getElementById('mic-status').textContent = '🎤 Listening...';
+
         // This event is triggered when the speech recognition service returns a result
         recognition.onresult = function(event) {
             var speechResult = event.results[0][0].transcript;
             document.getElementById(inputId).value = speechResult;
+            // Update the microphone status
+            document.getElementById('mic-status').textContent = '✅ Finished listening.';
+        };
+
+        // When the microphone is turned off
+        recognition.onend = function() {
+            // Update the microphone status
+            document.getElementById('mic-status').textContent = '🛑 Microphone off.';
         };
 
         // Handle errors
         recognition.onerror = function(event) {
             console.error('Speech recognition error', event.error);
+            // Update the microphone status
+            document.getElementById('mic-status').textContent = '❌ Error occurred.';
         };
     } else {
         alert('Your browser does not support speech recognition.');
     }
 }
+
+function showToast(message) {
+    var toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.style.display = 'block';
+    setTimeout(function() {
+        toast.style.display = 'none';
+    }, 3000);
+}
+
+// Call showToast when starting and stopping speech recognition
+recognition.start();
+showToast('Microphone is active');
+
+recognition.onend = function() {
+    showToast('Microphone has stopped recording');
+};
 
 /*
 // Function to start speech recognition
