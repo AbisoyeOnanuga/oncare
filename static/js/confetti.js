@@ -2,8 +2,9 @@
 const confettiSize = { width: 215.433, height: 51.2 };
 
 function setConfettiColor(confettiPiece) {
-    const color = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
-    confettiPiece.style.setProperty('--confetti-color', color);
+    const rainbowColors = ['orangered', 'orange', 'yellow', 'limegreen', 'skyblue', 'green', 'turquoiseblue', 'pink', 'purple'];
+    const randomColor = rainbowColors[Math.floor(Math.random() * rainbowColors.length)];
+    confettiPiece.style.setProperty('--confetti-color', randomColor);
 }
 
 // Function to generate a random number within a range
@@ -14,34 +15,34 @@ function randomRange(min, max) {
 // Function to create a single confetti piece
 function createConfettiPiece(x, y) {
     const confetti = document.createElement('div');
-    confetti.className = 'confetti-piece';
+    const size = randomRange(5, 10); // Size range between 5px and 10px
+    const shapes = ['circle', 'square', 'star', 'spark', 'heart', 'diamond'];
+    const shapeType = shapes[Math.floor(randomRange(0, shapes.length))];
+
+    confetti.classList.add('confetti-piece', shapeType); // Add the shape class
     confetti.style.left = x + 'px';
     confetti.style.top = y + 'px';
-
-    // Randomize size and shape
-    const size = randomRange(5, 10); // Size range between 5px and 10px
     confetti.style.width = size + 'px';
     confetti.style.height = size + 'px';
-    confetti.style.backgroundColor = `hsl(${randomRange(0, 360)}, 100%, 50%)`; // Random color
 
-    // Randomize shape
-    const shapes = ['circle', 'square', 'star', 'spark'];
-    const shapeType = shapes[Math.floor(randomRange(0, shapes.length))];
     // Apply additional styles if needed
     switch (shapeType) {
         case 'circle':
             confetti.style.borderRadius = '50%';
             break;
-        case 'star':
+        case 'spark':
             // Star shape is created with CSS, no inline styles needed here
             break;
-        case 'spark':
-            // Spark shape is created with CSS, no inline styles needed here
+        case 'star':
+            break;
+        case 'heart':
+            break;
+        case 'diamond':
             break;
         // No default needed if no additional styles are required
     }
-    
-    // Set a random rainbow color
+
+    // Set a random HSL color
     setConfettiColor(confetti);
 
     return confetti;
@@ -80,8 +81,7 @@ document.getElementById('analyse-note-btn').addEventListener('click', animateCon
 
 /*
 function setConfettiColor(confettiPiece) {
-    const rainbowColors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
-    const randomColor = rainbowColors[Math.floor(Math.random() * rainbowColors.length)];
-    confettiPiece.style.setProperty('--color', randomColor);
+    const color = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
+    confettiPiece.style.setProperty('--confetti-color', color);
 }
 */
