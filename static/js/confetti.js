@@ -27,12 +27,20 @@ function createConfettiPiece(x, y) {
     // Randomize shape
     const shapes = ['circle', 'square', 'star', 'spark'];
     const shapeType = shapes[Math.floor(randomRange(0, shapes.length))];
-    if (shapeType === 'circle') {
-        confetti.style.borderRadius = '50%';
-    } else if (shapeType === 'star') {
-        // Additional CSS for star shape
-    } // Add more conditions for other shapes
-
+    // Apply additional styles if needed
+    switch (shapeType) {
+        case 'circle':
+            confetti.style.borderRadius = '50%';
+            break;
+        case 'star':
+            // Star shape is created with CSS, no inline styles needed here
+            break;
+        case 'spark':
+            // Spark shape is created with CSS, no inline styles needed here
+            break;
+        // No default needed if no additional styles are required
+    }
+    
     // Set a random rainbow color
     setConfettiColor(confetti);
 
@@ -48,22 +56,22 @@ function animateConfetti() {
     // Clear previous confetti
     confettiContainer.innerHTML = '';
 
-    for (let i = 0; i < 50; i++) { // Generate 50 pieces of confetti
+    for (let i = 0; i < 20; i++) { // Generate 50 pieces of confetti
         const confettiPiece = createConfettiPiece(rect.width / 2, rect.height / 2);
         confettiContainer.appendChild(confettiPiece);
 
         // Animate confetti piece
         confettiPiece.animate([
             { transform: `scale(1) translate(0, 0)`, opacity: 1 },
-            { transform: `scale(1.5) translate(${randomRange(-rect.width, rect.width)}px, ${randomRange(-rect.height, rect.height)}px)`, opacity: 0.5 }
+            { transform: `scale(1.5) translate(${randomRange(-rect.width / 3, rect.width / 3)}px, ${randomRange(-rect.height, rect.height)}px)`, opacity: 1 }
         ], {
-            duration: randomRange(1000, 3000), // Duration between 1s and 3s
+            duration: randomRange(1000, 2000), // Duration between 1s and 3s
             easing: 'ease-out',
             fill: 'forwards'
         });
 
         // Remove confetti piece after animation
-        setTimeout(() => confettiPiece.remove(), 3000);
+        setTimeout(() => confettiPiece.remove(), randomRange(1000, 1500));
     }
 }
 
