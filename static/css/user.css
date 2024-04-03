@@ -9,7 +9,8 @@
     /* Hue colour mode */
     --hue-color: 27;
     --first-color: hsl(var(--hue-color), 100%, 60%);
-    --second-color: hsl(var(--hue-color), 50%, 20%);
+    --second-color: hsl(var(--hue-color), 90%, 45%);
+    --third-color: hsl(var(--hue-color), 50%, 20%);
     /*===== Fuente y tipografia =====*/
     --body-font: "League Spartan", sans-serif;
     --big-font-size: 3rem;
@@ -235,7 +236,7 @@ gap: 1rem;
 .notes-content textarea {
     width: 100%; /* Full width of the container */
     height: auto; /* Adjust height automatically */
-    min-height: 60%;
+    min-height: 50vh;
     max-width: 100%;
 }
 .notes-content form {
@@ -265,10 +266,13 @@ gap: 1rem;
 /* ===== FOOTER =====*/
 .footer {
     width: 100%;
-    background-color: var(--second-color);
+    background-color: var(--third-color);
     padding: var(--mb-2) 0;
     text-align: center;
     color: #fff;
+    position: relative;
+    bottom: -160px;
+    z-index: -1;
 }
 .footer__title {
     font-size: var(--h2-font-size);
@@ -298,7 +302,7 @@ gap: 1rem;
         top: 50%;
         transform: translateY(-650%);
         font-size: 2rem;
-        color: var(--second-color);
+        color: var(--third-color);
     }
     .nav__menu {
         position: absolute;
@@ -328,6 +332,7 @@ gap: 1rem;
     }
     .footer {
         position: relative; /* Adjust footer position on small screens */
-        top: 800px;
+        bottom: -1000px;
+        z-index: -1;
     }
 }

@@ -9,7 +9,8 @@
     /* Hue colour mode */
     --hue-color: 27;
     --first-color: hsl(var(--hue-color), 100%, 60%);
-    --second-color: hsl(var(--hue-color), 50%, 20%);
+    --second-color: hsl(var(--hue-color), 90%, 45%);
+    --third-color: hsl(var(--hue-color), 50%, 20%);
     /*===== Font =====*/
     --body-font: "League Spartan", sans-serif;
     --big-font-size: 3rem;
@@ -186,6 +187,9 @@ gap: 1rem;
     font-size: var(--h2-font-size);
     border-radius: 0.5rem;
 }
+.patient-link:hover {
+    background: var(--second-color);
+}
 .doctor-note,
 .patient-note {
     padding: var(--mb-2);
@@ -194,10 +198,9 @@ gap: 1rem;
     position: relative;
     flex-grow: 1; /* Grow to fill the space */
     border: 0.1rem solid rgba(0, 0, 0); /* Transparent border */
-    min-height: 35vh; /* Half view height */
+    min-height: 58vh; /* Half view height */
 }
 .patient-note {
-    max-width: fit-content;
     min-width: fit-content;
 }
 
@@ -267,7 +270,9 @@ gap: 1rem;
 .notes-content textarea {
     width: 100%; /* Full width of the container */
     height: auto; /* Adjust height automatically */
+    max-height: 90%;
     min-height: 80%;
+    min-width: 54.5rem;
 }
 .notes-content form {
     display: flex;
@@ -301,10 +306,13 @@ gap: 1rem;
 /* ===== FOOTER =====*/
 .footer {
     width: 100%;
-    background-color: var(--second-color);
+    background-color: var(--third-color);
     padding: var(--mb-2) 0;
     text-align: center;
     color: white;
+    position: relative;
+    z-index: -1;
+    bottom: -200px;
 }
 .footer__title {
     font-size: var(--h2-font-size);
@@ -332,9 +340,20 @@ gap: 1rem;
     }
     .patient-note  {
         min-width: 62%;
+        min-height: 73vh;
     }
     #notes-links-container {
         height: 80%;
+    }
+    .notes-content textarea {
+        width: 100%;
+        height: auto;
+        min-height: 75%;
+        max-width: auto;
+        min-width: auto;
+    }
+    .close-btn {
+        margin-top: 8px;
     }
 }
 @media screen and (max-width: 768px) {
@@ -345,7 +364,7 @@ gap: 1rem;
         top: 50%;
         transform: translateY(-650%);
         font-size: 2rem;
-        color: var(--second-color);
+        color: var(--third-color);
     }
     .nav__menu {
         position: absolute;
@@ -378,6 +397,8 @@ gap: 1rem;
     }
     .notes-content textarea{
         min-height: 70%;
+        max-width: auto;
+        min-width: auto;
     }
     .doctor-note,
     .patient-note {
@@ -387,7 +408,7 @@ gap: 1rem;
         position: relative;
         flex-grow: 1; /* Grow to fill the space */
         border: 0.1rem solid rgba(0, 0, 0); /* Transparent border */
-        min-height: 50vh; /* Half view height */
+        min-height: 70vh; /* Half view height */
         margin-bottom: var(--mb-2); /* Adds a gap between the notes */
         max-width: 100%;
     }
@@ -398,9 +419,16 @@ gap: 1rem;
         flex-grow: 1;
         width: auto;
     }
+    .doctor-note {
+        margin-top: 0px;
+        height: 70vh;
+    }
     .footer {
         position: relative;
         top: 1300px;
+    }
+    #doctor-note-form {
+        max-height: 90%;
     }
     .note-summary {
         max-width: none;

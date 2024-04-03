@@ -9,7 +9,8 @@
     /* Hue colour mode */
     --hue-color: 27;
     --first-color: hsl(var(--hue-color), 100%, 60%);
-    --second-color: hsl(var(--hue-color), 50%, 20%);
+    --second-color: hsl(var(--hue-color), 90%, 45%);
+    --third-color: hsl(var(--hue-color), 50%, 20%);
     /*===== Fuente y tipografia =====*/
     --body-font: "League Spartan", sans-serif;
     --big-font-size: 3rem;
@@ -218,7 +219,7 @@ div pre {
     width: max-content;
     margin-bottom: var(--mb-2);
     font-size: var(--big-font-size);
-    color: var(--second-color);
+    color: var(--third-color);
 }
 .home__social-icon:hover {
     color: var(--first-color);
@@ -375,7 +376,7 @@ gap: 1rem;
 /* ===== FOOTER =====*/
 .footer {
     width: 100%;
-    background-color: var(--second-color);
+    background-color: var(--third-color);
     padding: var(--mb-2) 0;
     text-align: center;
     color: #fff;
@@ -433,7 +434,7 @@ gap: 1rem;
         top: 50%;
         transform: translateY(-650%);
         font-size: 2rem;
-        color: var(--second-color);
+        color: var(--third-color);
     }
     .nav__menu {
         position: absolute;

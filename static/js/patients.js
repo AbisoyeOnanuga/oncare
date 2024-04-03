@@ -18,7 +18,7 @@ function toggleNotesContentVisibility(show) {
     const doctorContent = document.querySelector('.doctor-note');
     const patientContent = document.getElementById('patient-note-form');
     var backBtn = document.getElementById('back-btn')
-    notesContent.style.display = show ? 'flex' : 'none';
+    notesContent.style.display = show ? 'grid' : 'none';
     patientContent.style.display = 'none';
     backBtn.style.display = 'none';
     doctorContent.style.display = 'none';
@@ -150,7 +150,7 @@ document.getElementById('back-btn').addEventListener('click', function() {
     toggleDisplay('notes-links-container', true);
     // Hide the back button itself
     toggleDisplay('back-btn', false);
-    toggleDisplay('analyze-note-btn', false);
+    toggleDisplay('analyse-note-btn', false);
 });
 
 // Attach event listeners after the DOM content has loaded
