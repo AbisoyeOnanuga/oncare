@@ -72,6 +72,7 @@ function fetchNoteContent(noteId) {
         toggleDisplay('patient-note-form', true);
         toggleDisplay('patient-note-text', true);
         toggleDisplay('back-btn', true);
+        toggleDisplay('analyse-note-btn', true);
         toggleDisplay('doctor-note', true);
 
         // Hide the notes-links-container
@@ -132,10 +133,10 @@ function fetchAndDisplayNotes(patientId) {
         // Hide the patient-note-form and back-btn by default
         document.getElementById('patient-note-form').style.display = 'none';
         document.getElementById('back-btn').style.display = 'none';
+        toggleDisplay('analyse-note-btn', false);
         // Hide the doctor-note by default
         document.querySelector('.doctor-note').style.display = 'none';
         toggleDisplay('note-label', true);
-        togglePatientNoteContainer();
     })
     .catch(error => console.error('Error:', error));
 }
@@ -149,6 +150,7 @@ document.getElementById('back-btn').addEventListener('click', function() {
     toggleDisplay('notes-links-container', true);
     // Hide the back button itself
     toggleDisplay('back-btn', false);
+    toggleDisplay('analyze-note-btn', false);
 });
 
 // Attach event listeners after the DOM content has loaded
@@ -157,6 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Other initialization code...
     toggleDisplay('patient-note-form', false);
     toggleDisplay('back-btn', false);
+    toggleDisplay('analyse-note-btn', false);
     toggleDisplay('doctor-note', false);
 });
 

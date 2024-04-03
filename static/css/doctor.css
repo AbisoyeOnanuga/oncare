@@ -10,7 +10,7 @@
     --hue-color: 27;
     --first-color: hsl(var(--hue-color), 100%, 60%);
     --second-color: hsl(var(--hue-color), 50%, 20%);
-    /*===== Fuente y tipografia =====*/
+    /*===== Font =====*/
     --body-font: "League Spartan", sans-serif;
     --big-font-size: 3rem;
     --h2-font-size: 1.25rem;
@@ -125,7 +125,15 @@ button:hover {
     position: relative;
     bottom: 0;
 }
-
+#confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allows clicks to pass through */
+    z-index: 0; /* Ensures it's behind the button */
+}
 /*===== HOME =====*/
 /* Profile image styling */
 .profile-picture {
