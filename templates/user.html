@@ -84,7 +84,7 @@
                         <div class="doctor-note-label">Doctor's Note</div>
                         <form id="doctor-note-form">
                             <!-- Doctor's input fields -->
-                            <textarea class="note-input" name="doctor-note-input" disabled="true"></textarea>
+                            <textarea class="doctor-note-input" name="doctor-note-input" disabled="true"></textarea>
                         </form>
                     </div>
                     <div class="patient-note">
@@ -96,7 +96,7 @@
                                 <!-- Speech recognition button -->
                                 <button id="patient-speech-btn" type="button" onclick="startSpeechRecognition('patient-note-input', 'patient-speech-btn')" class="speech-btn">🎤 Speak</button>
                                 <!-- This button is used to create a new note entry in the database -->
-                                <button class="note-btn" type="submit">Save New</button>
+                                <button id="save-btn" type="click">Save New</button>
                             </div>
                         </form>
                     </div>
@@ -144,9 +144,8 @@
         <script src="{{ url_for('static', filename='js/notes-update.js') }}"></script>
         <script type="text/javascript">
             var userId = "{{ session.userinfo.email }}";
-            var email = "{{ session['email'] }}";
         </script>
-        <input type="hidden" id="userId" value="{{ session.userinfo.sub }}" />
+        <input type="hidden" id="userId" value="{{ session.userinfo.email }}" />
         <input type="hidden" id="userName" value="{{ session.userinfo.name }}" />
     </body>
 </html>
