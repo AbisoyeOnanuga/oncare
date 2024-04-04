@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     // Submit button functionality
-    document.getElementById('patient-note-form').addEventListener('submit', function(event) {
+    document.getElementById('patient-note-input').addEventListener('submit', function(event) {
         event.preventDefault();
         var noteContent = document.getElementById('patient-note-input').value;
         var date = new Date().toISOString();

@@ -37,8 +37,9 @@ def doctor():
 def add_note():
     try:
         data = request.get_json()
+        user_id = session.get('email')
         note = {
-            "user_id": data.get("user_id"),
+            "user_id": data.get(user_id),
             "name": data.get("name"),
             "type": data.get("type"),
             "content": data.get("content"),
