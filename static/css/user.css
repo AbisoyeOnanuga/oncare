@@ -225,6 +225,7 @@ gap: 1rem;
     height: 75vh; /* Full view height */
     overflow-y: auto; /* Enables vertical scrolling */
 }
+.edit-note-input,
 .note-input {
     border: 0.1rem solid rgba(0, 0, 0); /* Transparent border */
     height: auto;
