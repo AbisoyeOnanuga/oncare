@@ -35,23 +35,41 @@ document.addEventListener("click", (event) => {
 });
 
 /*==================== DATE FILTER ====================*/ 
-// Function to handle the date range selection
-function filterNotesByDate(startDate, endDate) {
+// Function to handle the date range selection and filter notes
+function filterNotes() {
+    const startDate = document.getElementById('start-date-filter').value;
+    const endDate = document.getElementById('end-date-filter').value;
+
     // Format the dates as needed, here assumed as 'YYYY-MM-DD'
-    const formattedStartDate = startDate.toISOString().split('T')[0];
-    const formattedEndDate = endDate.toISOString().split('T')[0];
+    const formattedStartDate = startDate;
+    const formattedEndDate = endDate;
 
     // AJAX request to Flask backend
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `/filter-notes?start=${formattedStartDate}&end=${formattedEndDate}`, true);
+    xhr.open('GET', `/patient/notes?start=${formattedStartDate}&end=${formattedEndDate}`, true);
     xhr.onload = function() {
         if (this.status === 200) {
             const notes = JSON.parse(this.responseText);
             // Handle the filtered notes here
             console.log(notes);
+            // Update the notes-links-container with the filtered notes
+            updateNotesLinks(notes);
         }
     };
     xhr.send();
+}
+
+// Function to update the notes-links-container with the filtered notes
+function updateNotesLinks(notes) {
+    const container = document.getElementById('notes-links-container');
+    container.innerHTML = ''; // Clear existing notes
+    notes.forEach(note => {
+        // Create a new link element for each note
+        const noteLink = document.createElement('a');
+        noteLink.href = '#'; // Set the href to the note's URL or ID
+        noteLink.textContent = `Note on ${new Date(note.created_at).toLocaleDateString()}`;
+        container.appendChild(noteLink);
+    });
 }
 
 
