@@ -74,7 +74,9 @@
                 <div class="notes-dates">
                     <button id="add-note-btn" class="button">+</button>
                     <!-- Date filter form -->
-                    <input type="date" id="date-filter" />
+                    <button id="filter-notes-btn" class="button" onclick="filterNotes()">Filter</button>
+                    <input type="date" id="start-date-filter" />
+                    <input type="date" id="end-date-filter" />
                     <!-- Container for note links -->
                     <div id="notes-links-container"></div>
                 </div>
