@@ -5,6 +5,7 @@ from datetime import datetime
 from pymongo import DESCENDING
 from os import getenv
 from dotenv import load_dotenv
+import pytz
 
 import json
 #from os import environ as env, use getenv
@@ -100,16 +101,17 @@ def update_note(note_id):
     except Exception as e:
         return jsonify({'error': 'An error occurred'}), 500
 
-@app.route('/patient/filter-notes', methods=['GET'])
+@app.route('/patient/', methods=['GET'])
 def patient_notes():
     date_filter = request.args.get('date')
     if date_filter:
         # Convert string date to datetime object
         date = datetime.strptime(date_filter, '%Y-%m-%d')
-        # Set the time to the start of the day (00:00:00)
-        start_of_day = datetime.combine(date, datetime.min.time())
-        # Set the time to the end of the day (23:59:59)
-        end_of_day = datetime.combine(date, datetime.max.time())
+
+        # Adjust for Eastern Time Zone
+        eastern = pytz.timezone('America/Toronto')
+        start_of_day = eastern.localize(datetime.combine(date, datetime.min.time()))
+        end_of_day = eastern.localize(datetime.combine(date, datetime.max.time()))
         
         # Query the database for notes within the specific date
         notes = mongo.db.patientnotes.find({

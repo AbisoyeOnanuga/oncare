@@ -19,7 +19,7 @@
     --smaller-font-size: .75rem;
     /*===== Margins =====*/
     --mb-2: 1rem;
-    --mb-4: 2rem;
+    --mb-4: 1.5rem;
     --mb-5: 2.5rem;
     --mb-6: 3rem;
     /*===== z index =====*/
@@ -224,6 +224,11 @@ gap: 1rem;
     margin-right: var(--mb-2); /* Adds a gap to the right */
     height: 75vh; /* Full view height */
     overflow-y: auto; /* Enables vertical scrolling */
+    font-size: var(--mb-2);
+}
+.date-filter {
+    font-size: var(--mb-4);
+    font-weight: var(--font-semi);
 }
 .doctor-note-input,
 .edit-note-input,
@@ -265,8 +270,7 @@ gap: 1rem;
     background-color: var(--first-color);
     color: #fff;
     padding: 0.5rem 1rem;
-    font-weight: var(--font-semi);
-    font-size: var(--body-font);
+    font-size: var(--mb-4);
     border-radius: 0.5rem;
     transition: 0.3s;
     border:rgb(0, 0, 0);
