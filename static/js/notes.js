@@ -140,24 +140,32 @@ document.addEventListener('DOMContentLoaded', fetchAndDisplayNotes);
 function displayNotes(notesList) {
     var notesContainer = document.getElementById('notes-links-container');
     notesContainer.innerHTML = '';  // Clear existing notes
-
-    notesList.forEach(note => {
-        var noteElement = document.createElement('div');
-        var noteSummary = document.createElement('a');
-        noteSummary.href = '#';
-        noteSummary.className = 'note-summary';
-        noteSummary.dataset.noteId = note.id;
-        noteSummary.textContent = `Note - ${new Date(note.date).toLocaleString()}: ${truncateContent(note.content, 50)}`;
-        noteElement.appendChild(noteSummary);
-
-        // Attach the fetchNoteContent function to the click event of the note summary
-        noteSummary.addEventListener('click', function() {
-            fetchNoteContent(note.id);
-            fetchDoctorNoteForPatient(note.id);
+    
+    if (notesList.length === 0) {
+        // Display a message if no notes are found
+        var noNotesMessage = document.createElement('p');
+        noNotesMessage.textContent = 'No notes created on this date.';
+        notesContainer.appendChild(noNotesMessage);
+    } else {
+        // Otherwise, display the notes
+        notesList.forEach(note => {
+            var noteElement = document.createElement('div');
+            var noteSummary = document.createElement('a');
+            noteSummary.href = '#';
+            noteSummary.className = 'note-summary';
+            noteSummary.dataset.noteId = note.id;
+            noteSummary.textContent = `Note - ${new Date(note.date).toLocaleString()}: ${truncateContent(note.content, 50)}`;
+            noteElement.appendChild(noteSummary);
+    
+            // Attach the fetchNoteContent function to the click event of the note summary
+            noteSummary.addEventListener('click', function() {
+                fetchNoteContent(note.id);
+                fetchDoctorNoteForPatient(note.id);
+            });
+    
+            notesContainer.appendChild(noteElement);
         });
-
-        notesContainer.appendChild(noteElement);
-    });
+    }
 }
 
 // Function to filter notes by date

@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template, redirect, session, url_for
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-from datetime import datetime
+from datetime import datetime, timedelta
 from pymongo import DESCENDING
 from os import getenv
 from dotenv import load_dotenv
@@ -103,27 +103,36 @@ def update_note(note_id):
 
 @app.route('/patient/', methods=['GET'])
 def patient_notes():
-    date_filter = request.args.get('date')
-    if date_filter:
-        # Convert string date to datetime object
-        date = datetime.strptime(date_filter, '%Y-%m-%d')
+    start_date_filter = request.args.get('start')
+    end_date_filter = request.args.get('end') or start_date_filter  # Use start date if end date is not provided
+    
+    if start_date_filter:
+        # Convert string dates to datetime objects
+        start_date = datetime.strptime(start_date_filter, '%Y-%m-%d')
+        end_date = datetime.strptime(end_date_filter, '%Y-%m-%d')
 
         # Adjust for Eastern Time Zone
         eastern = pytz.timezone('America/Toronto')
-        start_of_day = eastern.localize(datetime.combine(date, datetime.min.time()))
-        end_of_day = eastern.localize(datetime.combine(date, datetime.max.time()))
-        
-        # Query the database for notes within the specific date
+        start_of_day = eastern.localize(datetime.combine(start_date, datetime.min.time()))
+        end_of_day = eastern.localize(datetime.combine(end_date, datetime.max.time()))
+
+        # Query the database for notes within the specific date range
         notes = mongo.db.patientnotes.find({
             'created_at': {
                 '$gte': start_of_day,
                 '$lte': end_of_day
             }
         }, {'_id': False})  # Exclude the '_id' field
+
+        notes_list = list(notes)
+        # Check if notes_list is empty and return a message if no notes are found
+        if not notes_list:
+            return jsonify({'message': 'No notes on this day'}), 404
+
         # Convert the notes to a list and return as JSON
-        return jsonify(list(notes))
+        return jsonify(notes_list)
     else:
-        # Return all notes if no date is provided
+        # Return all notes if no dates are provided
         notes = mongo.db.patientnotes.find({}, {'_id': False})
         return jsonify(list(notes))
 
