@@ -46,7 +46,7 @@ function filterNotes() {
 
     // AJAX request to Flask backend
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `/patient/notes?start=${formattedStartDate}&end=${formattedEndDate}`, true);
+    xhr.open('GET', `/patient/filter-notes?start=${formattedStartDate}&end=${formattedEndDate}`, true);
     xhr.onload = function() {
         if (this.status === 200) {
             const notes = JSON.parse(this.responseText);
