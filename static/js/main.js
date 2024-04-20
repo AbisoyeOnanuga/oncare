@@ -34,6 +34,27 @@ document.addEventListener("click", (event) => {
     }
 });
 
+/*==================== DATE FILTER ====================*/ 
+// Function to handle the date range selection
+function filterNotesByDate(startDate, endDate) {
+    // Format the dates as needed, here assumed as 'YYYY-MM-DD'
+    const formattedStartDate = startDate.toISOString().split('T')[0];
+    const formattedEndDate = endDate.toISOString().split('T')[0];
+
+    // AJAX request to Flask backend
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `/filter-notes?start=${formattedStartDate}&end=${formattedEndDate}`, true);
+    xhr.onload = function() {
+        if (this.status === 200) {
+            const notes = JSON.parse(this.responseText);
+            // Handle the filtered notes here
+            console.log(notes);
+        }
+    };
+    xhr.send();
+}
+
+
 /*==================== SPEECH RECOGNITION ====================*/ 
 // Function to start speech recognition
 function startSpeechRecognition(inputId, buttonId) {
