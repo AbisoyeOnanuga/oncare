@@ -59,13 +59,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 
-// Notes Summary for list view
-function truncateContent(content, maxLength) {
-    if (content.length > maxLength) {
-        return content.substring(0, maxLength) + '...';
+    // Notes Summary for list view
+    function truncateContent(content, maxLength) {
+        if (content.length > maxLength) {
+            return content.substring(0, maxLength) + '...';
+        }
+        return content;
     }
-    return content;
-}
 
 // Fetch notes for edit, then close notes after edit with close-btn
 function fetchNoteContent(noteId) {
@@ -121,35 +121,63 @@ function fetchDoctorNoteForPatient(noteId) {
 }
 
 // Open note fucntion
+// Global variable to store all notes
+var allNotes = [];
+
+// Function to fetch all notes on page load and store them in allNotes
 function fetchAndDisplayNotes() {
     fetch('/patient/get_all_notes')
     .then(response => response.json())
     .then(notesList => {
-        var notesContainer = document.getElementById('notes-links-container');
-        notesContainer.innerHTML = '';  // Clear existing notes
-
-        notesList.forEach(note => {
-            var noteElement = document.createElement('div');
-            var noteSummary = document.createElement('a');
-            noteSummary.href = '#';
-            noteSummary.className = 'note-summary';
-            noteSummary.dataset.noteId = note.id;
-            noteSummary.textContent = `Note - ${new Date(note.date).toLocaleString()}: ${truncateContent(note.content, 50)}`;
-            noteElement.appendChild(noteSummary);
-
-            // Attach the fetchNoteContent function to the click event of the note summary
-            noteSummary.addEventListener('click', function() {
-                fetchNoteContent(note.id);
-                fetchDoctorNoteForPatient(note.id);
-            });
-
-            notesContainer.appendChild(noteElement);
-        });
+        allNotes = notesList; // Store all notes
+        displayNotes(allNotes); // Display all notes initially
     })
     .catch(error => console.error('Error:', error));
 }
 document.addEventListener('DOMContentLoaded', fetchAndDisplayNotes);
 
+// Function to display notes
+function displayNotes(notesList) {
+    var notesContainer = document.getElementById('notes-links-container');
+    notesContainer.innerHTML = '';  // Clear existing notes
+
+    notesList.forEach(note => {
+        var noteElement = document.createElement('div');
+        var noteSummary = document.createElement('a');
+        noteSummary.href = '#';
+        noteSummary.className = 'note-summary';
+        noteSummary.dataset.noteId = note.id;
+        noteSummary.textContent = `Note - ${new Date(note.date).toLocaleString()}: ${truncateContent(note.content, 50)}`;
+        noteElement.appendChild(noteSummary);
+
+        // Attach the fetchNoteContent function to the click event of the note summary
+        noteSummary.addEventListener('click', function() {
+            fetchNoteContent(note.id);
+            fetchDoctorNoteForPatient(note.id);
+        });
+
+        notesContainer.appendChild(noteElement);
+    });
+}
+
+// Function to filter notes by date
+function filterNotesByDate() {
+    const startDate = document.getElementById('start-date-filter').value;
+    const endDate = document.getElementById('end-date-filter').value || startDate; // Use the same date if end date is not provided
+
+    // Filter notes based on the selected date(s)
+    const filteredNotes = allNotes.filter(note => {
+        const noteDate = new Date(note.date);
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        return noteDate >= start && noteDate <= end;
+    });
+
+    displayNotes(filteredNotes); // Display filtered notes
+}
+
+// Event listener for the filter button
+document.getElementById('filter-notes-btn').addEventListener('click', filterNotesByDate);
 
 
 // Event listener for the note-summary link in the patient account
