@@ -84,13 +84,6 @@
                 </div>
                 <!--===== NOTES UI =====-->
                 <div class="notes-content">
-                    <div class="doctor-note hidden">
-                        <div class="doctor-note-label">Doctor's Note</div>
-                        <form id="doctor-note-form">
-                            <!-- Doctor's input fields -->
-                            <textarea class="doctor-note-input" name="doctor-note-input" disabled="true"></textarea>
-                        </form>
-                    </div>
                     <div class="patient-note">
                         <div class="patient-note-label">Your Note</div>
                         <form id="patient-note-form">
@@ -102,6 +95,13 @@
                                 <!-- This button is used to create a new note entry in the database -->
                                 <button id="save-btn" type="click">Save New</button>
                             </div>
+                        </form>
+                    </div>
+                    <div class="doctor-note hidden">
+                        <div class="doctor-note-label">Doctor's Note</div>
+                        <form id="doctor-note-form">
+                            <!-- Doctor's input fields -->
+                            <textarea class="doctor-note-input" name="doctor-note-input" disabled="true"></textarea>
                         </form>
                     </div>
                     <div class="edit-note">
