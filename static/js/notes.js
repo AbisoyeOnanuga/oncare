@@ -59,13 +59,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 
-    // Notes Summary for list view
-    function truncateContent(content, maxLength) {
-        if (content.length > maxLength) {
-            return content.substring(0, maxLength) + '...';
-        }
-        return content;
+// Notes Summary for list view
+function truncateContent(content, maxLength) {
+    if (content.length > maxLength) {
+        return content.substring(0, maxLength) + '...';
     }
+    return content;
+}
 
 // Fetch notes for edit, then close notes after edit with close-btn
 function fetchNoteContent(noteId) {

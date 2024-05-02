@@ -13,7 +13,7 @@ from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
 #from dotenv import find_dotenv, load_dotenv, use load_dotenv
 
-from generate import generate_content
+# from generate import generate_content
 
 load_dotenv()
 
@@ -31,15 +31,43 @@ def home():
 def user():
     user_role = session.get("user_role")
     return render_template("user.html", session=session.get('user'), user_role=user_role, pretty=json.dumps(session.get('user'), indent=4))
+@app.route("/medication")
+def medication():
+    user_role = session.get("user_role")
+    return render_template("medication.html", session=session.get('user'), user_role=user_role, pretty=json.dumps(session.get('user'), indent=4))
 @app.route("/doctor")
 def doctor():
     user_role = session.get("user_role")
     return render_template("doctor.html", session=session.get('user'), user_role=user_role, pretty=json.dumps(session.get('user'), indent=4))
-@app.route('/doctor/analyse-note', methods=['POST'])
+"""@app.route('/doctor/analyse-note', methods=['POST'])
 def analyse_note():
     prompt = request.json['note']
     generated_content = generate_content(prompt)
-    return jsonify({'analysis': generated_content})
+    return jsonify({'analysis': generated_content})"""
+
+@app.route('/patient/save_medications', methods=['POST'])
+def save_medications():
+    try:
+        data = request.get_json()
+        user_email = data['user_id']  # This is the email address used as the user ID
+        medications = data['medications']
+        date = data['date']  # The date when the medications were saved
+
+        # Update the user's medication list in the database using their email as the identifier
+        result = mongo.db.medications.update_one(
+            {"user_id": user_email},  # Use the email address to identify the user document
+            {
+                "$set": {
+                    "medications": medications,
+                    "updated_at": datetime.strptime(date, "%Y-%m-%dT%H:%M:%S.%fZ")
+                }
+            },
+            upsert=True  # This creates a new document if no document matches the query
+        )
+        return jsonify({'result': 'Medications saved', 'id': user_email})  # Return the email as the identifier
+    except Exception as e:
+        app.logger.error(f"Error saving medications: {e}")
+        return jsonify({'error': 'An error occurred while saving medications'}), 500
 
 @app.route('/patient/add_note', methods=['POST'])
 def add_note():
