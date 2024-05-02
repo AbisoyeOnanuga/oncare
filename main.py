@@ -68,6 +68,44 @@ def save_medications():
     except Exception as e:
         app.logger.error(f"Error saving medications: {e}")
         return jsonify({'error': 'An error occurred while saving medications'}), 500
+"""
+@app.route('/patient/get_medications', methods=['GET'])
+def get_medications():
+    try:
+        user_id = session.get('email')  # Replace with the actual session variable name
+        # Fetch medications associated with the user ID
+        patient_medications = mongo.db.medications.find_one({'user_id': user_id})
+        if patient_medications:
+            # Extract medication details
+            medications_list = patient_medications.get('medications', [])
+            # Format the date
+            updated_at = patient_medications.get('updated_at', '')
+            if updated_at:
+                updated_at = updated_at.strftime('%Y-%m-%d %H:%M:%S')
+            # Prepare the response
+            response_data = {
+                'medications': medications_list,
+                'updated_at': updated_at
+            }
+            return jsonify(response_data)
+        else:
+            return jsonify({'error': 'Medication list not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+        """
+
+@app.route('/patient/get_medications', methods=['GET'])
+def get_medications():
+    try:
+        user_id = session.get('email')
+        patient_medications = mongo.db.medications.find_one({'user_id': user_id})
+        if patient_medications:
+            medications_list = patient_medications.get('medications', [])
+            return jsonify(medications_list)
+        else:
+            return jsonify({'error': 'Medication list not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/patient/add_note', methods=['POST'])
 def add_note():

@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+    fetchMedicationContent(); // Call this function when needed (e.g., after the user logs in or when the page loads)
+});
+
+document.addEventListener('DOMContentLoaded', () => {
     const medicationList = document.getElementById('medication-list');
     const addMedicationBtn = document.getElementById('add-medication-btn');
 
@@ -29,34 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return rowDiv;
     }
 
-    function saveMedications() {
-        const medications = [];
-        document.querySelectorAll('.medication-row').forEach(row => {
-            medications.push({
-                name: row.querySelector('.medication-name').value,
-                dosage: row.querySelector('.dosage').value,
-                frequency: row.querySelector('.frequency').value
-            });
-        });
-        // Send the medications array to the Flask backend
-        fetch('/patient/update_medications', {
-            method: 'POST',
-            body: JSON.stringify({ user_id: 'user_id_here', medications }),
-            headers: { 'Content-Type': 'application/json' }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.result) {
-                alert('Medications updated successfully!');
-            } else {
-                alert('Error: ' + data.error);
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    }
-
-    // Call saveMedications when needed, e.g., on a save button click
-    // Add a save button and its event listener as needed
 });
 
 /*==================== SAVE MEDICATIONS ====================*/
@@ -102,3 +78,40 @@ document.addEventListener('DOMContentLoaded', (event) => {
         .catch(error => console.error('Error:', error));
     });
 });
+
+/*==================== FETCH MEDICATIONS ====================*/
+// Fetch medication data for edit and display it
+// Global variable to store all medications
+var allMedications = [];
+
+// Function to fetch all medications on page load and store them in allMedications
+function fetchAndDisplayMedications() {
+    fetch('/patient/get_medications')
+    .then(response => response.json())
+    .then(medicationsList => {
+        allMedications = medicationsList; // Store all medications
+        displayMedications(allMedications); // Display all medications initially
+    })
+    .catch(error => console.error('Error:', error));
+}
+document.addEventListener('DOMContentLoaded', fetchAndDisplayMedications);
+
+// Function to display medications
+function displayMedications(medications) {
+    const medicationListDiv = document.getElementById('medication-list');
+    medicationListDiv.innerHTML = ''; // Clear existing entries
+
+    medications.forEach(med => {
+        const medEntryDiv = document.createElement('div');
+        medEntryDiv.classList.add('medication-entry');
+        medEntryDiv.innerHTML = `
+            <p>Medication: <strong>${med.name}</strong></p>
+            <p>Dosage: <strong>${med.dosage}</strong></p>
+            <p>Frequency: <strong>${med.frequency}</strong></p>
+        `;
+        medicationListDiv.appendChild(medEntryDiv);
+    });
+}
+
+// Call this function when needed (e.g., after the user logs in or when the page loads)
+fetchAndDisplayMedications();
