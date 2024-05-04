@@ -8,12 +8,10 @@ from dotenv import load_dotenv
 import pytz
 
 import json
-#from os import environ as env, use getenv
 from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
-#from dotenv import find_dotenv, load_dotenv, use load_dotenv
 
-# from generate import generate_content
+from generate import analyze_patient_note
 
 load_dotenv()
 
@@ -39,11 +37,14 @@ def medication():
 def doctor():
     user_role = session.get("user_role")
     return render_template("doctor.html", session=session.get('user'), user_role=user_role, pretty=json.dumps(session.get('user'), indent=4))
-"""@app.route('/doctor/analyse-note', methods=['POST'])
+@app.route('/doctor/analyse-note', methods=['POST'])
 def analyse_note():
-    prompt = request.json['note']
-    generated_content = generate_content(prompt)
-    return jsonify({'analysis': generated_content})"""
+    try:
+        prompt = request.json['note']
+        generated_content = analyze_patient_note(prompt)
+        return jsonify({'analysis': generated_content})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/patient/save_medications', methods=['POST'])
 def save_medications():
