@@ -1,13 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     const analyseNoteBtn = document.getElementById('analyse-note-btn');
     const analysisResultDiv = document.querySelector('.analysis-result');
+    const patientNoteTextarea = document.getElementById('patient-note-text');
 
     analyseNoteBtn.addEventListener('click', () => {
-        const noteContent = { note: 'The content of the note to be analyzed' }; // Replace with actual note content retrieval logic
+        const noteContent = patientNoteTextarea.value; // Get the content of the note from the textarea
 
         fetch('/doctor/analyse-note', {
             method: 'POST',
-            body: JSON.stringify(noteContent),
+            body: JSON.stringify({ note: noteContent }),
             headers: {
                 'Content-Type': 'application/json'
             }
