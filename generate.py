@@ -1,4 +1,24 @@
+import os
 import requests
+from dotenv import load_dotenv
+from google.generativeai import GenerativeModel, GenerationConfig
+
+# Load environment variables from .env file
+load_dotenv()
+
+
+# Configure the Google API key
+GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')  # Replace with your actual Google API key
+
+# Initialize the Gemini model with safety settings and the API key
+model = GenerativeModel(
+    'gemini-pro',
+    generation_config=GenerationConfig(
+        max_output_tokens=2000,
+        temperature=0.9,
+    ),
+    api_key=GOOGLE_API_KEY  # Pass the API key here
+)
 
 # Sample medication list and patient note
 medication_list = [
@@ -8,33 +28,76 @@ medication_list = [
 ]
 patient_note = "Patient reports experiencing intermittent headaches and dizziness over the past two weeks."
 
-# Function to retrieve data from the Knowledge Graph API
-def retrieve_kg_data(medications, note):
-    # Replace with the actual KG API endpoint and query logic
-    kg_response = requests.post('KG_API_ENDPOINT', json={'medications': medications, 'note': note})
-    if kg_response.status_code == 200:
-        return kg_response.json()
+# Placeholder for id_to_name_map (replace with actual mapping)
+id_to_name_map = {
+    "medication_id_1": "Medication Name 1",
+    "medication_id_2": "Medication Name 2",
+    # Add more mappings as needed
+}
+
+
+def get_side_effect_data(side_effect):
+    # URL encode the side effect to handle any special characters
+    side_effect_encoded = requests.utils.quote(side_effect)
+    
+    # Construct the API endpoint
+    api_endpoint = f"https://spoke.rbvi.ucsf.edu/api/v1/neighborhood/SideEffect/name/{side_effect_encoded}"
+    
+    # Send the GET request to the SPOKE Neighbourhood Explorer API
+    response = requests.get(api_endpoint)
+    
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Return the JSON response
+        return response.json()
     else:
-        raise Exception(f"KG API Error: {kg_response.status_code}")
+        # Handle errors
+        raise Exception(f"API Request Error: {response.status_code} - {response.text}")
+
+
+# New function to handle the SPOKE API response
+def process_spoke_response(response_data):
+    # Extract relevant data from the response
+    # Assuming 'relationships' is the key with the needed information
+    relationships = response_data.get('relationships', [])
+    # Filter for relevant relationships and map to medication names
+    medication_relations = [
+        rel for rel in relationships if rel.get('neo4j_type') == 'CAUSES_CcSE'
+    ]
+    # Example: Convert medication IDs to names
+    medication_names = [id_to_name_map.get(rel['source'], "Unknown") for rel in medication_relations]
+    return medication_names
+
+
+# Updated retrieve_kg_data function
+def retrieve_kg_data(medications, note):
+    # Call the get_side_effect_data function
+    side_effect = "Headache"  # Replace with the actual side effect you're querying
+    try:
+        response_data = get_side_effect_data(side_effect)
+        # Process the response to get medication names
+        medication_names = process_spoke_response(response_data)
+        # Combine with existing medications list
+        combined_medications = medications + medication_names
+        # Continue with the rest of the function...
+        return combined_medications
+    except Exception as e:
+        print(str(e))
+
 
 # Function to call the Gemini model with context from KG
 def call_gemini_with_context(kg_data, note):
-    # Replace with the actual Gemini API endpoint and authorization logic
-    gemini_response = requests.post(
-        'GEMINI_API_ENDPOINT',
-        headers={'Authorization': 'Bearer API_KEY'},
-        json={'prompt': f"{kg_data} {note}", 'max_tokens': 512}
+    # Generate content with the Gemini model
+    response = model.generate_content(
+        f"{kg_data} {note}",
+        safety_settings={'HARASSMENT': 'block_none'}
     )
-    if gemini_response.status_code == 200:
-        return gemini_response.json()['choices'][0]['text']
+    # Check if the response is safe to use
+    if all(rating.probability == 'NEGLIGIBLE' for rating in response.safety_ratings):
+        return response.text
     else:
-        raise Exception(f"Gemini API Error: {gemini_response.status_code}")
+        raise Exception("Content flagged by safety settings.")
 
-# Function to analyze the patient's note using KG + RAG
-def analyze_note_with_kg_rag(medications, note):
-    kg_data = retrieve_kg_data(medications, note)
-    analysis = call_gemini_with_context(kg_data, note)
-    return analysis
 
 # Example usage
 analysis_result = analyze_note_with_kg_rag(medication_list, patient_note)
