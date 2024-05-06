@@ -96,22 +96,22 @@ function fetchAndDisplayMedications() {
 }
 document.addEventListener('DOMContentLoaded', fetchAndDisplayMedications);
 
-// Function to display medications
 function displayMedications(medications) {
     const medicationListDiv = document.getElementById('medication-list');
-    medicationListDiv.innerHTML = ''; // Clear existing entries
-
-    medications.forEach(med => {
-        const medEntryDiv = document.createElement('div');
-        medEntryDiv.classList.add('medication-entry');
-        medEntryDiv.innerHTML = `
-            <p>Medication: <strong>${med.name}</strong></p>
-            <p>Dosage: <strong>${med.dosage}</strong></p>
-            <p>Frequency: <strong>${med.frequency}</strong></p>
-        `;
-        medicationListDiv.appendChild(medEntryDiv);
-    });
+    // Check if the medications array is empty and display a message
+    if (medications.length === 0) {
+        medicationListDiv.innerHTML = '<p>You have not created a medication list yet.</p>';
+    } else {
+        // Existing code to display medications
+        medications.forEach(med => {
+            const medEntryDiv = document.createElement('div');
+            medEntryDiv.classList.add('medication-entry');
+            medEntryDiv.innerHTML = `
+                <p>Medication: <strong>${med.name}</strong></p>
+                <p>Dosage: <strong>${med.dosage}</strong></p>
+                <p>Frequency: <strong>${med.frequency}</strong></p>
+            `;
+            medicationListDiv.appendChild(medEntryDiv);
+        });
+    }
 }
-
-// Call this function when needed (e.g., after the user logs in or when the page loads)
-fetchAndDisplayMedications();
