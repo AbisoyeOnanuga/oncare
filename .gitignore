@@ -3,3 +3,4 @@ config.js
 auth_config.json
 
 .env
+/data
