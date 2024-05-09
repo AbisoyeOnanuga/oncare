@@ -185,3 +185,42 @@ document.querySelector('.patient-note .close-btn').addEventListener('click', fun
     toggleDisplay('back-btn', false);
     toggleDisplay('doctor-note', false);
 });
+
+
+// Function to fetch and display medications for a specific patient
+function fetchAndDisplayPatientMedications(patientId) {
+    fetch('/doctor/get_patient_medications/' + patientId)
+    .then(response => response.json())
+    .then(medicationsList => {
+        // Assuming 'medication-list' is the ID of the container where you want to display the medications
+        const medicationListDiv = document.getElementById('medication-list');
+        medicationListDiv.innerHTML = ''; // Clear the container
+
+        // Check if the medications array is empty and display a message
+        if (medicationsList.length === 0) {
+            medicationListDiv.innerHTML = '<p>This patient does not have a medication list yet.</p>';
+        } else {
+            // Display medications for the specific patient
+            medicationsList.forEach(med => {
+                const medEntryDiv = document.createElement('div');
+                medEntryDiv.classList.add('medication-entry');
+                medEntryDiv.innerHTML = `
+                    <p>Medication: <strong>${med.name}</strong></p>
+                    <p>Dosage: <strong>${med.dosage}</strong></p>
+                    <p>Frequency: <strong>${med.frequency}</strong></p>
+                `;
+                medicationListDiv.appendChild(medEntryDiv);
+            });
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+// Event listener for patient links
+document.querySelectorAll('.patient-link').forEach(patientLink => {
+    patientLink.addEventListener('click', () => {
+        const patientId = patientLink.getAttribute('data-patient-id');
+        fetchAndDisplayPatientMedications(patientId);
+        // ... other actions to perform when a patient link is clicked
+    });
+});

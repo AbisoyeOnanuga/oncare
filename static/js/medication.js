@@ -17,14 +17,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const rowDiv = document.createElement('div');
         rowDiv.className = 'medication-row';
         rowDiv.innerHTML = `
-            <input type="text" class="medication-name" placeholder="Medication Name" required>
-            <input type="text" class="dosage" placeholder="Dosage" required>
-            <select class="frequency">
-                <option value="daily">Once a day</option>
-                <option value="weekly">Once a week</option>
-                <!-- Add more options as needed -->
-            </select>
-            <button class="remove-medication-btn">-</button>
+            <div class="medication-form">
+                <div class="medication-row">
+                    <input type="text" class="medication-name" placeholder="Medication Name" required>
+                    <input type="number" class="dosage" placeholder="Dosage" required>
+                    <select class="dosage-unit">
+                        <option value="mg">mg</option>
+                        <option value="g">g</option>
+                        <option value="mcg">mcg</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                    <input type="number" class="frequency-value" placeholder="Frequency" required>
+                    <select class="frequency-unit">
+                        <option value="daily">a day</option>
+                        <option value="weekly">a week</option>
+                        <option value="biweekly">bi-weekly</option>
+                        <option value="monthly">a month</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                    <button class="remove-medication-btn">-</button>
+                </div>
+                <!-- Add more medication rows dynamically as needed -->
+            </div>
         `;
         // Add event listener to remove button
         rowDiv.querySelector('.remove-medication-btn').addEventListener('click', () => {
@@ -32,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         return rowDiv;
     }
-
 });
 
 /*==================== SAVE MEDICATIONS ====================*/
@@ -45,14 +58,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
         event.preventDefault();
         const medications = [];
         document.querySelectorAll('.medication-row').forEach(row => {
+            const name = row.querySelector('.medication-name').value;
+            const dosage = row.querySelector('.dosage').value;
+            const dosageUnit = row.querySelector('.dosage-unit').value;
+            const frequencyValue = row.querySelector('.frequency-value').value;
+            const frequencyUnit = row.querySelector('.frequency-unit').value;
+
             medications.push({
-                name: row.querySelector('.medication-name').value,
-                dosage: row.querySelector('.dosage').value,
-                frequency: row.querySelector('.frequency').value
+                name: name,
+                dosage: `${dosage} ${dosageUnit}`,
+                frequency: `${frequencyValue} ${frequencyUnit}`
             });
         });
-        var date = new Date().toISOString();
-        var userId = document.getElementById('userId').value; // Assuming this value is set correctly
+        const date = new Date().toISOString();
+        const userId = document.getElementById('userId').value; // Assuming this value is set correctly
 
         // Send the medication data and date to the Flask app
         fetch('/patient/save_medications', {

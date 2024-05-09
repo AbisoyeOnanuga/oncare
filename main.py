@@ -69,31 +69,6 @@ def save_medications():
     except Exception as e:
         app.logger.error(f"Error saving medications: {e}")
         return jsonify({'error': 'An error occurred while saving medications'}), 500
-"""
-@app.route('/patient/get_medications', methods=['GET'])
-def get_medications():
-    try:
-        user_id = session.get('email')  # Replace with the actual session variable name
-        # Fetch medications associated with the user ID
-        patient_medications = mongo.db.medications.find_one({'user_id': user_id})
-        if patient_medications:
-            # Extract medication details
-            medications_list = patient_medications.get('medications', [])
-            # Format the date
-            updated_at = patient_medications.get('updated_at', '')
-            if updated_at:
-                updated_at = updated_at.strftime('%Y-%m-%d %H:%M:%S')
-            # Prepare the response
-            response_data = {
-                'medications': medications_list,
-                'updated_at': updated_at
-            }
-            return jsonify(response_data)
-        else:
-            return jsonify({'error': 'Medication list not found'}), 404
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-        """
 
 @app.route('/patient/get_medications', methods=['GET'])
 def get_medications():
@@ -248,6 +223,32 @@ def get_patient_notes(patientId):
             'last updated': note['updated_at']
         })
     return jsonify(notes_list)
+
+@app.route('/doctor/get_patient_medications/<patientId>', methods=['GET'])
+def get_patient_medications(patientId):
+    # Assuming 'patientmedications' is the collection where medication lists are stored
+    try:
+        # Convert the patientId to an ObjectId if it's stored as such in the database
+        patient_id_obj = ObjectId(patientId)
+    except:
+        # If the patientId is not an ObjectId, use it as is
+        patient_id_obj = patientId
+    # Fetch medication list for a specific patient
+    patient_medications = mongo.db.patientmedications.find_one({'user_id': patient_id_obj})
+    # Check if medications exist for the patient
+    if patient_medications and 'medications' in patient_medications:
+        medications_list = patient_medications['medications']
+        # Format the updated_at field
+        updated_at = patient_medications['updated_at']['$date']['$numberLong']
+    else:
+        medications_list = []
+        updated_at = None
+    # Prepare the response
+    response = {
+        'medications': medications_list,
+        'updated_at': updated_at
+    }
+    return jsonify(response)
 
 @app.route('/doctor/get_patient_content/<note_id>', methods=['GET'])
 def get_patient_content(note_id):
