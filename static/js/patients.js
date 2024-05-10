@@ -43,6 +43,7 @@ function fetchAndDisplayPatients() {
             patientLink.addEventListener('click', function() {
                 fetchAndDisplayNotes(patient.id);
                 toggleNotesContentVisibility(true); // Show the notes-content container
+                fetchAndDisplayPatientMedications(patient.id);
             });
             patientsContainer.appendChild(patientElement);
         });
@@ -163,16 +164,6 @@ document.addEventListener('DOMContentLoaded', function() {
     toggleDisplay('doctor-note', false);
 });
 
-// Attach event listeners after the DOM content has loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Attach event listeners to patient links
-    document.querySelectorAll('.patient-link').forEach(link => {
-        link.addEventListener('click', function() {
-            handlePatientLinkClick(this.dataset.patientId);
-        });
-    });
-});
-
 document.querySelector('.close-btn').addEventListener('click', function() {
     toggleNotesContentVisibility(false); // Hide the notes-content container
 });
@@ -191,17 +182,16 @@ document.querySelector('.patient-note .close-btn').addEventListener('click', fun
 function fetchAndDisplayPatientMedications(patientId) {
     fetch('/doctor/get_patient_medications/' + patientId)
     .then(response => response.json())
-    .then(medicationsList => {
-        // Assuming 'medication-list' is the ID of the container where you want to display the medications
+    .then(data => {
         const medicationListDiv = document.getElementById('medication-list');
         medicationListDiv.innerHTML = ''; // Clear the container
 
         // Check if the medications array is empty and display a message
-        if (medicationsList.length === 0) {
+        if (data.medications.length === 0) {
             medicationListDiv.innerHTML = '<p>This patient does not have a medication list yet.</p>';
         } else {
             // Display medications for the specific patient
-            medicationsList.forEach(med => {
+            data.medications.forEach(med => {
                 const medEntryDiv = document.createElement('div');
                 medEntryDiv.classList.add('medication-entry');
                 medEntryDiv.innerHTML = `
@@ -215,12 +205,3 @@ function fetchAndDisplayPatientMedications(patientId) {
     })
     .catch(error => console.error('Error:', error));
 }
-
-// Event listener for patient links
-document.querySelectorAll('.patient-link').forEach(patientLink => {
-    patientLink.addEventListener('click', () => {
-        const patientId = patientLink.getAttribute('data-patient-id');
-        fetchAndDisplayPatientMedications(patientId);
-        // ... other actions to perform when a patient link is clicked
-    });
-});

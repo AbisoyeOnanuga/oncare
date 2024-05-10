@@ -68,18 +68,20 @@
 
         <main class="l-main">
             <!--===== PATIENT CONTENT =====-->
-            <div id="doctor-content">
+            <div class="doctor-content">
                 
                 <!--===== NOTES DATES =====-->
-                <div class="notes-dates">
-                    <div class="patient-note-label">Patient's List</div><br>
-                    <!-- Name filter form -->
-                    <!-- Container for note links -->
-                    <div id="patients-links-container"></div>
-                </div>
-                <div id="patient-medications-container" class="patient-medications-container">
+                <div class="patients-data">
+                    <div class="patients-list">
+                        <div class="patient-note-label">Patient's List</div><br>
+                        <!-- Name filter form -->
+                        <!-- Container for note links -->
+                        <div id="patients-links-container"></div>
+                    </div>
                     <!-- Medication details will be dynamically inserted here -->
+                    <div id="medication-list" class="patient-medications"></div>
                 </div>
+
                 <!--===== NOTES UI =====-->
                 <div class="notes-content">
                     <div class="patient-note">
@@ -95,8 +97,11 @@
                             <button id="back-btn" class="back-btn">Back</button>
                             <button class="close-btn">X</button>
                         </div>
-                        <!-- Display AI analysis result here -->
-                        <div class="analysis-result"></div>
+                    </div>
+                    <!-- Display AI analysis result here -->
+                    <div id="analysis-result">
+                        <div class="analysis-label">Gemini AI response</div>
+                        <div id="analysis-content"></div>
                     </div>
                     <div id= "doctor-note" class="doctor-note">
                         <div class="doctor-note-label">Your Note</div>
@@ -134,6 +139,7 @@
         <script src="{{ url_for('static', filename='js/patients.js') }}"></script>
         <script src="{{ url_for('static', filename='js/patients-update.js') }}"></script>
         <script src="{{ url_for('static', filename='js/confetti.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/generate.js') }}"></script>
         <script type="text/javascript">
             var userId = "{{ session.userinfo.email }}";
         </script>

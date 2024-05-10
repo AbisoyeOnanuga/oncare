@@ -175,7 +175,8 @@ button:hover {
     display: none;
 }
 .doctor-content {
-gap: 1rem;
+    gap: 1rem;
+    display: flex;
 }
 .patient-link {
     background: var(--first-color);
@@ -205,7 +206,8 @@ gap: 1rem;
 }
 
 .doctor-note,
-.patient-note {
+.patient-note,
+#analysis-result {
     padding: var(--mb-2);
     border-radius: 1rem;
     background-color: rgba(255, 166, 0, 0.12); /* Transparent orange */
@@ -250,11 +252,33 @@ gap: 1rem;
     border-bottom-right-radius: 0.5rem;
     border-top-left-radius: 1rem;
 }
-.notes-dates,
-.notes-content {
+#analysis-result {
+    display: none;
+    height: fit-content;
+    margin-top: -20px;
+    margin-bottom: -16px;
+}
+#analysis-content {
+    margin-top: 20px;
+}
+.analysis-label {
+    position: absolute;
+    margin-top: -17px;
+    margin-left: -17px;
+    padding: 0.5rem;
+    background-color: rgba(255, 165, 0, 0.3);
+    border-bottom-right-radius: 0.5rem;
+    border-top-left-radius: 1rem;
+}
+.patients-list,
+.notes-content,
+.patient-medications {
     margin-right: var(--mb-2); /* Adds a gap to the right */
     height: 75vh; /* Full view height */
     overflow-y: auto; /* Enables vertical scrolling */
+}
+.patients-data {
+    display: grid
 }
 .note-input {
     border: 0.1rem solid rgba(0, 0, 0); /* Transparent border */
@@ -264,7 +288,8 @@ gap: 1rem;
     padding: var(--mb-2);
     font-size: var(--h2-font-size);
 }
-.notes-dates {
+.patients-list,
+.patient-medications {
     width: 30%;
     float: left;
     margin-bottom: var(--mb-4);
@@ -272,6 +297,8 @@ gap: 1rem;
     background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
     border-radius: 1rem;
     border: 0.1rem solid rgba(0, 0, 0); /* Transparent border */
+    max-height: fit-content;
+    min-width: fit-content;
 }
 .notes-content {
     width: 67%;
@@ -279,7 +306,7 @@ gap: 1rem;
     overflow: visible;
     display: flex;
     flex-direction: row;
-    gap: 12px;
+    gap: 50px;
 }
 .notes-content textarea {
     width: 100%; /* Full width of the container */
@@ -292,6 +319,7 @@ gap: 1rem;
     display: flex;
     flex-direction: column;
     height: 90%;
+    gap: 100px;
 }
 .note-summary {
     display: inline-block;
@@ -326,7 +354,7 @@ gap: 1rem;
     color: white;
     position: relative;
     z-index: -1;
-    bottom: -200px;
+    bottom: -820px;
 }
 .footer__title {
     font-size: var(--h2-font-size);
@@ -372,6 +400,9 @@ gap: 1rem;
     .close-btn {
         margin-top: 8px;
     }
+    #analysis-result {
+        margin-bottom: 230px;
+    }
 }
 @media screen and (max-width: 768px) {
     .nav__toggle {
@@ -400,17 +431,21 @@ gap: 1rem;
     .button {
         width: auto; /* Adjust button width on small screens */
     }
-    .notes-dates {
+    .patients-list,
+    .patient-medications {
         max-height: fit-content;
+        min-width: fit-content;
     }
-    .notes-dates,
-    .notes-content {
+    .patients-list,
+    .notes-content,
+    .patient-medications {
         width: 100%;
         float: none;
         margin-right: 0; /* Removes the gap for smaller screens */
     }
     .notes-content {
         display: grid;
+        gap: 70px;
     }
     .notes-content textarea{
         min-height: 70%;
@@ -418,7 +453,8 @@ gap: 1rem;
         min-width: auto;
     }
     .doctor-note,
-    .patient-note {
+    .patient-note,
+    .analysis-result {
         padding: var(--mb-2);
         border-radius: 1rem;
         background-color: rgba(255, 166, 0, 0.12); /* Transparent orange */
@@ -430,19 +466,23 @@ gap: 1rem;
         max-width: 100%;
     }
     .doctor-note {
-        background-color: rgba(0, 123, 255, 0.12); /* Transparent blue */
+        background-color: rgba(0, 255, 229, 0.12); /* Transparent blue */
+    }
+    .analysis-result {
+        background-color: rgba(0, 123, 255, 0.182); /* Transparent blue */
     }
     .doctor-note textarea{
         flex-grow: 1;
         width: auto;
     }
-    .doctor-note {
+    .doctor-note,
+    .analysis-result {
         margin-top: 0px;
         height: 70vh;
     }
     .footer {
         position: relative;
-        top: 1300px;
+        top: 2400px;
     }
     #doctor-note-form {
         max-height: 90%;
@@ -462,5 +502,12 @@ gap: 1rem;
         position: absolute;
         top: 1725px;
         left: 55%;
+    }
+    .doctor-content {
+        gap: 1rem;
+        display: grid;
+    }
+    #analysis-result {
+        margin-bottom: 500px;
     }
 }

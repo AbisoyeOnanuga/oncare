@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template, redirect, session, url_for
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from bson.json_util import dumps
 from datetime import datetime, timedelta
 from pymongo import DESCENDING
 from os import getenv
@@ -40,8 +41,13 @@ def doctor():
 @app.route('/doctor/analyse-note', methods=['POST'])
 def analyse_note():
     try:
-        prompt = request.json['note']
-        generated_content = analyze_patient_note(prompt)
+        data = request.get_json()
+        medications = data['medications']
+        side_effects_note = data['sideEffectsNote']
+        # Convert the medications list to the format expected by the AI module
+        formatted_medications = [{'name': med['name'], 'dosage': med['dosage'], 'frequency': med['frequency']} for med in medications]
+        # Call the AI module for analysis
+        generated_content = analyze_patient_note(formatted_medications, side_effects_note)
         return jsonify({'analysis': generated_content})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -224,32 +230,6 @@ def get_patient_notes(patientId):
         })
     return jsonify(notes_list)
 
-@app.route('/doctor/get_patient_medications/<patientId>', methods=['GET'])
-def get_patient_medications(patientId):
-    # Assuming 'patientmedications' is the collection where medication lists are stored
-    try:
-        # Convert the patientId to an ObjectId if it's stored as such in the database
-        patient_id_obj = ObjectId(patientId)
-    except:
-        # If the patientId is not an ObjectId, use it as is
-        patient_id_obj = patientId
-    # Fetch medication list for a specific patient
-    patient_medications = mongo.db.patientmedications.find_one({'user_id': patient_id_obj})
-    # Check if medications exist for the patient
-    if patient_medications and 'medications' in patient_medications:
-        medications_list = patient_medications['medications']
-        # Format the updated_at field
-        updated_at = patient_medications['updated_at']['$date']['$numberLong']
-    else:
-        medications_list = []
-        updated_at = None
-    # Prepare the response
-    response = {
-        'medications': medications_list,
-        'updated_at': updated_at
-    }
-    return jsonify(response)
-
 @app.route('/doctor/get_patient_content/<note_id>', methods=['GET'])
 def get_patient_content(note_id):
     try:
@@ -258,6 +238,24 @@ def get_patient_content(note_id):
             return jsonify(note['content'])
         else:
             return jsonify({'error': 'Note not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/doctor/get_patient_medications/<patientId>', methods=['GET'])
+def get_patient_medications(patientId):
+    try:
+        patient_medications = mongo.db.medications.find_one({'user_id': patientId})
+        if patient_medications and 'medications' in patient_medications:
+            medications_list = patient_medications['medications']
+            # Convert the datetime object to a string in ISO format
+            updated_at = patient_medications['updated_at'].isoformat() if 'updated_at' in patient_medications else None
+            response = {
+                'medications': medications_list,
+                'updated_at': updated_at
+            }
+            return jsonify(response)
+        else:
+            return jsonify({'error': 'Medication list not found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
