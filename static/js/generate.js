@@ -1,4 +1,3 @@
-
 // Function to show or hide elements by ID
 function toggleDisplay(elementId, show) {
     const element = document.getElementById(elementId);
@@ -33,10 +32,12 @@ document.getElementById('analyse-note-btn').addEventListener('click', () => {
         return response.json();
     })
     .then(data => {
+        // Convert markdown to HTML using marked.js
+        const renderedHTML = marked(data.analysis);
         // Show the 'analysis-result' element
         toggleDisplay('analysis-result', true);
-        // Update the 'analysis-content' element with the AI-generated analysis
-        document.getElementById('analysis-content').innerHTML = data.analysis;
+        // Update the 'analysis-content' element with the rendered HTML
+        document.getElementById('analysis-content').innerHTML = renderedHTML;
     })
     .catch(error => {
         console.error('Error:', error);
