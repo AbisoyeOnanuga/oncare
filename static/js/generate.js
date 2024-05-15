@@ -33,7 +33,7 @@ document.getElementById('analyse-note-btn').addEventListener('click', () => {
     })
     .then(data => {
         // Convert markdown to HTML using marked.js
-        const renderedHTML = marked(data.analysis);
+        const renderedHTML = marked.parse(data.analysis);
         // Show the 'analysis-result' element
         toggleDisplay('analysis-result', true);
         // Update the 'analysis-content' element with the rendered HTML
