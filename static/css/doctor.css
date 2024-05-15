@@ -270,6 +270,9 @@ button:hover {
     border-bottom-right-radius: 0.5rem;
     border-top-left-radius: 1rem;
 }
+.medication-entry {
+    margin-top: 0.5rem;
+}
 .patients-list,
 .notes-content,
 .patient-medications {
