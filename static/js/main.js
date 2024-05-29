@@ -70,6 +70,23 @@ function startSpeechRecognition(inputId, buttonId) {
         alert('Your browser does not support speech recognition.');
     }
 }
+
+
+/*==================== NOTIFICATION PROTOTYPE ====================*/ 
+function showNotification(message) {
+    const notificationContainer = document.getElementById('notification-container');
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = message;
+    notificationContainer.appendChild(notification);
+    setTimeout(() => {
+        notification.remove();
+    }, 5000); // Remove after 5 seconds
+}
+
+// Example usage:
+showNotification('New doctor response received!');
+
 /*
 // Call showToast when starting and stopping speech recognition
 recognition.start();
