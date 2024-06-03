@@ -201,7 +201,7 @@ gap: 1rem;
 #medication-management {
     margin-bottom: var(--mb-4);
     padding: var(--mb-2) 0;
-    background-color: #fff;
+/*    background-color: #fff; */
     border-radius: 1rem;
     position: relative;
     flex-grow: 1; /* Grow to fill the space */
