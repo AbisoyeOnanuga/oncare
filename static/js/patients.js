@@ -181,27 +181,43 @@ document.querySelector('.patient-note .close-btn').addEventListener('click', fun
 // Function to fetch and display medications for a specific patient
 function fetchAndDisplayPatientMedications(patientId) {
     fetch('/doctor/get_patient_medications/' + patientId)
-    .then(response => response.json())
-    .then(data => {
-        const medicationListDiv = document.getElementById('medication-list');
-        medicationListDiv.innerHTML = ''; // Clear the container
+        .then(response => response.json())
+        .then(data => {
+            const medicationListDiv = document.getElementById('medication-list');
+            
+            // Create a container div for the medication list
+            const medicationContainerDiv = document.createElement('div');
 
-        // Check if the medications array is empty and display a message
-        if (data.medications.length === 0) {
-            medicationListDiv.innerHTML = '<p>This patient does not have a medication list yet.</p>';
-        } else {
-            // Display medications for the specific patient
-            data.medications.forEach(med => {
-                const medEntryDiv = document.createElement('div');
-                medEntryDiv.classList.add('medication-entry');
-                medEntryDiv.innerHTML = `
-                    <p>Medication: <strong>${med.name}</strong></p>
-                    <p>Dosage: <strong>${med.dosage}</strong></p>
-                    <p>Frequency: <strong>${med.frequency}</strong></p>
-                `;
-                medicationListDiv.appendChild(medEntryDiv);
-            });
-        }
-    })
-    .catch(error => console.error('Error:', error));
+            // Add the label to the container div
+            const labelDiv = document.createElement('div');
+            labelDiv.classList.add('patient-note-label');
+            labelDiv.textContent = "Patient's Medication(s)";
+            medicationContainerDiv.appendChild(labelDiv);
+
+            // Check if the medications array is empty and display a message
+            if (data.medications.length === 0) {
+                const noMedsMessage = document.createElement('p');
+                noMedsMessage.textContent = 'This patient does not have a medication list yet.';
+                medicationContainerDiv.appendChild(noMedsMessage);
+            } else {
+                // Display medications for the specific patient
+                data.medications.forEach(med => {
+                    const medEntryDiv = document.createElement('div');
+                    medEntryDiv.classList.add('medication-entry');
+                    medEntryDiv.innerHTML = `
+                        <p>Medication: <strong>${med.name}</strong></p>
+                        <p>Dosage: <strong>${med.dosage}</strong></p>
+                        <p>Frequency: <strong>${med.frequency}</strong></p>
+                    `;
+                    medicationContainerDiv.appendChild(medEntryDiv);
+                });
+            }
+
+            // Replace the existing content with the updated container div
+            medicationListDiv.innerHTML = '';
+            medicationListDiv.appendChild(medicationContainerDiv);
+        })
+        .catch(error => {
+            console.error('Error fetching medication data:', error);
+        });
 }
