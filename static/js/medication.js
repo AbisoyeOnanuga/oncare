@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 var allMedications = [];
 
 // Function to fetch all medications on page load and store them in allMedications
-function fetchAndDisplayMedications() {
+function fetchAndDisplayPatientMedications() {
     fetch('/patient/get_medications')
     .then(response => response.json())
     .then(medicationsList => {
@@ -116,12 +116,23 @@ function fetchAndDisplayMedications() {
 document.addEventListener('DOMContentLoaded', fetchAndDisplayMedications);
 
 function displayMedications(medications) {
-    const medicationListDiv = document.getElementById('medication-list');
+    const medicationListDiv = document.getElementById('medication-group');
+    
     // Check if the medications array is empty and display a message
     if (medications.length === 0) {
         medicationListDiv.innerHTML = '<p>You have not created a medication list yet.</p>';
     } else {
-        // Existing code to display medications
+        // Create a container div for the medication list
+        const medicationContainerDiv = document.createElement('div');
+        medicationContainerDiv.classList.add('patient-medications');
+
+        // Add the label to the container div
+        const labelDiv = document.createElement('div');
+        labelDiv.classList.add('patient-note-label');
+        labelDiv.textContent = "Patient's Medication(s)";
+        medicationContainerDiv.appendChild(labelDiv);
+
+        // Display individual medications
         medications.forEach(med => {
             const medEntryDiv = document.createElement('div');
             medEntryDiv.classList.add('medication-entry');
@@ -130,7 +141,11 @@ function displayMedications(medications) {
                 <p>Dosage: <strong>${med.dosage}</strong></p>
                 <p>Frequency: <strong>${med.frequency}</strong></p>
             `;
-            medicationListDiv.appendChild(medEntryDiv);
+            medicationContainerDiv.appendChild(medEntryDiv);
         });
+
+        // Replace the existing content with the updated container div
+        medicationListDiv.innerHTML = '';
+        medicationListDiv.appendChild(medicationContainerDiv);
     }
 }

@@ -157,13 +157,13 @@ button:hover {
 .profile-card {
     display: none;
     position: absolute;
-    top: 60px; /* Adjust to position the card below the image */
+    top: 100px; /* Adjust to position the card below the image */
     right: 20px; /* Adjust to position the card next to the image */
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 10px;
-    top: 100px;
+    z-index: 5;
 }
 @keyframes blink {
     0%, 100% { border-color: transparent; }
@@ -260,6 +260,25 @@ button:hover {
     background-color: rgba(255, 165, 0, 0.3);
     border-bottom-right-radius: 0.5rem;
     border-top-left-radius: 1rem;
+}
+#medications-group {
+    padding-top: 2rem; /* Adjust based on the height of your label */
+    max-height: calc(100% - 2rem); /* Adjust based on the height of your label */
+    overflow-y: auto;
+}
+/* Style for each medication entry */
+.medication-entry {
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--third-color); /* Add a subtle border between items */
+}
+
+/* Alternating background colors for each medication entry */
+.medication-entry:nth-child(odd) {
+    background-color: rgba(0, 123, 255, 0.12);
+}
+
+.medication-entry:nth-child(even) {
+    background-color: rgba(255, 165, 0, 0.3);
 }
 #analysis-result {
     display: none;
@@ -494,7 +513,7 @@ button:hover {
     }
     .footer {
         position: relative;
-        top: 2400px;
+        top: 3000px;
     }
     #doctor-note-form {
         max-height: 90%;
