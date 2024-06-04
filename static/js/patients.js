@@ -183,22 +183,13 @@ function fetchAndDisplayPatientMedications(patientId) {
     fetch('/doctor/get_patient_medications/' + patientId)
         .then(response => response.json())
         .then(data => {
-            const medicationListDiv = document.getElementById('medication-list');
-            
-            // Create a container div for the medication list
-            const medicationContainerDiv = document.createElement('div');
-
-            // Add the label to the container div
-            const labelDiv = document.createElement('div');
-            labelDiv.classList.add('patient-note-label');
-            labelDiv.textContent = "Patient's Medication(s)";
-            medicationContainerDiv.appendChild(labelDiv);
+            const medicationListDiv = document.getElementById('medications-group');
 
             // Check if the medications array is empty and display a message
             if (data.medications.length === 0) {
                 const noMedsMessage = document.createElement('p');
                 noMedsMessage.textContent = 'This patient does not have a medication list yet.';
-                medicationContainerDiv.appendChild(noMedsMessage);
+                medicationListDiv.appendChild(noMedsMessage);
             } else {
                 // Display medications for the specific patient
                 data.medications.forEach(med => {
@@ -209,13 +200,9 @@ function fetchAndDisplayPatientMedications(patientId) {
                         <p>Dosage: <strong>${med.dosage}</strong></p>
                         <p>Frequency: <strong>${med.frequency}</strong></p>
                     `;
-                    medicationContainerDiv.appendChild(medEntryDiv);
+                    medicationListDiv.appendChild(medEntryDiv);
                 });
             }
-
-            // Replace the existing content with the updated container div
-            medicationListDiv.innerHTML = '';
-            medicationListDiv.appendChild(medicationContainerDiv);
         })
         .catch(error => {
             console.error('Error fetching medication data:', error);

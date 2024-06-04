@@ -77,14 +77,15 @@
                 <!--===== MEDICATION UI =====-->
                 <!-- Medication Management Section -->
                 <div id="medication-management">
-                    <h2>Medications</h2>
-                    <div id="medication-list">
+                    <h2 style="padding: var(--mb-2);">Medications</h2>
+                    <div class="patient-note-label">Your Medication(s)</div>
+                    <div id="medication-group">
                         <!-- Medication entries will be dynamically added here -->
                     </div>
-                    <button id="add-medication-btn">+</button>
-                    <button id="save-medications-btn">Save Medications</button> <!-- Save button -->
                 </div>
-
+                <div id="medication-list"></div>
+                <button id="add-medication-btn">+</button>
+                <button id="save-medications-btn">Save Medications</button> <!-- Save button -->
             </div>
         </main>
 
@@ -106,7 +107,9 @@
 
         <!--===== MAIN JS =====-->
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/medication.js') }}"></script>
+        <!--<script src="{{ url_for('static', filename='js/medication.js') }}"></script> -->
+        <script src="{{ url_for('static', filename='js/medication-b.js') }}"></script>
+
         <script type="text/javascript">
             var userId = "{{ session.userinfo.email }}";
         </script>
